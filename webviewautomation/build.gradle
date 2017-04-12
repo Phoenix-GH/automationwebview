@@ -30,4 +30,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'javax.annotation:javax.annotation-api:1.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
 }

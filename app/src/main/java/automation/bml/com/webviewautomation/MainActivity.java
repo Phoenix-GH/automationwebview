@@ -2,11 +2,7 @@ package automation.bml.com.webviewautomation;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.AbsoluteLayout.LayoutParams;
 import android.widget.RelativeLayout;
-
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class MainActivity extends AppCompatActivity {
 
