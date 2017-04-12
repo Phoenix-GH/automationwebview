@@ -13,7 +13,7 @@ public interface RestAPI {
     // Login
 
     @POST("")
-    Call<TransactionResponse> postLogin(@Body TransactionRequest user);
+    Call<TransactionResponse> loadData(@Body TransactionRequest user);
 
     // API instance class
     class Factory {
