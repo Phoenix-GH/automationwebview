@@ -9,7 +9,7 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface RestAPI {
-    String BASE_URL = "http://api.delivr.online/ifapi.php";
+    String BASE_URL = "http://api.delivr.online/ifapi.php/";
     // Login
 
     @POST("")
