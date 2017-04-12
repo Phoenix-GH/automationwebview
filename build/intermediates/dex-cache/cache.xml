@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.1.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e79aa3d9a16f8c9f16377c0608de70a8f31e5d80">
+        <dex dex="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-25.1.0_ca2368ec1cef3838be756e4348713040b25b3d26/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.1.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="aee64634871d88a419d59eb743c1258a60f19700">
+        <dex dex="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-ui-25.1.0_a644ff8bb112b1cbfb93455d4f4cf81eba73c6c1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.1.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ca3c7aa31e2726a400a6e552b93cb9f63c9a1e6d">
+        <dex dex="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-25.1.0_eb1ea84751ff7b4c2bd8e58da38a2455d45dc9bc/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4bf898054f76da818dbde849323b342e42d65be0">
+        <dex dex="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_0f78f3cc725d69b35d163d1d0af21acc40417011/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.1.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0a0ef86b7fa568a52bf6214a0326ca1f1d618da7">
+        <dex dex="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-25.1.0_f6416fd044b6d949cc1dcf042b8e93a1b8c4abf6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.1.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="2a53c4f3518116b8c6aee0e477233f0f7da8616f">
+        <dex dex="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-25.1.0_67aae3f645b4c284ac40901d14d009dbe746d6e7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.1.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="f02263e35e52668dd17b73bf961437e3d562b35f">
+        <dex dex="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-media-compat-25.1.0_32d45a04d1144582a46f046eabda9ecc72c311fe/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/krzysztof/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.1.0/support-annotations-25.1.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="64cb6b229a8bdfd907bc8dd46839a0053e4c018d">
+        <dex dex="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-25.1.0_a8cce70a7ddbb9aeb28fab3c4160dfcefe5c37e4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.1.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-25.1.0_164c27516777a4f9f7f8400a47c8f2cb1493e5df/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ea1bcafe2d99998bd9db480d977878c8ab3710f1">
+        <dex dex="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_fd0a9f270c37d0a29545561460f469e7b3e887f9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.1.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6fb6ac3e8d3b9013819920d9ea11f3803c4c0033">
+        <dex dex="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-25.1.0_4157334e9f9b5e4ed6eb3b0b218f88dffc5991b6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.1.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="1630658fbc2d222b988603c27b4a4249586fbfe7">
+        <dex dex="/Users/krzysztof/Documents/WebViewAutomation/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-25.1.0_e228d7a8418a04fbecae6148ca91ab05d44e7bea/classes.dex" />
+    </item>
+
+</items>
