@@ -14,7 +14,7 @@ import android.util.TypedValue;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.noname.akio.named.R;
+
 
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;

@@ -10,8 +10,22 @@ import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
+import java.io.IOException;
+
+import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionRequest;
+import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionResponse;
+import automation.bml.com.webviewautomation.RestAPI.RestAPI;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.content.Context.MODE_PRIVATE;
 import static android.content.Context.WIFI_SERVICE;
 
 public class AutomatedWebview extends WebView
@@ -25,7 +39,7 @@ public class AutomatedWebview extends WebView
         super(context);
         this.context = context;
         //getUserAgent();
-        getConnectionInfo();
+
         ipAddress = getIPAddress();
         Log.d("IpAddress", ipAddress);
         getMNCMCC();
@@ -36,8 +50,38 @@ public class AutomatedWebview extends WebView
         setWebViewClient(new WebViewClient() {
 
             public void onPageFinished(WebView view, String url) {
+
+                //Checking 3G/4G
+                info = getConnectionInfo();
+
                 injectJS();
-                //Toast.makeText(context,ipAddress.toString(),Toast.LENGTH_LONG).show();
+                TransactionRequest request = new TransactionRequest();
+                OkHttpClient httpClient = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+                    @Override
+                    public okhttp3.Response intercept(Chain chain) throws IOException {
+                        Request request = chain.request().newBuilder().addHeader("api-token", getSharedPreferences("MyPreference", MODE_PRIVATE).getString("token", "")).build();
+                        return chain.proceed(request);
+                    }
+                }).build();
+                Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
+                RestAPI service = retrofit.create(RestAPI.class);
+                Call<TransactionResponse> meResponse = service.loadData(request);
+                meResponse.enqueue(new Callback<TransactionResponse>() {
+                    @Override
+                    public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
+                        if (response.isSuccessful()) {
+                            TransactionResponse body = response.body();
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<TransactionResponse> call, Throwable t) {
+
+                    }
+
+
+                });
             }
         });
     }
