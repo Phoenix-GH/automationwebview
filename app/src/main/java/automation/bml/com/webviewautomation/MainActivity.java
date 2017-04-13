@@ -14,8 +14,13 @@ public class MainActivity extends AppCompatActivity {
 
         RelativeLayout main_layout = (RelativeLayout) findViewById(R.id.activity_main);
         main_layout.addView(webview);
-
-        webview.loadUrl("https://www.google.com");
+        try{
+            webview.loadUrl("https://www.google.com");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
        // webview.getMNCMCC();
     }

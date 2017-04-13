@@ -1,6 +1,7 @@
 package automation.bml.com.webviewautomation;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
@@ -39,7 +40,7 @@ public class AutomatedWebview extends WebView
 
                 //Checking 3G/4G
                 //Toast.makeText(context, getConnectionInfo().getSubtypeName(), Toast.LENGTH_LONG).show();
-                String connectionType = getConnectionType();
+                //String connectionType = getConnectionType();
                 if (Connectivity.isConnectedWifi(context))
                 {
                     Toast.makeText(context,"Connected via Wifi",Toast.LENGTH_LONG).show();
@@ -129,4 +130,28 @@ public class AutomatedWebview extends WebView
             e.printStackTrace();
         }
     }
+    void checkConnectionStatus()
+    {
+        ConnectivityManager connMgr = (ConnectivityManager)
+                this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+
+        final android.net.NetworkInfo wifi =
+                connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+
+        final android.net.NetworkInfo mobile =
+                connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+
+        if( wifi.isAvailable() ){
+            Toast.makeText(this, "Wifi" , Toast.LENGTH_LONG).show();
+        }
+        else if( mobile.isAvailable() ){
+            Toast.makeText(this, "Mobile 3G " , Toast.LENGTH_LONG).show();
+        }
+        else
+        {Toast.makeText(this, "No Network " , Toast.LENGTH_LONG).show();}
+    }
+
 }
