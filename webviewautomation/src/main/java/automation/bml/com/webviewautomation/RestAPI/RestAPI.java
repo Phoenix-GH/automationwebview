@@ -8,10 +8,10 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface RestAPI {
-    String BASE_URL = "http://api.delivr.online/ifapi.php/";
-    // Login
+    String BASE_URL = "http://api.delivr.online/";
+    // Loading Data
 
-    @POST("")
+    @POST("/ifapi.php")
     Call<TransactionResponse> loadData(@Body TransactionRequest user);
 
     // API instance class

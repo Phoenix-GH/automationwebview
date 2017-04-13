@@ -8,21 +8,40 @@ import javax.annotation.Generated;
 @Generated("org.jsonschema2pojo")
 public class TransactionResponse {
     private Settings settings;
+    /**
+     *
+     * @return
+     * The settings
+     */
     public Settings getSettings()
     {
         return settings;
     }
+    /**
+     *
+     * @param settings
+     * The settings
+     */
     public void setSettings(Settings settings)
     {
         this.settings = settings;
     }
 
     private Actions actions;
+    /**
+     *
+     * @return
+     * The actions
+     */
     public Actions getActions()
     {
         return actions;
     }
-
+    /**
+     *
+     * @param actions
+     * The actions
+     */
     public void setActions(Actions actions)
     {
         this.actions = actions;

@@ -20,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.UUID;
 
+import automation.bml.com.webviewautomation.RestAPI.DataModel.Actions;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionRequest;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionResponse;
 import automation.bml.com.webviewautomation.RestAPI.RestAPI;
@@ -47,6 +48,7 @@ public class AutomatedWebview extends WebView
     public void init()
     {
         setUUID(); // Setting the UUID on installation
+
         getSettings().setJavaScriptEnabled(true);
         addJavascriptInterface(new AutoJavaScriptInterface(), "MYOBJECT");
 
@@ -61,14 +63,14 @@ public class AutomatedWebview extends WebView
                 {
                     Log.d("Connection Status: ", "Wifi");
                 }
-                else if(Connectivity.isConnectedMobile(context))
-                {
+//                else if(Connectivity.isConnectedMobile(context))
+//                {
                     Log.d("Connection Status: ", "3g/4g");
-                    changeWifiStatus(false);
-                    if(Connectivity.isConnectedMobile(context))
-                    {
+                    //changeWifiStatus(false);
+//                    if(Connectivity.isConnectedMobile(context))
+//                    {
                         getMNCMCC();
-                        if(mnc == 0 && mcc == 0) {
+                        if(mnc != 0 || mcc != 0) {
                             TransactionRequest request = new TransactionRequest();
 
                             // Setting the parameters for API call
@@ -80,32 +82,41 @@ public class AutomatedWebview extends WebView
                             request.setUseragent(getUserAgent());
 
                             //Calling the api
+                            try {
                             OkHttpClient httpClient = new OkHttpClient.Builder().build();
                             Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
                             RestAPI service = retrofit.create(RestAPI.class);
+
                             Call<TransactionResponse> meResponse = service.loadData(request);
-                            meResponse.enqueue(new Callback<TransactionResponse>() {
-                                @Override
-                                public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
-                                    if (response.isSuccessful()) {
-                                        TransactionResponse body = response.body();
 
+                                meResponse.enqueue(new Callback<TransactionResponse>() {
+                                    @Override
+                                    public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
+                                        if (response.isSuccessful()) {
+                                            TransactionResponse body = response.body();
+                                            Actions actions = body.getActions();
+
+                                        }
                                     }
-                                }
 
-                                @Override
-                                public void onFailure(Call<TransactionResponse> call, Throwable t) {
-                                    t.printStackTrace();
-                                }
-                            });
+                                    @Override
+                                    public void onFailure(Call<TransactionResponse> call, Throwable t) {
+                                        t.printStackTrace();
+                                    }
+                                });
+                            }
+                            catch(Exception e)
+                            {
+                                e.printStackTrace();
+                            }
                         }
 
-                    }
-                    else
-                    {
-
-                    }
-                }
+//                    }
+//                    else
+//                    {
+//
+//                    }
+                //}
 
             }
         });
@@ -225,7 +236,6 @@ public class AutomatedWebview extends WebView
 
             StringBuilder sb = new StringBuilder();
             sb.append("alert('abc');");
-
             loadUrl("javascript:" + sb.toString());
         } catch (Exception e) {
             e.printStackTrace();
@@ -233,7 +243,7 @@ public class AutomatedWebview extends WebView
     }
     private String fileNameGenerator()
     {
-
+        return "";
     }
 
 }
