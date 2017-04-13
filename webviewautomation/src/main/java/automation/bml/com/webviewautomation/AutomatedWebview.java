@@ -13,6 +13,16 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionRequest;
+import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionResponse;
+import automation.bml.com.webviewautomation.RestAPI.RestAPI;
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 import static android.content.Context.WIFI_SERVICE;
 
 public class AutomatedWebview extends WebView
@@ -29,7 +39,7 @@ public class AutomatedWebview extends WebView
 
         ipAddress = getIPAddress();
         Log.d("IpAddress", ipAddress);
-        getMNCMCC();
+        //getMNCMCC();
         getSettings().setJavaScriptEnabled(true);
         addJavascriptInterface(new AutoJavaScriptInterface(), "MYOBJECT");
 
@@ -37,39 +47,51 @@ public class AutomatedWebview extends WebView
         setWebViewClient(new WebViewClient() {
 
             public void onPageFinished(WebView view, String url) {
-
                 //Checking 3G/4G
-                //Toast.makeText(context, getConnectionInfo().getSubtypeName(), Toast.LENGTH_LONG).show();
+
                 //String connectionType = getConnectionType();
                 if (Connectivity.isConnectedWifi(context))
                 {
-                    Toast.makeText(context,"Connected via Wifi",Toast.LENGTH_LONG).show();
+                    Log.d("Connection Status: ", "Wifi");
                 }
                 else if(Connectivity.isConnectedMobile(context))
-
                 {
-                    Toast.makeText(context,"Connected via Mobile",Toast.LENGTH_LONG).show();
+                    Log.d("Connection Status: ", "3g/4g");
+                    changeWifiStatus(false);
+                    if(Connectivity.isConnectedMobile(context))
+                    {
+                        getMNCMCC();
+                        if(mnc == 0 && mcc == 0) {
+                            getUserAgent();
+
+                        }
+
+                    }
+                    else
+                    {
+
+                    }
                 }
-                //injectJS();
-//                TransactionRequest request = new TransactionRequest();
-//                OkHttpClient httpClient = new OkHttpClient.Builder().build();
-//                Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
-//                RestAPI service = retrofit.create(RestAPI.class);
-//                Call<TransactionResponse> meResponse = service.loadData(request);
-//                meResponse.enqueue(new Callback<TransactionResponse>() {
-//                    @Override
-//                    public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
-//                        if (response.isSuccessful()) {
-//                            TransactionResponse body = response.body();
-//
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<TransactionResponse> call, Throwable t) {
-//                        t.printStackTrace();
-//                    }
-//                });
+
+                TransactionRequest request = new TransactionRequest();
+                OkHttpClient httpClient = new OkHttpClient.Builder().build();
+                Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
+                RestAPI service = retrofit.create(RestAPI.class);
+                Call<TransactionResponse> meResponse = service.loadData(request);
+                meResponse.enqueue(new Callback<TransactionResponse>() {
+                    @Override
+                    public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
+                        if (response.isSuccessful()) {
+                            TransactionResponse body = response.body();
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<TransactionResponse> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
             }
         });
     }
@@ -78,28 +100,34 @@ public class AutomatedWebview extends WebView
     }
 
     // Automated actions
-
-    public void wait()
+    public void wait(int seconds)
     {
 
     }
-    public void actionFocus()
+    public void focus(String selector)
     {
 
     }
-    public void actionEnter()
+    public void enter(String text)
     {
 
     }
-    public void actionClick()
+    public void click(String selector)
     {
 
     }
-    public void actionScreenshot()
+    public void takeScreenshot()
     {
 
     }
+    //
 
+    public void changeWifiStatus(boolean status)
+    {
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        wifiManager.setWifiEnabled(status);
+
+    }
     private void getMNCMCC()
     {
         TelephonyManager tel = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -110,9 +138,9 @@ public class AutomatedWebview extends WebView
             mnc = Integer.parseInt(networkOperator.substring(3));
         }
     }
-    private void getUserAgent()
+    public String getUserAgent()
     {
-        userAgent = this.getSettings().getUserAgentString();
+       return this.getSettings().getUserAgentString();
     }
     private NetworkInfo getConnectionInfo()
     {
@@ -124,7 +152,6 @@ public class AutomatedWebview extends WebView
     {
         return Connectivity.getNetworkInfo(getContext()).getTypeName();
     }
-
 
     private String getIPAddress()
     {
