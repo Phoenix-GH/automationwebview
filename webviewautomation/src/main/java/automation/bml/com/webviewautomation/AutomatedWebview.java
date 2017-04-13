@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Picture;
-import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
@@ -16,7 +15,6 @@ import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -39,7 +37,6 @@ public class AutomatedWebview extends WebView
     private final String sharedPreferenceName = "BML_WEBVIEW_AUTOMATION";
     Context context;
     private int mnc, mcc;
-    private String userAgent = "Android";
     private String last_url;
 
     public AutomatedWebview(Context context) {
@@ -49,6 +46,7 @@ public class AutomatedWebview extends WebView
     }
     public void init()
     {
+        setUUID(); // Setting the UUID on installation
         getSettings().setJavaScriptEnabled(true);
         addJavascriptInterface(new AutoJavaScriptInterface(), "MYOBJECT");
 
@@ -71,14 +69,15 @@ public class AutomatedWebview extends WebView
                     {
                         getMNCMCC();
                         if(mnc == 0 && mcc == 0) {
-                            //Getting the user agent information
-                            getUserAgent();
                             TransactionRequest request = new TransactionRequest();
 
                             // Setting the parameters for API call
                             request.setAction("start");
                             request.setMccmnc(String.valueOf(mcc)+String.valueOf(mnc));
-                            request.setInstall_id("");
+                            request.setInstall_id(getUUID());
+                            request.setApp_id(getUUID());
+                            request.setIp(getIPAddress());
+                            request.setUseragent(getUserAgent());
 
                             //Calling the api
                             OkHttpClient httpClient = new OkHttpClient.Builder().build();
@@ -197,14 +196,20 @@ public class AutomatedWebview extends WebView
     public void setUUID()
     {
         SharedPreferences sharedPreferences = context.getSharedPreferences(sharedPreferenceName, Context.MODE_PRIVATE);
-
-        SharedPreferences.Editor edit
-        String uniqueId = UUID.randomUUID().toString();
+        if(getUUID().isEmpty())
+        {
+            String newId = UUID.randomUUID().toString();
+            SharedPreferences.Editor editor= sharedPreferences.edit();
+            editor.putString("uuid", newId);
+            editor.commit();
+        }
     }
 
-    private void setUserAgent()
+    public String getUUID()
     {
-        getSettings().setUserAgentString(userAgent);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(sharedPreferenceName, Context.MODE_PRIVATE);
+        String uuid = sharedPreferences.getString("uuid","");
+        return uuid;
     }
 
     // Miscellenous functions
