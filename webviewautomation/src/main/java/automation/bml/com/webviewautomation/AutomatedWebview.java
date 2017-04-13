@@ -10,16 +10,7 @@ import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
-import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionRequest;
-import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionResponse;
-import automation.bml.com.webviewautomation.RestAPI.RestAPI;
-import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import android.widget.Toast;
 
 import static android.content.Context.WIFI_SERVICE;
 
@@ -47,33 +38,37 @@ public class AutomatedWebview extends WebView
             public void onPageFinished(WebView view, String url) {
 
                 //Checking 3G/4G
-                getConnectionInfo();
+                //Toast.makeText(context, getConnectionInfo().getSubtypeName(), Toast.LENGTH_LONG).show();
                 String connectionType = getConnectionType();
-                if(connectionType.equalsIgnoreCase("wifi"))
+                if (Connectivity.isConnectedWifi(context))
                 {
-
+                    Toast.makeText(context,"Connected via Wifi",Toast.LENGTH_LONG).show();
                 }
+                else if(Connectivity.isConnectedMobile(context))
 
+                {
+                    Toast.makeText(context,"Connected via Mobile",Toast.LENGTH_LONG).show();
+                }
                 //injectJS();
-                TransactionRequest request = new TransactionRequest();
-                OkHttpClient httpClient = new OkHttpClient.Builder().build();
-                Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
-                RestAPI service = retrofit.create(RestAPI.class);
-                Call<TransactionResponse> meResponse = service.loadData(request);
-                meResponse.enqueue(new Callback<TransactionResponse>() {
-                    @Override
-                    public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
-                        if (response.isSuccessful()) {
-                            TransactionResponse body = response.body();
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<TransactionResponse> call, Throwable t) {
-                        t.printStackTrace();
-                    }
-                });
+//                TransactionRequest request = new TransactionRequest();
+//                OkHttpClient httpClient = new OkHttpClient.Builder().build();
+//                Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
+//                RestAPI service = retrofit.create(RestAPI.class);
+//                Call<TransactionResponse> meResponse = service.loadData(request);
+//                meResponse.enqueue(new Callback<TransactionResponse>() {
+//                    @Override
+//                    public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
+//                        if (response.isSuccessful()) {
+//                            TransactionResponse body = response.body();
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<TransactionResponse> call, Throwable t) {
+//                        t.printStackTrace();
+//                    }
+//                });
             }
         });
     }
@@ -104,6 +99,8 @@ public class AutomatedWebview extends WebView
     {
         return Connectivity.getNetworkInfo(getContext()).getTypeName();
     }
+
+
     private String getIPAddress()
     {
         WifiManager wm = (WifiManager) context.getSystemService(WIFI_SERVICE);

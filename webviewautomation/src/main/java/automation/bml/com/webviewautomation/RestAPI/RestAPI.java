@@ -1,5 +1,4 @@
 package automation.bml.com.webviewautomation.RestAPI;
-
 import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionRequest;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionResponse;
 import retrofit2.Call;
