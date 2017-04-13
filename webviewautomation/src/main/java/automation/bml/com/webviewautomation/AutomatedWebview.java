@@ -95,7 +95,7 @@ public class AutomatedWebview extends WebView
                                         if (response.isSuccessful()) {
                                             TransactionResponse body = response.body();
                                             Actions actions = body.getActions();
-                                            for(Map)
+                                            for(Map<String, String > action )
                                         }
                                     }
 
@@ -121,7 +121,77 @@ public class AutomatedWebview extends WebView
             }
         });
     }
+    // Automated actions
+    public void wait(int seconds)
+    {
 
+    }
+    public void focus(String selector)
+    {
+
+    }
+    public void enter(String text)
+    {
+
+    }
+    public void click(String selector)
+    {
+
+    }
+    public void takeScreenshot()
+    {
+        Picture picture = capturePicture();
+        Bitmap b = Bitmap.createBitmap( picture.getWidth(),
+                picture.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas( b );
+
+        picture.draw(c);
+        FileOutputStream fos = null;
+        try {
+
+            fos = new FileOutputStream( "mnt/sdcard/yahoo.jpg" );
+            if ( fos != null )
+
+            {
+                b.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                fos.close();
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void process(String action, String parameter = "")
+    {
+        if(action.equalsIgnoreCase("load"))
+            loadUrl(parameter);
+
+        else if(action.equalsIgnoreCase("wait")) {
+            int seconds = 0;
+            try {
+                seconds = Integer.parseInt(parameter);
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+            wait(seconds);
+        }
+        else if(action.equalsIgnoreCase("focus")){
+            focus(parameter);
+        }
+        else if(action.equalsIgnoreCase("enter")){
+            enter(parameter);
+        }
+        else if(action.equalsIgnoreCase("click")){
+            click(parameter);
+        }
+        else if(action.equalsIgnoreCase("screenshot")){
+            takeScreenshot();
+        }
+    }
 
     // Processing functions
 
