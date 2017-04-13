@@ -10,6 +10,6 @@ public class AutoJavaScriptInterface {
     @JavascriptInterface
     public void processHTML(String html)
     {
-        //called by javascript
+
     }
 }
