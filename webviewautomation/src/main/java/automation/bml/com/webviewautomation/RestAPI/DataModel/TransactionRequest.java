@@ -5,6 +5,16 @@ package automation.bml.com.webviewautomation.RestAPI.DataModel;
  */
 
 public class TransactionRequest {
+    private String action;
+    public String getAction()
+    {
+        return action;
+    }
+    public void setAction(String action)
+    {
+        this.action = action;
+    }
+
     private String app_id;
     public String getApp_id()
     {

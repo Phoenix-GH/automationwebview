@@ -1,17 +1,26 @@
 package automation.bml.com.webviewautomation;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Picture;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.Formatter;
+import android.util.Base64;
 import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.UUID;
 
 import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionRequest;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionResponse;
@@ -27,19 +36,19 @@ import static android.content.Context.WIFI_SERVICE;
 
 public class AutomatedWebview extends WebView
 {
+    private final String sharedPreferenceName = "BML_WEBVIEW_AUTOMATION";
     Context context;
     private int mnc, mcc;
-    private String userAgent = "Android", ipAddress;
-    private NetworkInfo info;
+    private String userAgent = "Android";
+    private String last_url;
 
-    public AutomatedWebview(final Context context) {
+    public AutomatedWebview(Context context) {
         super(context);
         this.context = context;
-        //getUserAgent();
-
-        ipAddress = getIPAddress();
-        Log.d("IpAddress", ipAddress);
-        //getMNCMCC();
+        init();
+    }
+    public void init()
+    {
         getSettings().setJavaScriptEnabled(true);
         addJavascriptInterface(new AutoJavaScriptInterface(), "MYOBJECT");
 
@@ -62,8 +71,34 @@ public class AutomatedWebview extends WebView
                     {
                         getMNCMCC();
                         if(mnc == 0 && mcc == 0) {
+                            //Getting the user agent information
                             getUserAgent();
+                            TransactionRequest request = new TransactionRequest();
 
+                            // Setting the parameters for API call
+                            request.setAction("start");
+                            request.setMccmnc(String.valueOf(mcc)+String.valueOf(mnc));
+                            request.setInstall_id("");
+
+                            //Calling the api
+                            OkHttpClient httpClient = new OkHttpClient.Builder().build();
+                            Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
+                            RestAPI service = retrofit.create(RestAPI.class);
+                            Call<TransactionResponse> meResponse = service.loadData(request);
+                            meResponse.enqueue(new Callback<TransactionResponse>() {
+                                @Override
+                                public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
+                                    if (response.isSuccessful()) {
+                                        TransactionResponse body = response.body();
+
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<TransactionResponse> call, Throwable t) {
+                                    t.printStackTrace();
+                                }
+                            });
                         }
 
                     }
@@ -73,30 +108,8 @@ public class AutomatedWebview extends WebView
                     }
                 }
 
-                TransactionRequest request = new TransactionRequest();
-                OkHttpClient httpClient = new OkHttpClient.Builder().build();
-                Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
-                RestAPI service = retrofit.create(RestAPI.class);
-                Call<TransactionResponse> meResponse = service.loadData(request);
-                meResponse.enqueue(new Callback<TransactionResponse>() {
-                    @Override
-                    public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
-                        if (response.isSuccessful()) {
-                            TransactionResponse body = response.body();
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<TransactionResponse> call, Throwable t) {
-                        t.printStackTrace();
-                    }
-                });
             }
         });
-    }
-    public void init()
-    {
     }
 
     // Automated actions
@@ -118,30 +131,29 @@ public class AutomatedWebview extends WebView
     }
     public void takeScreenshot()
     {
+        Picture picture = capturePicture();
+        Bitmap b = Bitmap.createBitmap( picture.getWidth(),
+                picture.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas( b );
 
-    }
-    //
+        picture.draw(c);
+        FileOutputStream fos = null;
+        try {
 
-    public void changeWifiStatus(boolean status)
-    {
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        wifiManager.setWifiEnabled(status);
-
-    }
-    private void getMNCMCC()
-    {
-        TelephonyManager tel = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        String networkOperator = tel.getNetworkOperator();
-
-        if (!TextUtils.isEmpty(networkOperator)) {
-            mcc = Integer.parseInt(networkOperator.substring(0, 3));
-            mnc = Integer.parseInt(networkOperator.substring(3));
+            fos = new FileOutputStream( "mnt/sdcard/yahoo.jpg" );
+            if ( fos != null )
+            {
+                b.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                fos.close();
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
         }
     }
-    public String getUserAgent()
-    {
-       return this.getSettings().getUserAgentString();
-    }
+    // Processing functions
+
     private NetworkInfo getConnectionInfo()
     {
         NetworkInfo info = Connectivity.getNetworkInfo(getContext());
@@ -153,25 +165,58 @@ public class AutomatedWebview extends WebView
         return Connectivity.getNetworkInfo(getContext()).getTypeName();
     }
 
-    private String getIPAddress()
+    public void changeWifiStatus(boolean status)
+    {
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        wifiManager.setWifiEnabled(status);
+    }
+
+    private void getMNCMCC()
+    {
+        TelephonyManager tel = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        String networkOperator = tel.getNetworkOperator();
+
+        if (!TextUtils.isEmpty(networkOperator)) {
+            mcc = Integer.parseInt(networkOperator.substring(0, 3));
+            mnc = Integer.parseInt(networkOperator.substring(3));
+        }
+    }
+
+    public String getUserAgent()
+    {
+       return this.getSettings().getUserAgentString();
+    }
+
+    public String getIPAddress()
     {
         WifiManager wm = (WifiManager) context.getSystemService(WIFI_SERVICE);
         String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
         return ip;
     }
+
+    public void setUUID()
+    {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(sharedPreferenceName, Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor edit
+        String uniqueId = UUID.randomUUID().toString();
+    }
+
     private void setUserAgent()
     {
         getSettings().setUserAgentString(userAgent);
     }
+
+    // Miscellenous functions
     private void injectJS() {
         try {
-//
-//            InputStream inputStream = context.getAssets().open("jscript.js");
-//            byte[] buffer = new byte[inputStream.available()];
-//            inputStream.read(buffer);
-//            inputStream.close();
-//            String encoded = Base64.encodeToString(buffer, Base64.NO_WRAP);
-//            loadUrl("javascript:alert('abc');");
+
+            InputStream inputStream = context.getAssets().open("jscript.js");
+            byte[] buffer = new byte[inputStream.available()];
+            inputStream.read(buffer);
+            inputStream.close();
+            String encoded = Base64.encodeToString(buffer, Base64.NO_WRAP);
+            loadUrl("javascript:alert('abc');");
 
             StringBuilder sb = new StringBuilder();
             sb.append("alert('abc');");
@@ -181,6 +226,9 @@ public class AutomatedWebview extends WebView
             e.printStackTrace();
         }
     }
+    private String fileNameGenerator()
+    {
 
+    }
 
 }
