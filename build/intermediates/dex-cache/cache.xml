@@ -2,166 +2,157 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="/Users/krzysztof/.android/build-cache/ff1c5f4c2169d782235370d6f766e8f3105ec0b7/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="ca3c7aa31e2726a400a6e552b93cb9f63c9a1e6d">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_c28e624ee9f0a99ecf751362cfd30998139ec39e/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/krzysztof/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.2.0/a09926806199499a20b2f5168779499abfa33342/converter-gson-2.2.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="a09926806199499a20b2f5168779499abfa33342">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10/converter-gson-2.2.0_5e4dbb4dbe2c3c90366faba9cd577122802df1f7/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/krzysztof/.android/build-cache/4965720dff35944d7ceb7c10351202f4ee23bb96/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="1630658fbc2d222b988603c27b4a4249586fbfe7">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_4074d5829a15cc5a319625926c446dd43decf0f8/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/krzysztof/automationwebview/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="6d9e4fb8d8f8c2b2322df1322c8edf01d7db15f4">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_b798190f21eaa7d2bc0306b2b7b60d53154209f3/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/krzysztof/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.2.0/41e67dba73c3347e4503761642c39d0e06ca1f2/retrofit-2.2.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="041e67dba73c3347e4503761642c39d0e06ca1f2">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10/retrofit-2.2.0_2de2a44b7b3909ba8f2efa3c20ffdc20593d0bd1/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/krzysztof/.android/build-cache/7b82a26e6d3a4b04f08413de9449ca2d871be8c7/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="6fb6ac3e8d3b9013819920d9ea11f3803c4c0033">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_657d7d98c3e13ac7462e7827d9d3fdb3b1c2d795/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/krzysztof/.android/build-cache/f09079eaf2c8a2e06ceab6ea918ab9380860654f/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="0a0ef86b7fa568a52bf6214a0326ca1f1d618da7">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_28dcda105ca6eaa7e35c3719efea1e04e078b4a2/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/krzysztof/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.1.0/support-annotations-25.1.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="64cb6b229a8bdfd907bc8dd46839a0053e4c018d">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-25.1.0_a8cce70a7ddbb9aeb28fab3c4160dfcefe5c37e4/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/krzysztof/.android/build-cache/5512d476e24eba4a60156bf8c061fdd44b89ef50/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="2a53c4f3518116b8c6aee0e477233f0f7da8616f">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_002f7765c710e6cd0ec37021cb7312ca0fd23f26/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/krzysztof/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.11.0/840897fcd7223a8143f1d9b6f69714e7be34fd50/okio-1.11.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="840897fcd7223a8143f1d9b6f69714e7be34fd50">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10/okio-1.11.0_5b2bef69fd203c91e450abbddc87103caaaaee43/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/krzysztof/.android/build-cache/0fa3a60f9597a3e6f5aa89407f1f14fd4a232e4a/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="f02263e35e52668dd17b73bf961437e3d562b35f">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_56dabd814c583c1c08e3342559f963cfd4a6dbfd/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/krzysztof/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.7/751f548c85fa49f330cecbb1875893f971b33c4e/gson-2.7.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="751f548c85fa49f330cecbb1875893f971b33c4e">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10/gson-2.7_ef04b66e32eef6391d50ff5d35110d4971bf8378/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/krzysztof/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.6.0/69edde9fc4b01c9fd51d25b83428837478c27254/okhttp-3.6.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="69edde9fc4b01c9fd51d25b83428837478c27254">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-3.6.0_170d716939fcf6e6c72d76da0b568e0610bedab9/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
+        is-multidex="false"
         jar="/Users/krzysztof/.android/build-cache/394494d153ceab72b94c77b9ad4ec5b9b42e22f7/output/jars/classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_7a7ec8502f69886c3154cf5f98c911028117c49d/classes.dex" />
+        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/classes_7a7ec8502f69886c3154cf5f98c911028117c49d.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/krzysztof/.android/build-cache/e81a8fcbbf9994cd58ced052dc2176a463ef9873/output/jars/classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/krzysztof/.android/build-cache/ff1c5f4c2169d782235370d6f766e8f3105ec0b7/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="e79aa3d9a16f8c9f16377c0608de70a8f31e5d80">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_57ee940f481c3b58cca11ed0a6f841de5c484700/classes.dex" />
+        sha1="ca3c7aa31e2726a400a6e552b93cb9f63c9a1e6d">
+        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/classes_c28e624ee9f0a99ecf751362cfd30998139ec39e.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/krzysztof/automationwebview/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/krzysztof/automationwebview/webviewautomation/build/intermediates/bundles/default/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_dd6de02df946b4a6b68ffffbc87bbc71d307023d/classes.dex" />
+        sha1="ca2f49b7969981bd3a768b3d0da434d6d71e6c28">
+        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/classes_15edcedaa3c8cdb08308e63a435a7669579da72b.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/krzysztof/.gradle/caches/modules-2/files-2.1/javax.annotation/javax.annotation-api/1.2/479c1e06db31c432330183f5cae684163f186146/javax.annotation-api-1.2.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/krzysztof/.android/build-cache/4965720dff35944d7ceb7c10351202f4ee23bb96/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="479c1e06db31c432330183f5cae684163f186146">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10/javax.annotation-api-1.2_6cf009851d9e569520145b65eb1b5e144fb0f9ac/classes.dex" />
+        sha1="1630658fbc2d222b988603c27b4a4249586fbfe7">
+        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/classes_4074d5829a15cc5a319625926c446dd43decf0f8.jar" />
     </item>
     <item
-        is-multidex="true"
+        is-multidex="false"
+        jar="/Users/krzysztof/.android/build-cache/f09079eaf2c8a2e06ceab6ea918ab9380860654f/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0a0ef86b7fa568a52bf6214a0326ca1f1d618da7">
+        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/classes_28dcda105ca6eaa7e35c3719efea1e04e078b4a2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/krzysztof/.android/build-cache/5512d476e24eba4a60156bf8c061fdd44b89ef50/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="2a53c4f3518116b8c6aee0e477233f0f7da8616f">
+        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/classes_002f7765c710e6cd0ec37021cb7312ca0fd23f26.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/krzysztof/.android/build-cache/0fa3a60f9597a3e6f5aa89407f1f14fd4a232e4a/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="f02263e35e52668dd17b73bf961437e3d562b35f">
+        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/classes_56dabd814c583c1c08e3342559f963cfd4a6dbfd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/krzysztof/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.1.0/support-annotations-25.1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="64cb6b229a8bdfd907bc8dd46839a0053e4c018d">
+        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/support-annotations-25.1.0_a8cce70a7ddbb9aeb28fab3c4160dfcefe5c37e4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/krzysztof/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.2.0/41e67dba73c3347e4503761642c39d0e06ca1f2/retrofit-2.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="041e67dba73c3347e4503761642c39d0e06ca1f2">
+        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/retrofit-2.2.0_2de2a44b7b3909ba8f2efa3c20ffdc20593d0bd1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/krzysztof/.android/build-cache/7b82a26e6d3a4b04f08413de9449ca2d871be8c7/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6fb6ac3e8d3b9013819920d9ea11f3803c4c0033">
+        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/classes_657d7d98c3e13ac7462e7827d9d3fdb3b1c2d795.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/krzysztof/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.11.0/840897fcd7223a8143f1d9b6f69714e7be34fd50/okio-1.11.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="840897fcd7223a8143f1d9b6f69714e7be34fd50">
+        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/okio-1.11.0_5b2bef69fd203c91e450abbddc87103caaaaee43.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/krzysztof/.android/build-cache/0b1d5214477329ee1cd2da1a34c85fef2c44f6bb/output/jars/classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="aee64634871d88a419d59eb743c1258a60f19700">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_b8d3850af7a0b21634371c03ac6dd22502f7e7fb/classes.dex" />
+        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/classes_b8d3850af7a0b21634371c03ac6dd22502f7e7fb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/krzysztof/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.2.0/a09926806199499a20b2f5168779499abfa33342/converter-gson-2.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a09926806199499a20b2f5168779499abfa33342">
+        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/converter-gson-2.2.0_5e4dbb4dbe2c3c90366faba9cd577122802df1f7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/krzysztof/.gradle/caches/modules-2/files-2.1/javax.annotation/javax.annotation-api/1.2/479c1e06db31c432330183f5cae684163f186146/javax.annotation-api-1.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="479c1e06db31c432330183f5cae684163f186146">
+        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/javax.annotation-api-1.2_6cf009851d9e569520145b65eb1b5e144fb0f9ac.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/krzysztof/.android/build-cache/e81a8fcbbf9994cd58ced052dc2176a463ef9873/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e79aa3d9a16f8c9f16377c0608de70a8f31e5d80">
+        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/classes_57ee940f481c3b58cca11ed0a6f841de5c484700.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/krzysztof/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.7/751f548c85fa49f330cecbb1875893f971b33c4e/gson-2.7.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="751f548c85fa49f330cecbb1875893f971b33c4e">
+        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/gson-2.7_ef04b66e32eef6391d50ff5d35110d4971bf8378.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/krzysztof/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.6.0/69edde9fc4b01c9fd51d25b83428837478c27254/okhttp-3.6.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="69edde9fc4b01c9fd51d25b83428837478c27254">
+        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/okhttp-3.6.0_170d716939fcf6e6c72d76da0b568e0610bedab9.jar" />
     </item>
 
 </items>

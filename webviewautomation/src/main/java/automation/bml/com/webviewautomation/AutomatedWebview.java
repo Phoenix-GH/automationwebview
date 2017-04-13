@@ -46,8 +46,13 @@ public class AutomatedWebview extends WebView
 
             public void onPageFinished(WebView view, String url) {
 
-                //Checking 3G/4Gge
-                info = getConnectionInfo();
+                //Checking 3G/4G
+                getConnectionInfo();
+                String connectionType = getConnectionType();
+                if(connectionType.equalsIgnoreCase("wifi"))
+                {
+
+                }
 
                 //injectJS();
                 TransactionRequest request = new TransactionRequest();
@@ -95,6 +100,10 @@ public class AutomatedWebview extends WebView
         return info;
     }
 
+    private String getConnectionType()
+    {
+        return Connectivity.getNetworkInfo(getContext()).getTypeName();
+    }
     private String getIPAddress()
     {
         WifiManager wm = (WifiManager) context.getSystemService(WIFI_SERVICE);
