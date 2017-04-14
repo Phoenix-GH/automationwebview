@@ -76,7 +76,7 @@ public class AutomatedWebview extends WebView
             public void onPageFinished(WebView view, String url) {
                 //Checking 3G/4G
 
-                injectJS();
+                focus("sb-form-q");
                 //String connectionType = getConnectionType();
                 if (Connectivity.isConnectedWifi(context))
                 {
@@ -154,7 +154,11 @@ public class AutomatedWebview extends WebView
     }
     public void focus(String selector)
     {
+        //String script = "$('"+selector+"').focus()";
+        //String script = "$('"+selector+"').html('argeargharh');";
 
+        String script = "document.getElementById('"+selector+"').innerHTML='aefaeg';";
+        injectJS(script);
     }
     public void enter(String text)
     {
@@ -280,24 +284,22 @@ public class AutomatedWebview extends WebView
     }
 
     // Miscellenous functions
-    private void injectJS() {
+    private void injectJS(String script) {
         try {
-            loadUrl("javascript:" + sb.toString());
-            InputStream inputStream = getContext().getAssets().open("jquery.html");
-            byte[] buffer = new byte[inputStream.available()];
-            inputStream.read(buffer);
-            inputStream.close();
-            String javascript_loader = Base64.encodeToString(buffer, Base64.NO_WRAP);
-            String script = "location.href='https://www.apple.com'";
-            String script2 = "history.goBack(-1)";
-            //String encoded = Base64.encodeToString(script, Base64.NO_WRAP);
-            //loadUrl("javascript:location.href('https://www.google.com');");
+            //loadData("<script type='javascript' src='https://code.jquery.com/jquery-3.2.1.min.js'></script>","text/html", "UTF-8");
 
             StringBuilder sb = new StringBuilder();
-            sb.append(javascript_loader);
             sb.append(script);
-            //sb.append(script2);
-            loadUrl("javascript:" + sb.toString());
+            wait(10);
+           /* loadUrl("javascript:(function() {" +
+                    "var parent = document.getElementsByTagName('head').item(0);" +
+                    "var script = document.createElement('script');" +
+                    "script.type = 'text/javascript';" +
+                    // Tell the browser to BASE64-decode the string into your script !!!
+                    "script.innerHTML = window.atob('" + sb.toString() + "');" +
+                    "parent.appendChild(script)" +
+                    "})()");*/
+            //loadUrl("javascript:" + sb.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }

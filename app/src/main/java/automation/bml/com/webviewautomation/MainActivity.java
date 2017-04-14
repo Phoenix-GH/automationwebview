@@ -14,8 +14,9 @@ public class MainActivity extends AppCompatActivity {
 
         RelativeLayout main_layout = (RelativeLayout) findViewById(R.id.activity_main);
         main_layout.addView(webview);
+        webview.setMinimumHeight(200);
         try{
-            webview.loadUrl("https://www.bing.com");
+            webview.loadUrl("https://www.google.com");
         }
         catch (Exception e)
         {
