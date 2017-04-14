@@ -7,31 +7,21 @@ import android.graphics.Canvas;
 import android.graphics.Picture;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
+import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.Formatter;
-import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.util.Map;
 import java.util.UUID;
-
-import automation.bml.com.webviewautomation.RestAPI.DataModel.Actions;
-import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionRequest;
-import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionResponse;
-import automation.bml.com.webviewautomation.RestAPI.RestAPI;
-import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.WIFI_SERVICE;
 
@@ -40,7 +30,8 @@ public class AutomatedWebview extends WebView
     private final String sharedPreferenceName = "BML_WEBVIEW_AUTOMATION";
     Context context;
     private int mnc, mcc;
-    private String last_url;
+    private String cssSelector;
+    private String lastUrl;
 
     public AutomatedWebview(Context context) {
         super(context);
@@ -76,7 +67,7 @@ public class AutomatedWebview extends WebView
             public void onPageFinished(WebView view, String url) {
                 //Checking 3G/4G
 
-                focus("sb-form-q");
+                focus("lst-ib");
                 //String connectionType = getConnectionType();
                 if (Connectivity.isConnectedWifi(context))
                 {
@@ -146,11 +137,13 @@ public class AutomatedWebview extends WebView
     // Automated actions
     public void wait(int seconds)
     {
-        try {
-            Thread.sleep(seconds*1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Do something after 100ms
+            }
+        }, 1000 * seconds);
     }
     public void focus(String selector)
     {
@@ -159,10 +152,13 @@ public class AutomatedWebview extends WebView
 
         String script = "document.getElementById('"+selector+"').innerHTML='aefaeg';";
         injectJS(script);
+
+
     }
     public void enter(String text)
     {
-
+        String script = "document.getElementById('"+cssSelector+"').innerHTML='"+text+"';";
+        injectJS(script);
     }
     public void click(String selector)
     {
@@ -284,6 +280,7 @@ public class AutomatedWebview extends WebView
     }
 
     // Miscellenous functions
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void injectJS(String script) {
         try {
             //loadData("<script type='javascript' src='https://code.jquery.com/jquery-3.2.1.min.js'></script>","text/html", "UTF-8");
@@ -299,9 +296,17 @@ public class AutomatedWebview extends WebView
                     "script.innerHTML = window.atob('" + sb.toString() + "');" +
                     "parent.appendChild(script)" +
                     "})()");*/
-            //loadUrl("javascript:" + sb.toString());
+
+            //loadUrl("javascript:" +script);
+            evaluateJavascript(script, new ValueCallback<String>() {
+                @Override
+                public void onReceiveValue(String value) {
+
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
+
         }
     }
     private String fileNameGenerator()

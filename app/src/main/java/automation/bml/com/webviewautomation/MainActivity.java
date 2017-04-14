@@ -22,7 +22,5 @@ public class MainActivity extends AppCompatActivity {
         {
             e.printStackTrace();
         }
-
-       // webview.getMNCMCC();
     }
 }
