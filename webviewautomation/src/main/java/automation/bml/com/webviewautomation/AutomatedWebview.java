@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.Formatter;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.webkit.WebChromeClient;
@@ -20,20 +21,25 @@ import android.webkit.WebViewClient;
 import java.io.FileOutputStream;
 import java.util.UUID;
 
+
 import static android.content.Context.WIFI_SERVICE;
 
 public class AutomatedWebview extends WebView
 {
     private final String sharedPreferenceName = "BML_WEBVIEW_AUTOMATION";
     Context context;
+
     private int mnc, mcc;
     private String cssSelector;
-    private String lastUrl;
 
     public AutomatedWebview(Context context) {
         super(context);
         this.context = context;
         init();
+    }
+
+    public AutomatedWebview(Context context, AttributeSet attributes) {
+        super(context, attributes);
     }
 
     @Override
