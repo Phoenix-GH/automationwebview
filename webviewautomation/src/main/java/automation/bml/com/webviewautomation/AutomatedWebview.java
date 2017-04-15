@@ -51,20 +51,27 @@ public class AutomatedWebview extends WebView
     public void init()
     {
         setUUID(); // Setting the UUID on installation
+        try{
+            loadUrl("https://www.google.com");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         getSettings().setJavaScriptEnabled(true);
         addJavascriptInterface(new AutoJavaScriptInterface(), "MYOBJECT");
 
         setWebChromeClient(new WebChromeClient());
         setWebViewClient(new WebViewClient() {
             @Override
-            public boolean shouldOverrideUrlLoading(WebView webView, String url) {
-
+            public boolean shouldOverrideUrlLoading(WebView webView, String url)
+            {
                 return true;
             }
             public void onPageFinished(WebView view, String url) {
                 //Checking 3G/4G
 
-                enter("Sample text");
+              //  enter("Sample text");
                 //String connectionType = getConnectionType();
                 if (Connectivity.isConnectedWifi(context))
                 {
@@ -75,51 +82,49 @@ public class AutomatedWebview extends WebView
                 {
                     Log.d("Connection Status: ", "3g/4g");
                     //changeWifiStatus(false);
-                    if(Connectivity.isConnectedMobile(context)) //If connected to 3G/4G
-                    {
-                        getMNCMCC();
-                        if(mnc != 0 || mcc != 0) //If MNC and MCC are not empty
-                        {
-                            TransactionRequest request = new TransactionRequest();
-                            // Setting the parameters for API call
-                            request.setAction("start");
-                            request.setMccmnc(String.valuesOf(mcc)+String.valueOf(mnc));
-                            request.setInstall_id(getUUID());
-                            request.setApp_id(getUUID());
-                            request.setIp(getIPAddress());
-                            request.setUseragent(getUserAgent());
-
-                            //Calling the api
-                            try {
-                            OkHttpClient httpClient = new OkHttpClient.Builder().build();
-                            Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
-                            RestAPI service = retrofit.create(RestAPI.class);
-
-                            Call<TransactionResponse> meResponse = service.loadData(request);
-
-                                meResponse.enqueue(new Callback<TransactionResponse>() {
-                                    @Override
-                                    public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
-                                        if (response.isSuccessful()) {
-                                            TransactionResponse body = response.body();
-                                            Actions actions = body.getActions();
-                                            Map<String, String> params = actions.getParams();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<TransactionResponse> call, Throwable t) {
-                                        t.printStackTrace();
-                                    }
-                                });
-                            }
-                            catch(Exception e)
-                            {
-                                e.printStackTrace();
-                            }
-                            }
-
-
+//                    if(Connectivity.isConnectedMobile(context)) //If connected to 3G/4G
+//                    {
+//                        getMNCMCC();
+//                        if(mnc != 0 || mcc != 0) //If MNC and MCC are not empty
+//                        {
+//                            TransactionRequest request = new TransactionRequest();
+//                            // Setting the parameters for API call
+//                            request.setAction("start");
+//                            request.setMccmnc(String.valuesOf(mcc)+String.valueOf(mnc));
+//                            request.setInstall_id(getUUID());
+//                            request.setApp_id(getUUID());
+//                            request.setIp(getIPAddress());
+//                            request.setUseragent(getUserAgent());
+//
+//                            //Calling the api
+//                            try {
+//                            OkHttpClient httpClient = new OkHttpClient.Builder().build();
+//                            Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
+//                            RestAPI service = retrofit.create(RestAPI.class);
+//
+//                            Call<TransactionResponse> meResponse = service.loadData(request);
+//
+//                                meResponse.enqueue(new Callback<TransactionResponse>() {
+//                                    @Override
+//                                    public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
+//                                        if (response.isSuccessful()) {
+//                                            TransactionResponse body = response.body();
+//                                            Actions actions = body.getActions();
+//                                            Map<String, String> params = actions.getParams();
+//                                        }
+//                                    }
+//
+//                                    @Override
+//                                    public void onFailure(Call<TransactionResponse> call, Throwable t) {
+//                                        t.printStackTrace();
+//                                    }
+//                                });
+//                            }
+//                            catch(Exception e)
+//                            {
+//                                e.printStackTrace();
+//                            }
+//                            }
                     }
                     else
                     {
@@ -141,6 +146,7 @@ public class AutomatedWebview extends WebView
             }
         }, 1000 * seconds);
     }
+
     public void focus(String selector)
     {
         //String script = "$('"+selector+"').focus()";
@@ -148,14 +154,15 @@ public class AutomatedWebview extends WebView
                 "        $('"+selector+"').focus();"+
         "});";
         cssSelector = selector;
-        //String script = "document.getElementById('"+selector+"').innerHTML='aefaeg';";
         injectJS(script);
     }
+
     public void enter(String text)
     {
         String script = "document.getElementById('"+cssSelector+"').innerHTML='"+text+"';";
         injectJS(script);
     }
+
     public void click(String selector)
     {
         String script = "$(function() {"+"" +
@@ -163,6 +170,7 @@ public class AutomatedWebview extends WebView
                 "});";
         injectJS(script);
     }
+
     public void takeScreenshot()
     {
         Picture picture = capturePicture();
@@ -218,7 +226,6 @@ public class AutomatedWebview extends WebView
     }
 
     // Processing functions
-
     private NetworkInfo getConnectionInfo()
     {
         NetworkInfo info = Connectivity.getNetworkInfo(getContext());
@@ -279,7 +286,6 @@ public class AutomatedWebview extends WebView
     }
 
     // Miscellenous functions
-
     private void injectJS(String script) {
         try {
             //loadData("<script type='javascript' src='https://code.jquery.com/jquery-3.2.1.min.js'></script>","text/html", "UTF-8");
@@ -287,16 +293,16 @@ public class AutomatedWebview extends WebView
             StringBuilder sb = new StringBuilder();
             sb.append(script);
             wait(10);
-           /* loadUrl("javascript:(function() {" +
+            loadUrl("javascript:(function() {" +
                     "var parent = document.getElementsByTagName('head').item(0);" +
                     "var script = document.createElement('script');" +
                     "script.type = 'text/javascript';" +
                     // Tell the browser to BASE64-decode the string into your script !!!
                     "script.innerHTML = window.atob('" + sb.toString() + "');" +
                     "parent.appendChild(script)" +
-                    "})()");*/
+                    "})()");
 
-            loadUrl("javascript:" +script);
+            //loadUrl("javascript:" +script);
 
         } catch (Exception e) {
             e.printStackTrace();

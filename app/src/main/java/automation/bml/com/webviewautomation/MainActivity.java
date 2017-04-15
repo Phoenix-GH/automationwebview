@@ -10,17 +10,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AutomatedWebview webview = new AutomatedWebview(getApplicationContext());
+        //AutomatedWebview webview = new AutomatedWebview(getApplicationContext());
 
         RelativeLayout main_layout = (RelativeLayout) findViewById(R.id.activity_main);
-        main_layout.addView(webview);
-        webview.setMinimumHeight(200);
-        try{
-            webview.loadUrl("https://www.google.com");
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        //main_layout.addView(webview);
+        //webview.setMinimumHeight(200);
+
     }
 }
