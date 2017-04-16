@@ -9,6 +9,7 @@ import android.graphics.Picture;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.telephony.TelephonyManager;
@@ -26,7 +27,11 @@ import android.webkit.WebViewClient;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.UUID;
+
+import automation.bml.com.webviewautomation.RestAPI.Constants;
 
 import static android.content.Context.WIFI_SERVICE;
 
@@ -91,8 +96,15 @@ public class AutomatedWebview extends WebView
             }
             public void onPageFinished(WebView view, String url) {
                 //Checking 3G/4G
-                focus("lst-ib");
-                takeScreenshot();
+                click("lst-ib");
+                URL u = null;
+                try {
+                    u = new URL(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                String host = u.getHost();
+                takeScreenshot(host);
                 //enter("Sample text");
                 //String connectionType = getConnectionType();
                 if (Connectivity.isConnectedWifi(context))
@@ -198,7 +210,7 @@ public class AutomatedWebview extends WebView
         injectJS(script);
     }
 
-    public void takeScreenshot()
+    public void takeScreenshot(String url)
     {
         Picture picture = capturePicture();
         Bitmap b = Bitmap.createBitmap( picture.getWidth(),
@@ -209,15 +221,15 @@ public class AutomatedWebview extends WebView
         FileOutputStream fos;
         try {
             ContextWrapper cw = new ContextWrapper(context);
+
             // path to /data/data/yourapp/app_data/imageDir
-            File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-            // Create imageDir
-            File mypath=new File(directory,"profile.jpg");
-            fos = new FileOutputStream(mypath);
-            if ( fos != null )
-            {
-                b.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                fos.close();
+            if(createDirIfNotExists(Constants.DIRECTORY)) {
+                File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/" + Constants.DIRECTORY + "/" + "profile.jpg");
+                fos = new FileOutputStream(file);
+                if (fos != null) {
+                    b.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                    fos.close();
+                }
             }
         }
         catch(Exception e)
@@ -252,7 +264,7 @@ public class AutomatedWebview extends WebView
             click(parameter);
         }
         else if(action.equalsIgnoreCase("screenshot")){
-            takeScreenshot();
+            takeScreenshot(parameter);
         }
     }
 
@@ -317,7 +329,6 @@ public class AutomatedWebview extends WebView
     }
 
     // Miscellenous functions
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void injectJS(String script) {
         try {
             //loadData("<script type='javascript' src='https://code.jquery.com/jquery-3.2.1.min.js'></script>","text/html", "UTF-8");
@@ -347,6 +358,18 @@ public class AutomatedWebview extends WebView
 
         }
     }
+    private boolean createDirIfNotExists(String path) {
+        boolean ret = true;
 
+
+        File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), path);
+        if (!file.exists()) {
+            if (!file.mkdirs()) {
+                Log.e("TravellerLog :: ", "Problem creating Image folder");
+                ret = false;
+            }
+        }
+        return ret;
+    }
 
 }
