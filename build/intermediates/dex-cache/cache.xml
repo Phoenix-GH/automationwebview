@@ -20,21 +20,12 @@
         <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/classes_c28e624ee9f0a99ecf751362cfd30998139ec39e.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/krzysztof/automationwebview/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="60fd95ff749ba98220d893c41fa4ef6fec9f0ef6">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_b798190f21eaa7d2bc0306b2b7b60d53154209f3/classes.dex" />
-    </item>
-    <item
         is-multidex="false"
         jar="/Users/krzysztof/automationwebview/webviewautomation/build/intermediates/bundles/default/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="c903bfad4d7e37822db7e761474d5acb7a86a097">
+        sha1="42b6e6b5b6aa105d36497724dec1783291ce00fe">
         <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/classes_15edcedaa3c8cdb08308e63a435a7669579da72b.jar" />
     </item>
     <item
@@ -144,15 +135,6 @@
         revision="25.0.2"
         sha1="e79aa3d9a16f8c9f16377c0608de70a8f31e5d80">
         <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/classes_57ee940f481c3b58cca11ed0a6f841de5c484700.jar" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/krzysztof/automationwebview/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
-        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_dd6de02df946b4a6b68ffffbc87bbc71d307023d/classes.dex" />
     </item>
     <item
         is-multidex="false"

@@ -2,7 +2,6 @@ package automation.bml.com.webviewautomation;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -10,11 +9,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //AutomatedWebview webview = new AutomatedWebview(getApplicationContext());
-
-        RelativeLayout main_layout = (RelativeLayout) findViewById(R.id.activity_main);
-        //main_layout.addView(webview);
-        //webview.setMinimumHeight(200);
-
     }
 }

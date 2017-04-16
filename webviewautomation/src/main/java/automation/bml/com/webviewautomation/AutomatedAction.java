@@ -12,7 +12,7 @@ import java.io.FileOutputStream;
  */
 
 public class AutomatedAction {
-       public AutomatedAction()
+    public AutomatedAction()
     {
 
     }

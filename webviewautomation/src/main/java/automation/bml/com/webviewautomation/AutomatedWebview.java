@@ -1,26 +1,32 @@
 package automation.bml.com.webviewautomation;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Picture;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.UUID;
-
 
 import static android.content.Context.WIFI_SERVICE;
 
@@ -40,6 +46,8 @@ public class AutomatedWebview extends WebView
 
     public AutomatedWebview(Context context, AttributeSet attributes) {
         super(context, attributes);
+        this.context = context;
+        init();
     }
 
     @Override
@@ -66,7 +74,14 @@ public class AutomatedWebview extends WebView
         }
         getSettings().setJavaScriptEnabled(true);
         addJavascriptInterface(new AutoJavaScriptInterface(), "MYOBJECT");
-
+        getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+        getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        if (Build.VERSION.SDK_INT >= 19) {
+            setWebContentsDebuggingEnabled(true);
+            setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        } else {
+            setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
         setWebChromeClient(new WebChromeClient());
         setWebViewClient(new WebViewClient() {
             @Override
@@ -76,8 +91,9 @@ public class AutomatedWebview extends WebView
             }
             public void onPageFinished(WebView view, String url) {
                 //Checking 3G/4G
-
-              //  enter("Sample text");
+                focus("lst-ib");
+                takeScreenshot();
+                //enter("Sample text");
                 //String connectionType = getConnectionType();
                 if (Connectivity.isConnectedWifi(context))
                 {
@@ -156,9 +172,10 @@ public class AutomatedWebview extends WebView
     public void focus(String selector)
     {
         //String script = "$('"+selector+"').focus()";
-        String script = "$(function() {"+"" +
-                "        $('"+selector+"').focus();"+
-        "});";
+//        String script = "$(function() {"+"" +
+//                "        $('"+selector+"').focus();"+
+//        "});";
+        String script = "document.getElementById('"+selector+"').focus();";
         cssSelector = selector;
         injectJS(script);
     }
@@ -166,14 +183,18 @@ public class AutomatedWebview extends WebView
     public void enter(String text)
     {
         String script = "document.getElementById('"+cssSelector+"').innerHTML='"+text+"';";
+        /*String script = "$(function() {"+"" +
+                "        $('"+cssSelector+"').html('"+text+"');"+
+                "});";*/
         injectJS(script);
     }
 
     public void click(String selector)
     {
-        String script = "$(function() {"+"" +
-                "        $('"+selector+"').trigger('click');"+
-                "});";
+//        String script = "$(function() {"+"" +
+//                "        $('"+selector+"').trigger('click');"+
+//                "});";
+        String script = "document.getElementById('"+selector+"').click();";
         injectJS(script);
     }
 
@@ -187,8 +208,12 @@ public class AutomatedWebview extends WebView
         picture.draw(c);
         FileOutputStream fos;
         try {
-
-            fos = new FileOutputStream( "mnt/sdcard/yahoo.jpg" );
+            ContextWrapper cw = new ContextWrapper(context);
+            // path to /data/data/yourapp/app_data/imageDir
+            File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+            // Create imageDir
+            File mypath=new File(directory,"profile.jpg");
+            fos = new FileOutputStream(mypath);
             if ( fos != null )
             {
                 b.compress(Bitmap.CompressFormat.JPEG, 100, fos);
@@ -292,23 +317,30 @@ public class AutomatedWebview extends WebView
     }
 
     // Miscellenous functions
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void injectJS(String script) {
         try {
             //loadData("<script type='javascript' src='https://code.jquery.com/jquery-3.2.1.min.js'></script>","text/html", "UTF-8");
 
             StringBuilder sb = new StringBuilder();
             sb.append(script);
-            wait(10);
-            loadUrl("javascript:(function() {" +
-                    "var parent = document.getElementsByTagName('head').item(0);" +
-                    "var script = document.createElement('script');" +
-                    "script.type = 'text/javascript';" +
-                    // Tell the browser to BASE64-decode the string into your script !!!
-                    "script.innerHTML = window.atob('" + sb.toString() + "');" +
-                    "parent.appendChild(script)" +
-                    "})()");
+            //wait(10);
+//            loadUrl("javascript:(function() {" +
+//                    "var parent = document.getElementsByTagName('head').item(0);" +
+//                    "var script = document.createElement('script');" +
+//                    "script.type = 'text/javascript';" +
+//                    // Tell the browser to BASE64-decode the string into your script !!!
+//                    "script.innerHTML = window.atob('" + sb.toString() + "');" +
+//                    "parent.appendChild(script)" +
+//                    "})()");
 
-            //loadUrl("javascript:" +script);
+            loadUrl("javascript:" +script);
+//            evaluateJavascript(script, new ValueCallback<String>() {
+//                @Override
+//                public void onReceiveValue(String value) {
+//                    Log.d("JS execution", "Successfully completed");
+//                }
+//            });
 
         } catch (Exception e) {
             e.printStackTrace();
