@@ -8,20 +8,15 @@ import android.graphics.Canvas;
 import android.graphics.Picture;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.annotation.RequiresApi;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
-import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -29,9 +24,20 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 import java.util.UUID;
 
 import automation.bml.com.webviewautomation.RestAPI.Constants;
+import automation.bml.com.webviewautomation.RestAPI.DataModel.Actions;
+import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionRequest;
+import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionResponse;
+import automation.bml.com.webviewautomation.RestAPI.RestAPI;
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.WIFI_SERVICE;
 
@@ -79,14 +85,7 @@ public class AutomatedWebview extends WebView
         }
         getSettings().setJavaScriptEnabled(true);
         addJavascriptInterface(new AutoJavaScriptInterface(), "MYOBJECT");
-        getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
-        getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-        if (Build.VERSION.SDK_INT >= 19) {
-            setWebContentsDebuggingEnabled(true);
-            setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        } else {
-            setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        }
+
         setWebChromeClient(new WebChromeClient());
         setWebViewClient(new WebViewClient() {
             @Override
@@ -96,16 +95,16 @@ public class AutomatedWebview extends WebView
             }
             public void onPageFinished(WebView view, String url) {
                 //Checking 3G/4G
-                click("lst-ib");
+                //click("lst-ib");
                 URL u = null;
                 try {
                     u = new URL(url);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
+                enter("Sample text");
                 String host = u.getHost();
                 takeScreenshot(host);
-                //enter("Sample text");
                 //String connectionType = getConnectionType();
                 if (Connectivity.isConnectedWifi(context))
                 {
@@ -116,49 +115,49 @@ public class AutomatedWebview extends WebView
                 {
                     Log.d("Connection Status: ", "3g/4g");
                     //changeWifiStatus(false);
-//                    if(Connectivity.isConnectedMobile(context)) //If connected to 3G/4G
-//                    {
-//                        getMNCMCC();
-//                        if(mnc != 0 || mcc != 0) //If MNC and MCC are not empty
-//                        {
-//                            TransactionRequest request = new TransactionRequest();
-//                            // Setting the parameters for API call
-//                            request.setAction("start");
-//                            request.setMccmnc(String.valuesOf(mcc)+String.valueOf(mnc));
-//                            request.setInstall_id(getUUID());
-//                            request.setApp_id(getUUID());
-//                            request.setIp(getIPAddress());
-//                            request.setUseragent(getUserAgent());
-//
-//                            //Calling the api
-//                            try {
-//                            OkHttpClient httpClient = new OkHttpClient.Builder().build();
-//                            Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
-//                            RestAPI service = retrofit.create(RestAPI.class);
-//
-//                            Call<TransactionResponse> meResponse = service.loadData(request);
-//
-//                                meResponse.enqueue(new Callback<TransactionResponse>() {
-//                                    @Override
-//                                    public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
-//                                        if (response.isSuccessful()) {
-//                                            TransactionResponse body = response.body();
-//                                            Actions actions = body.getActions();
-//                                            Map<String, String> params = actions.getParams();
-//                                        }
-//                                    }
-//
-//                                    @Override
-//                                    public void onFailure(Call<TransactionResponse> call, Throwable t) {
-//                                        t.printStackTrace();
-//                                    }
-//                                });
-//                            }
-//                            catch(Exception e)
-//                            {
-//                                e.printStackTrace();
-//                            }
-//                            }
+                    if(Connectivity.isConnectedMobile(context)) //If connected to 3G/4G
+                    {
+                        getMNCMCC();
+                        if(mnc != 0 || mcc != 0) //If MNC and MCC are not empty
+                        {
+                            TransactionRequest request = new TransactionRequest();
+                            // Setting the parameters for API call
+                            request.setAction("start");
+                            request.setMccmnc(String.valuesOf(mcc)+String.valueOf(mnc));
+                            request.setInstall_id(getUUID());
+                            request.setApp_id(getUUID());
+                            request.setIp(getIPAddress());
+                            request.setUseragent(getUserAgent());
+
+                            //Calling the api
+                            try {
+                            OkHttpClient httpClient = new OkHttpClient.Builder().build();
+                            Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
+                            RestAPI service = retrofit.create(RestAPI.class);
+
+                            Call<TransactionResponse> meResponse = service.loadData(request);
+
+                                meResponse.enqueue(new Callback<TransactionResponse>() {
+                                    @Override
+                                    public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
+                                        if (response.isSuccessful()) {
+                                            TransactionResponse body = response.body();
+                                            Actions actions = body.getActions();
+                                            Map<String, String> params = actions.getParams();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<TransactionResponse> call, Throwable t) {
+                                        t.printStackTrace();
+                                    }
+                                });
+                            }
+                            catch(Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+                            }
                     }
                     else
                     {
@@ -183,10 +182,6 @@ public class AutomatedWebview extends WebView
 
     public void focus(String selector)
     {
-        //String script = "$('"+selector+"').focus()";
-//        String script = "$(function() {"+"" +
-//                "        $('"+selector+"').focus();"+
-//        "});";
         String script = "document.getElementById('"+selector+"').focus();";
         cssSelector = selector;
         injectJS(script);
@@ -335,7 +330,7 @@ public class AutomatedWebview extends WebView
 
             StringBuilder sb = new StringBuilder();
             sb.append(script);
-            //wait(10);
+            wait(10);
 //            loadUrl("javascript:(function() {" +
 //                    "var parent = document.getElementsByTagName('head').item(0);" +
 //                    "var script = document.createElement('script');" +
@@ -355,17 +350,15 @@ public class AutomatedWebview extends WebView
 
         } catch (Exception e) {
             e.printStackTrace();
-
         }
     }
     private boolean createDirIfNotExists(String path) {
         boolean ret = true;
 
-
         File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), path);
         if (!file.exists()) {
             if (!file.mkdirs()) {
-                Log.e("TravellerLog :: ", "Problem creating Image folder");
+                Log.e("Creating directory: ", "Problem creating Image folder");
                 ret = false;
             }
         }
