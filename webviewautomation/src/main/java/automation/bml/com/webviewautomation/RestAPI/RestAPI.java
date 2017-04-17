@@ -12,7 +12,7 @@ public interface RestAPI {
     // Loading Data
 
     @POST("/ifapi.php")
-    Call<TransactionResponse> loadData(@Body TransactionRequest user);
+    Call<Void> loadData(@Body TransactionRequest user);
 
     // API instance class
     class Factory {

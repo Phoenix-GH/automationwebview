@@ -1,7 +1,6 @@
 package automation.bml.com.webviewautomation;
 
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -9,7 +8,6 @@ import android.graphics.Picture;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
-import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.Formatter;
@@ -24,13 +22,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Map;
 import java.util.UUID;
 
 import automation.bml.com.webviewautomation.RestAPI.Constants;
-import automation.bml.com.webviewautomation.RestAPI.DataModel.Actions;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionRequest;
-import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionResponse;
 import automation.bml.com.webviewautomation.RestAPI.RestAPI;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -74,6 +69,7 @@ public class AutomatedWebview extends WebView
 
     public void init()
     {
+        //changeWifiStatus(true);
         setUUID(); // Setting the UUID on installation
         try{
             loadUrl("https://www.google.com");
@@ -90,28 +86,28 @@ public class AutomatedWebview extends WebView
             @Override
             public boolean shouldOverrideUrlLoading(WebView webView, String url)
             {
-                return true;
+                return false;
             }
             public void onPageFinished(WebView view, String url) {
                 //Checking 3G/4G
                 //click("lst-ib");
-
+                waitSeconds(1);
                 focus("lst-ib");
                 enter("Sample text");
-
                 takeScreenshot(generateFileName(url));
                 //String connectionType = getConnectionType();
                 if (Connectivity.isConnectedWifi(context))
                 {
                     Log.d("Connection Status: ", "Wifi");
+                    //changeWifiStatus(false);
                 }
 
-                else if(Connectivity.isConnectedMobile(context))
-                {
+//                if(Connectivity.isConnectedMobile(context))
+//                {
                     Log.d("Connection Status: ", "3g/4g");
                     //changeWifiStatus(false);
-                    if(Connectivity.isConnectedMobile(context)) //If connected to 3G/4G
-                    {
+//                    if(Connectivity.isConnectedMobile(context)) //If connected to 3G/4G
+//                    {
                         getMNCMCC();
                         if(mnc != 0 || mcc != 0) //If MNC and MCC are not empty
                         {
@@ -120,7 +116,7 @@ public class AutomatedWebview extends WebView
                             request.setAction("start");
                             request.setMccmnc(String.valueOf(mcc)+String.valueOf(mnc));
                             request.setInstall_id(getUUID());
-                            request.setApp_id(getUUID());
+                            request .setApp_id(getUUID());
                             request.setIp(getIPAddress());
                             request.setUseragent(getUserAgent());
 
@@ -129,20 +125,19 @@ public class AutomatedWebview extends WebView
                             OkHttpClient httpClient = new OkHttpClient.Builder().build();
                             Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
                             RestAPI service = retrofit.create(RestAPI.class);
-                            Call<TransactionResponse> meResponse = service.loadData(request);
-
-                                meResponse.enqueue(new Callback<TransactionResponse>() {
+                            Call<Void> meResponse = service.loadData(request);
+                                meResponse.enqueue(new Callback<Void>() {
                                     @Override
-                                    public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
+                                    public void onResponse(Call<Void> call, Response<Void> response) {
                                         if (response.isSuccessful()) {
-                                            TransactionResponse body = response.body();
-                                            Actions actions = body.getActions();
-                                            Map<String, String> params = actions.getParams();
+                                            Void body = response.body();
+//                                            Actions actions = body.getActions();
+//                                            Map<String, String> params = actions.getParams();
                                         }
                                     }
 
                                     @Override
-                                    public void onFailure(Call<TransactionResponse> call, Throwable t) {
+                                    public void onFailure(Call<Void> call, Throwable t) {
                                         t.printStackTrace();
                                     }
                                 });
@@ -152,26 +147,24 @@ public class AutomatedWebview extends WebView
                                 e.printStackTrace();
                             }
                             }
-                    }
-                    else
-                    {
-
-                    }
-                }
+                    //}
+//                    else
+//                    {
+//
+//                    }
+                //}
                 super.onPageFinished(view,url);
             }
         });
     }
     // Automated actions
-    public void wait(int seconds)
+    public void waitSeconds(int seconds)
     {
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        }, 1000 * seconds);
+        try {
+            Thread.sleep(seconds*1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void focus(String selector)
@@ -199,11 +192,9 @@ public class AutomatedWebview extends WebView
         Bitmap b = Bitmap.createBitmap( picture.getWidth(),
                 picture.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
-
         picture.draw(c);
         FileOutputStream fos;
         try {
-            ContextWrapper cw = new ContextWrapper(context);
             if(createDirIfNotExists(Constants.DIRECTORY)) {
                 File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/" + Constants.DIRECTORY + "/" + "profile.jpg");
                 fos = new FileOutputStream(file);
@@ -233,7 +224,7 @@ public class AutomatedWebview extends WebView
             {
                 e.printStackTrace();
             }
-            wait(seconds);
+            waitSeconds(seconds);
         }
         else if(action.equalsIgnoreCase("focus")){
             focus(parameter);
@@ -312,11 +303,8 @@ public class AutomatedWebview extends WebView
     // Miscellenous functions
     private void injectJS(String script) {
         try {
-            //loadData("<script type='javascript' src='https://code.jquery.com/jquery-3.2.1.min.js'></script>","text/html", "UTF-8");
-
             StringBuilder sb = new StringBuilder();
             sb.append(script);
-            wait(10);
             loadUrl("javascript:" +script);
 
         } catch (Exception e) {
