@@ -1,12 +1,14 @@
 package automation.bml.com.webviewautomation.RestAPI.DataModel;
 
+import java.util.Map;
+
 /**
  * Created by krzysztof on 4/12/17.
  */
 public class TransactionResponse {
 
     private Settings settings;
-    private Actions actions;
+    private Map<String, Object> actions;
 
     public Settings getSettings() {
         return settings;
@@ -16,11 +18,11 @@ public class TransactionResponse {
         this.settings = settings;
     }
 
-    public Actions getActions() {
+    public Map<String, Object> getActions() {
         return actions;
     }
 
-    public void setActions(Actions actions) {
+    public void setActions(Map<String, Object> actions) {
         this.actions = actions;
     }
 
