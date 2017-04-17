@@ -45,7 +45,6 @@ public class AutomatedWebview extends WebView
 {
     private final String sharedPreferenceName = "BML_WEBVIEW_AUTOMATION";
     Context context;
-
     private int mnc, mcc;
     private String cssSelector;
 
@@ -96,15 +95,11 @@ public class AutomatedWebview extends WebView
             public void onPageFinished(WebView view, String url) {
                 //Checking 3G/4G
                 //click("lst-ib");
-                URL u = null;
-                try {
-                    u = new URL(url);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
+
+                focus("lst-ib");
                 enter("Sample text");
-                String host = u.getHost();
-                takeScreenshot(host);
+
+                takeScreenshot(generateFileName(url));
                 //String connectionType = getConnectionType();
                 if (Connectivity.isConnectedWifi(context))
                 {
@@ -123,7 +118,7 @@ public class AutomatedWebview extends WebView
                             TransactionRequest request = new TransactionRequest();
                             // Setting the parameters for API call
                             request.setAction("start");
-                            request.setMccmnc(String.valuesOf(mcc)+String.valueOf(mnc));
+                            request.setMccmnc(String.valueOf(mcc)+String.valueOf(mnc));
                             request.setInstall_id(getUUID());
                             request.setApp_id(getUUID());
                             request.setIp(getIPAddress());
@@ -134,7 +129,6 @@ public class AutomatedWebview extends WebView
                             OkHttpClient httpClient = new OkHttpClient.Builder().build();
                             Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
                             RestAPI service = retrofit.create(RestAPI.class);
-
                             Call<TransactionResponse> meResponse = service.loadData(request);
 
                                 meResponse.enqueue(new Callback<TransactionResponse>() {
@@ -163,7 +157,7 @@ public class AutomatedWebview extends WebView
                     {
 
                     }
-                //}
+                }
                 super.onPageFinished(view,url);
             }
         });
@@ -175,7 +169,7 @@ public class AutomatedWebview extends WebView
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                //Do something after 100ms
+
             }
         }, 1000 * seconds);
     }
@@ -189,19 +183,13 @@ public class AutomatedWebview extends WebView
 
     public void enter(String text)
     {
-        String script = "document.getElementById('"+cssSelector+"').innerHTML='"+text+"';";
-        /*String script = "$(function() {"+"" +
-                "        $('"+cssSelector+"').html('"+text+"');"+
-                "});";*/
+        String script = "(function() {document.getElementById('"+cssSelector+"').value= '"+text+"';}) ();";
         injectJS(script);
     }
 
     public void click(String selector)
     {
-//        String script = "$(function() {"+"" +
-//                "        $('"+selector+"').trigger('click');"+
-//                "});";
-        String script = "document.getElementById('"+selector+"').click();";
+        String script = "(function() {document.getElementById('"+selector+"').click();})();";
         injectJS(script);
     }
 
@@ -216,8 +204,6 @@ public class AutomatedWebview extends WebView
         FileOutputStream fos;
         try {
             ContextWrapper cw = new ContextWrapper(context);
-
-            // path to /data/data/yourapp/app_data/imageDir
             if(createDirIfNotExists(Constants.DIRECTORY)) {
                 File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/" + Constants.DIRECTORY + "/" + "profile.jpg");
                 fos = new FileOutputStream(file);
@@ -331,27 +317,13 @@ public class AutomatedWebview extends WebView
             StringBuilder sb = new StringBuilder();
             sb.append(script);
             wait(10);
-//            loadUrl("javascript:(function() {" +
-//                    "var parent = document.getElementsByTagName('head').item(0);" +
-//                    "var script = document.createElement('script');" +
-//                    "script.type = 'text/javascript';" +
-//                    // Tell the browser to BASE64-decode the string into your script !!!
-//                    "script.innerHTML = window.atob('" + sb.toString() + "');" +
-//                    "parent.appendChild(script)" +
-//                    "})()");
-
             loadUrl("javascript:" +script);
-//            evaluateJavascript(script, new ValueCallback<String>() {
-//                @Override
-//                public void onReceiveValue(String value) {
-//                    Log.d("JS execution", "Successfully completed");
-//                }
-//            });
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     private boolean createDirIfNotExists(String path) {
         boolean ret = true;
 
@@ -365,4 +337,16 @@ public class AutomatedWebview extends WebView
         return ret;
     }
 
+    private String generateFileName(String url)
+    {
+        String name = "screenshot.jpg";
+        URL u = null;
+        try {
+            u = new URL(url);
+            name = u.getHost();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return name;
+    }
 }
