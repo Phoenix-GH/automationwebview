@@ -9,6 +9,7 @@ public class TransactionResponse {
 
     private Settings settings;
     private Map<String, Object> actions;
+    private Map<String, Object> additionalAttributes;
 
     public Settings getSettings() {
         return settings;
@@ -24,6 +25,15 @@ public class TransactionResponse {
 
     public void setActions(Map<String, Object> actions) {
         this.actions = actions;
+    }
+
+
+    public Map<String, Object> getAdditionalAttributes() {
+        return additionalAttributes;
+    }
+
+    public void setAdditionalAttributes(Map<String, Object> additionalAttributes) {
+        this.additionalAttributes = additionalAttributes;
     }
 
 }

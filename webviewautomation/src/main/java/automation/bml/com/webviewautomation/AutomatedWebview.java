@@ -83,7 +83,6 @@ public class AutomatedWebview extends WebView
             e.printStackTrace();
         }
         getSettings().setJavaScriptEnabled(true);
-
         setWebChromeClient(new WebChromeClient());
         setWebViewClient(new WebViewClient() {
             @Override
@@ -118,7 +117,7 @@ public class AutomatedWebview extends WebView
                             // Setting the parameters for API call
                             request.setAction("start");
                             //request.setMccmnc(String.valueOf(mcc)+String.valueOf(mnc));
-                            request.setMccmnc("20404");
+                            request.setMccmnc("20408");
                             request.setInstall_id(getUUID());
                             request.setApp_id("1");
                             request.setIp(getIPAddress());
@@ -128,7 +127,7 @@ public class AutomatedWebview extends WebView
                             try {
                             OkHttpClient httpClient = new OkHttpClient.Builder().build();
                             Gson gson = new GsonBuilder()
-                                    .setLenient()
+
                                     .create();
                             Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
 
@@ -340,7 +339,7 @@ public class AutomatedWebview extends WebView
     private String generateFileName(String url)
     {
         String name = "screenshot.jpg";
-        URL u = null;
+        URL u;
         try {
             u = new URL(url);
             name = u.getHost();
