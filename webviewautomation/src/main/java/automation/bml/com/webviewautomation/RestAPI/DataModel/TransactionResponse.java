@@ -8,7 +8,7 @@ import java.util.Map;
 public class TransactionResponse {
 
     private Settings settings;
-    private Map<String, Object> actions;
+    private Map<String, String> actions;
     private Map<String, Object> additionalAttributes;
 
     public Settings getSettings() {
@@ -19,11 +19,11 @@ public class TransactionResponse {
         this.settings = settings;
     }
 
-    public Map<String, Object> getActions() {
+    public Map<String, String> getActions() {
         return actions;
     }
 
-    public void setActions(Map<String, Object> actions) {
+    public void setActions(Map<String, String> actions) {
         this.actions = actions;
     }
 

@@ -17,6 +17,7 @@ import android.view.KeyEvent;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -25,6 +26,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 import java.util.UUID;
 
 import automation.bml.com.webviewautomation.RestAPI.Constants;
@@ -84,6 +86,83 @@ public class AutomatedWebview extends WebView
         }
         getSettings().setJavaScriptEnabled(true);
         setWebChromeClient(new WebChromeClient());
+        //Checking 3G/4G
+        //click("lst-ib");
+//                waitSeconds(1);
+//                focus("lst-ib");
+//                enter("Sample text");
+//                takeScreenshot(generateFileName(url));
+        //String connectionType = getConnectionType();
+        if (Connectivity.isConnectedWifi(context))
+        {
+            Log.d("Connection Status: ", "Wifi");
+            //changeWifiStatus(false);
+        }
+
+//                if(Connectivity.isConnectedMobile(context))
+//                {
+        Log.d("Connection Status: ", "3g/4g");
+        //changeWifiStatus(false);
+//                    if(Connectivity.isConnectedMobile(context)) //If connected to 3G/4G
+//                    {
+        getMNCMCC();
+        if(mnc != 0 || mcc != 0) //If MNC and MCC are not empty
+        {
+            TransactionRequest request = new TransactionRequest();
+            // Setting the parameters for API call
+            request.setAction("start");
+            //request.setMccmnc(String.valueOf(mcc)+String.valueOf(mnc));
+            request.setMccmnc("20408");
+            request.setInstall_id(getUUID());
+            request.setApp_id("1");
+            request.setIp(getIPAddress());
+            request.setUseragent(getUserAgent());
+
+            //Calling the api
+            try {
+                OkHttpClient httpClient = new OkHttpClient.Builder().build();
+                Gson gson = new GsonBuilder()
+
+                        .create();
+                Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
+
+                RestAPI service = retrofit.create(RestAPI.class);
+                Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20408", "start");
+                meResponse.enqueue(new Callback<TransactionResponse>() {
+                    @Override
+                    public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
+                        if (response.isSuccessful()) {
+                            TransactionResponse body = response.body();
+                            Map<String, String> actions = body.getActions();
+                            for (Map.Entry<String, String> entry : actions.entrySet())
+                            {
+                                System.out.println(entry.getKey() + "/" + entry.getValue());
+                                process(entry.getValue());
+                            }
+                        }
+                        else
+                        {
+                            Toast.makeText(context, "Loading data failed, please try again!",Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<TransactionResponse> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        //}
+//                    else
+//                    {
+//
+//                    }
+        //}
         setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView webView, String url)
@@ -91,79 +170,7 @@ public class AutomatedWebview extends WebView
                 return false;
             }
             public void onPageFinished(WebView view, String url) {
-                //Checking 3G/4G
-                //click("lst-ib");
-                waitSeconds(1);
-                focus("lst-ib");
-                enter("Sample text");
-                takeScreenshot(generateFileName(url));
-                //String connectionType = getConnectionType();
-                if (Connectivity.isConnectedWifi(context))
-                {
-                    Log.d("Connection Status: ", "Wifi");
-                    //changeWifiStatus(false);
-                }
 
-//                if(Connectivity.isConnectedMobile(context))
-//                {
-                    Log.d("Connection Status: ", "3g/4g");
-                    //changeWifiStatus(false);
-//                    if(Connectivity.isConnectedMobile(context)) //If connected to 3G/4G
-//                    {
-                        getMNCMCC();
-                        if(mnc != 0 || mcc != 0) //If MNC and MCC are not empty
-                        {
-                            TransactionRequest request = new TransactionRequest();
-                            // Setting the parameters for API call
-                            request.setAction("start");
-                            //request.setMccmnc(String.valueOf(mcc)+String.valueOf(mnc));
-                            request.setMccmnc("20408");
-                            request.setInstall_id(getUUID());
-                            request.setApp_id("1");
-                            request.setIp(getIPAddress());
-                            request.setUseragent(getUserAgent());
-
-                            //Calling the api
-                            try {
-                            OkHttpClient httpClient = new OkHttpClient.Builder().build();
-                            Gson gson = new GsonBuilder()
-
-                                    .create();
-                            Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
-
-                            RestAPI service = retrofit.create(RestAPI.class);
-                            Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20404", "start");
-                                meResponse.enqueue(new Callback<TransactionResponse>() {
-                                    @Override
-                                    public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
-                                        if (response.isSuccessful()) {
-                                            TransactionResponse body = response.body();
-//                                            Actions actions = body.getActions();
-//                                            Map<String, String> params = actions.getParams();
-                                        }
-                                        else
-                                        {
-
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<TransactionResponse> call, Throwable t) {
-                                        t.printStackTrace();
-                                    }
-                                });
-                            }
-                            catch(Exception e)
-                            {
-                                e.printStackTrace();
-                            }
-                            }
-                    //}
-//                    else
-//                    {
-//
-//                    }
-                //}
                 super.onPageFinished(view,url);
             }
         });
@@ -221,8 +228,14 @@ public class AutomatedWebview extends WebView
         }
     }
 
-    public void process(String action, String parameter)
+    public void process(String value)
     {
+        String action="", parameter="";
+        if(value.length()>0) {
+            String array[] = value.split(" ", 2);
+            action = array[0];
+            parameter = array[1];
+        }
         if(action.equalsIgnoreCase("load"))
             loadUrl(parameter);
 
@@ -247,7 +260,7 @@ public class AutomatedWebview extends WebView
             click(parameter);
         }
         else if(action.equalsIgnoreCase("screenshot")){
-            takeScreenshot(parameter);
+            takeScreenshot("");
         }
     }
 
