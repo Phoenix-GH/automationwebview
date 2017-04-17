@@ -18,6 +18,9 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.MalformedURLException;
@@ -26,6 +29,7 @@ import java.util.UUID;
 
 import automation.bml.com.webviewautomation.RestAPI.Constants;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionRequest;
+import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionResponse;
 import automation.bml.com.webviewautomation.RestAPI.RestAPI;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -79,7 +83,6 @@ public class AutomatedWebview extends WebView
             e.printStackTrace();
         }
         getSettings().setJavaScriptEnabled(true);
-        addJavascriptInterface(new AutoJavaScriptInterface(), "MYOBJECT");
 
         setWebChromeClient(new WebChromeClient());
         setWebViewClient(new WebViewClient() {
@@ -114,30 +117,39 @@ public class AutomatedWebview extends WebView
                             TransactionRequest request = new TransactionRequest();
                             // Setting the parameters for API call
                             request.setAction("start");
-                            request.setMccmnc(String.valueOf(mcc)+String.valueOf(mnc));
+                            //request.setMccmnc(String.valueOf(mcc)+String.valueOf(mnc));
+                            request.setMccmnc("20404");
                             request.setInstall_id(getUUID());
-                            request .setApp_id(getUUID());
+                            request.setApp_id("1");
                             request.setIp(getIPAddress());
                             request.setUseragent(getUserAgent());
 
                             //Calling the api
                             try {
                             OkHttpClient httpClient = new OkHttpClient.Builder().build();
-                            Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
+                            Gson gson = new GsonBuilder()
+                                    .setLenient()
+                                    .create();
+                            Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
+
                             RestAPI service = retrofit.create(RestAPI.class);
-                            Call<Void> meResponse = service.loadData(request);
-                                meResponse.enqueue(new Callback<Void>() {
+                            Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20404", "start");
+                                meResponse.enqueue(new Callback<TransactionResponse>() {
                                     @Override
-                                    public void onResponse(Call<Void> call, Response<Void> response) {
+                                    public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
                                         if (response.isSuccessful()) {
-                                            Void body = response.body();
+                                            TransactionResponse body = response.body();
 //                                            Actions actions = body.getActions();
 //                                            Map<String, String> params = actions.getParams();
+                                        }
+                                        else
+                                        {
+
                                         }
                                     }
 
                                     @Override
-                                    public void onFailure(Call<Void> call, Throwable t) {
+                                    public void onFailure(Call<TransactionResponse> call, Throwable t) {
                                         t.printStackTrace();
                                     }
                                 });
