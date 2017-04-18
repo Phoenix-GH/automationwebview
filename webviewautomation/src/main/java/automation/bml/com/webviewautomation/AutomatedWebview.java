@@ -80,15 +80,9 @@ public class AutomatedWebview extends WebView
     {
         //changeWifiStatus(true);
         setUUID(); // Setting the UUID on installation
-
         getSettings().setJavaScriptEnabled(true);
         setWebChromeClient(new WebChromeClient());
         //Checking 3G/4G
-        //click("lst-ib");
-//                waitSeconds(1);
-//                focus("lst-ib");
-//                enter("Sample text");
-//                takeScreenshot(generateFileName(url));
         //String connectionType = getConnectionType();
         if (Connectivity.isConnectedWifi(context))
         {
@@ -98,23 +92,13 @@ public class AutomatedWebview extends WebView
 
 //                if(Connectivity.isConnectedMobile(context))
 //                {
-        Log.d("Connection Status: ", "3g/4g");
+        //Log.d("Connection Status: ", "3g/4g");
         //changeWifiStatus(false);
 //                    if(Connectivity.isConnectedMobile(context)) //If connected to 3G/4G
 //                    {
 //        getMNCMCC();
 //        if(mnc != 0 || mcc != 0) //If MNC and MCC are not empty
 //        {
-            TransactionRequest request = new TransactionRequest();
-            // Setting the parameters for API call
-            request.setAction("start");
-            //request.setMccmnc(String.valueOf(mcc)+String.valueOf(mnc));
-            request.setMccmnc("20408");
-            request.setInstall_id(getUUID());
-            request.setApp_id("1");
-            request.setIp(getIPAddress());
-            request.setUseragent(getUserAgent());
-
             //Calling the api
             try {
                 OkHttpClient httpClient = new OkHttpClient.Builder().build();
@@ -155,6 +139,7 @@ public class AutomatedWebview extends WebView
 
                     @Override
                     public void onFailure(Call<TransactionResponse> call, Throwable t) {
+                        Toast.makeText(context, "Network error, please try again!",Toast.LENGTH_LONG).show();
                         t.printStackTrace();
                     }
                 });
