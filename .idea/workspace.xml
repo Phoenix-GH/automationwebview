@@ -6,12 +6,13 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" line="195" />
+    <bookmark url="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" line="192" />
     <bookmark url="file://$PROJECT_DIR$/app/src/main/java/automation/bml/com/webviewautomation/MainActivity.java" line="11" />
-    <bookmark url="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" line="200" />
+    <bookmark url="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" line="197" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55852e9a-1cb2-4c57-ac8d-ae22936dfd9a" name="Default" comment="">
@@ -25,6 +26,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_webviewautomation_compileReleaseJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_webviewautomation_compileReleaseJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_webviewautomation_compileReleaseJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_webviewautomation_compileReleaseJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" afterPath="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" />
     </list>
@@ -58,36 +60,41 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AutomatedWebview.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java">
+      <file leaf-file-name="activity_main.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1501">
-              <caret line="190" column="69" selection-start-line="190" selection-start-column="69" selection-end-line="190" selection-end-column="69" />
+            <state relative-caret-position="45">
+              <caret line="3" column="20" selection-start-line="3" selection-start-column="20" selection-end-line="3" selection-end-column="20" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#5783#5784#0" expanded="true" />
-                <element signature="e#5827#5828#0" expanded="true" />
-                <element signature="e#8077#8255#0" expanded="true" />
-                <element signature="e#8254#8255#0" expanded="true" />
-                <element signature="e#8381#8559#0" expanded="true" />
-                <element signature="e#8558#8559#0" expanded="true" />
-                <element signature="e#8685#8863#0" expanded="true" />
-                <element signature="e#8862#8863#0" expanded="true" />
-                <element signature="e#8992#9162#0" expanded="true" />
-                <element signature="e#9161#9162#0" expanded="true" />
-                <element signature="e#10133#10134#0" expanded="true" />
-                <element signature="e#10195#10196#0" expanded="true" />
+                <element signature="e#486#519#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Settings.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/RestAPI/DataModel/Settings.java">
+      <file leaf-file-name="AutomatedWebview.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-              <folding />
+            <state relative-caret-position="45">
+              <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#6178#6179#0" expanded="true" />
+                <element signature="e#6222#6223#0" expanded="true" />
+                <element signature="e#8472#8650#0" expanded="true" />
+                <element signature="e#8649#8650#0" expanded="true" />
+                <element signature="e#8776#8954#0" expanded="true" />
+                <element signature="e#8953#8954#0" expanded="true" />
+                <element signature="e#9080#9258#0" expanded="true" />
+                <element signature="e#9257#9258#0" expanded="true" />
+                <element signature="e#9387#9557#0" expanded="true" />
+                <element signature="e#9556#9557#0" expanded="true" />
+                <element signature="e#10528#10529#0" expanded="true" />
+                <element signature="e#10590#10591#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -95,9 +102,11 @@
       <file leaf-file-name="Action.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/RestAPI/DataModel/Action.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+            <state relative-caret-position="345">
+              <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
               <folding>
+                <element signature="e#462#463#0" expanded="true" />
+                <element signature="e#498#499#0" expanded="true" />
                 <element signature="e#623#624#0" expanded="true" />
                 <element signature="e#665#666#0" expanded="true" />
               </folding>
@@ -105,21 +114,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/webviewautomation/build.gradle">
+      <file leaf-file-name="Connectivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/Connectivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="25" column="27" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
+            <state relative-caret-position="91">
+              <caret line="98" column="48" selection-start-line="98" selection-start-column="48" selection-end-line="98" selection-end-column="48" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Connectivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/Connectivity.java">
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/AndroidManifest.xml">
+          <provider editor-type-id="android-manifest">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="102" column="73" selection-start-line="102" selection-start-column="73" selection-end-line="102" selection-end-column="73" />
+            <state relative-caret-position="225">
+              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -128,12 +140,11 @@
       <file leaf-file-name="TransactionResponse.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/RestAPI/DataModel/TransactionResponse.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="27" column="5" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
+            <state relative-caret-position="241">
+              <caret line="25" column="57" selection-start-line="25" selection-start-column="57" selection-end-line="25" selection-end-column="57" />
               <folding>
                 <element signature="e#497#498#0" expanded="true" />
                 <element signature="e#527#528#0" expanded="true" />
-                <element signature="e#586#587#0" expanded="true" />
                 <element signature="e#624#625#0" expanded="true" />
                 <element signature="e#684#685#0" expanded="true" />
                 <element signature="e#727#728#0" expanded="true" />
@@ -142,21 +153,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/RestAPI/Constants.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="RestAPI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/RestAPI/RestAPI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+            <state relative-caret-position="135">
+              <caret line="9" column="50" selection-start-line="9" selection-start-column="50" selection-end-line="9" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -2837,7 +2838,6 @@
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/automation/bml/com/webviewautomation/MainActivity.java" />
         <option value="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedAction.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/RestAPI/Constants.java" />
         <option value="$PROJECT_DIR$/webviewautomation/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/RestAPI/DataModel/Settings.java" />
@@ -2847,6 +2847,7 @@
         <option value="$PROJECT_DIR$/webviewautomation/build.gradle" />
         <option value="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/RestAPI/DataModel/TransactionResponse.java" />
         <option value="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/RestAPI/DataModel/TransactionRequest.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" />
       </list>
     </option>
@@ -3204,6 +3205,66 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="automationwebview" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="automationwebview" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mipmap-hdpi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="automationwebview" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="automationwebview" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -3630,17 +3691,17 @@
     <frame x="0" y="23" width="1920" height="977" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.4978701" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868758" sideWeight="0.6682641" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1904762" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19755058" sideWeight="0.3015625" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.24387646" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868758" sideWeight="0.33173588" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868758" sideWeight="0.75612354" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295583" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868758" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295583" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295583" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868758" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
@@ -3713,19 +3774,19 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java</url>
-          <line>319</line>
+          <line>316</line>
           <properties />
           <option name="timeStamp" value="56" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java</url>
-          <line>135</line>
+          <line>134</line>
           <properties />
           <option name="timeStamp" value="90" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java</url>
-          <line>128</line>
+          <line>127</line>
           <properties />
           <option name="timeStamp" value="91" />
         </line-breakpoint>
@@ -3856,18 +3917,18 @@
           <caret line="80" column="21" selection-start-line="80" selection-start-column="21" selection-end-line="80" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#5783#5784#0" expanded="true" />
-            <element signature="e#5827#5828#0" expanded="true" />
-            <element signature="e#8077#8255#0" expanded="true" />
-            <element signature="e#8254#8255#0" expanded="true" />
-            <element signature="e#8381#8559#0" expanded="true" />
-            <element signature="e#8558#8559#0" expanded="true" />
-            <element signature="e#8685#8863#0" expanded="true" />
-            <element signature="e#8862#8863#0" expanded="true" />
-            <element signature="e#8992#9162#0" expanded="true" />
-            <element signature="e#9161#9162#0" expanded="true" />
-            <element signature="e#10133#10134#0" expanded="true" />
-            <element signature="e#10195#10196#0" expanded="true" />
+            <element signature="e#6178#6179#0" expanded="true" />
+            <element signature="e#6222#6223#0" expanded="true" />
+            <element signature="e#8472#8650#0" expanded="true" />
+            <element signature="e#8649#8650#0" expanded="true" />
+            <element signature="e#8776#8954#0" expanded="true" />
+            <element signature="e#8953#8954#0" expanded="true" />
+            <element signature="e#9080#9258#0" expanded="true" />
+            <element signature="e#9257#9258#0" expanded="true" />
+            <element signature="e#9387#9557#0" expanded="true" />
+            <element signature="e#9556#9557#0" expanded="true" />
+            <element signature="e#10528#10529#0" expanded="true" />
+            <element signature="e#10590#10591#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3967,33 +4028,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="43" selection-start-line="13" selection-start-column="43" selection-end-line="13" selection-end-column="43" />
-          <folding>
-            <element signature="e#308#341#0" expanded="true" />
-            <element signature="e#366#401#0" expanded="true" />
-            <element signature="e#427#462#0" expanded="true" />
-            <element signature="e#486#519#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-25/android/telephony/TelephonyManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="121">
@@ -4080,14 +4114,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webviewautomation/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="27" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/automation/bml/com/webviewautomation/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -4106,21 +4132,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/RestAPI/DataModel/TransactionResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="27" column="5" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
-          <folding>
-            <element signature="e#497#498#0" expanded="true" />
-            <element signature="e#527#528#0" expanded="true" />
-            <element signature="e#586#587#0" expanded="true" />
-            <element signature="e#624#625#0" expanded="true" />
-            <element signature="e#684#685#0" expanded="true" />
-            <element signature="e#727#728#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/RestAPI/DataModel/Settings.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -4129,43 +4140,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/RestAPI/DataModel/Action.java">
+    <entry file="file://$PROJECT_DIR$/webviewautomation/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-          <folding>
-            <element signature="e#623#624#0" expanded="true" />
-            <element signature="e#665#666#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="375">
+          <caret line="25" column="27" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1501">
-          <caret line="190" column="69" selection-start-line="190" selection-start-column="69" selection-end-line="190" selection-end-column="69" />
+        <state relative-caret-position="45">
+          <caret line="3" column="20" selection-start-line="3" selection-start-column="20" selection-end-line="3" selection-end-column="20" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5783#5784#0" expanded="true" />
-            <element signature="e#5827#5828#0" expanded="true" />
-            <element signature="e#8077#8255#0" expanded="true" />
-            <element signature="e#8254#8255#0" expanded="true" />
-            <element signature="e#8381#8559#0" expanded="true" />
-            <element signature="e#8558#8559#0" expanded="true" />
-            <element signature="e#8685#8863#0" expanded="true" />
-            <element signature="e#8862#8863#0" expanded="true" />
-            <element signature="e#8992#9162#0" expanded="true" />
-            <element signature="e#9161#9162#0" expanded="true" />
-            <element signature="e#10133#10134#0" expanded="true" />
-            <element signature="e#10195#10196#0" expanded="true" />
+            <element signature="e#486#519#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/RestAPI/RestAPI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+        <state relative-caret-position="135">
+          <caret line="9" column="50" selection-start-line="9" selection-start-column="50" selection-end-line="9" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -4174,17 +4173,77 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/RestAPI/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        <state relative-caret-position="135">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/RestAPI/DataModel/TransactionResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="25" column="57" selection-start-line="25" selection-start-column="57" selection-end-line="25" selection-end-column="57" />
+          <folding>
+            <element signature="e#497#498#0" expanded="true" />
+            <element signature="e#527#528#0" expanded="true" />
+            <element signature="e#624#625#0" expanded="true" />
+            <element signature="e#684#685#0" expanded="true" />
+            <element signature="e#727#728#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/RestAPI/DataModel/Action.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+          <folding>
+            <element signature="e#462#463#0" expanded="true" />
+            <element signature="e#498#499#0" expanded="true" />
+            <element signature="e#623#624#0" expanded="true" />
+            <element signature="e#665#666#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/Connectivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="102" column="73" selection-start-line="102" selection-start-column="73" selection-end-line="102" selection-end-column="73" />
+        <state relative-caret-position="91">
+          <caret line="98" column="48" selection-start-line="98" selection-start-column="48" selection-end-line="98" selection-end-column="48" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#6178#6179#0" expanded="true" />
+            <element signature="e#6222#6223#0" expanded="true" />
+            <element signature="e#8472#8650#0" expanded="true" />
+            <element signature="e#8649#8650#0" expanded="true" />
+            <element signature="e#8776#8954#0" expanded="true" />
+            <element signature="e#8953#8954#0" expanded="true" />
+            <element signature="e#9080#9258#0" expanded="true" />
+            <element signature="e#9257#9258#0" expanded="true" />
+            <element signature="e#9387#9557#0" expanded="true" />
+            <element signature="e#9556#9557#0" expanded="true" />
+            <element signature="e#10528#10529#0" expanded="true" />
+            <element signature="e#10590#10591#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
