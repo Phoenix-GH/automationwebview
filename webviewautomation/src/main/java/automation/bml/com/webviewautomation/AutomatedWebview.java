@@ -139,7 +139,8 @@ public class AutomatedWebview extends WebView
                                 actionList.add(entry.getValue());
 
                             }
-                            process(actions.get("1"));
+                            process();
+
                         }
                         else
                         {
@@ -179,13 +180,7 @@ public class AutomatedWebview extends WebView
     // Automated actions
     public void waitSeconds(int seconds)
     {
-        Handler handler = new Handler(Looper.getMainLooper());
-        final Runnable r = new Runnable() {
-            public void run() {
-                //do your stuff here after DELAY sec
-            }
-        };
-        handler.postDelayed(r, seconds*1000);
+
     }
 
     public void focus(String selector)
@@ -231,41 +226,51 @@ public class AutomatedWebview extends WebView
         }
     }
 
-    public void process(String value)
+    public void process()
     {
-        String action="", parameter="";
-        if(value.length()>0) {
-            String array[] = value.split(" ", 2);
-            action = array[0];
-            if(array.length>1)
-                parameter = array[1];
-        }
-        if(action.equalsIgnoreCase("load"))
-            loadUrl(parameter);
+        int index = 0;
+        for(String item: actionList) {
 
-        else if(action.equalsIgnoreCase("wait")) {
-            int seconds = 0;
-            try {
-                seconds = Integer.parseInt(parameter);
+            String action = "", parameter = "";
+            if (item.length() > 0) {
+                String array[] = item.split(" ", 2);
+                action = array[0];
+                if (array.length > 1)
+                    parameter = array[1];
             }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-            waitSeconds(seconds);
-        }
-        else if(action.equalsIgnoreCase("focus")){
+            if (action.equalsIgnoreCase("load"))
+                loadUrl(parameter);
 
-            focus(parameter);
-        }
-        else if(action.equalsIgnoreCase("enter")){
-            enter(parameter);
-        }
-        else if(action.equalsIgnoreCase("click")){
-            click(parameter);
-        }
-        else if(action.equalsIgnoreCase("screenshot")){
-            takeScreenshot("");
+//        else if(action.equalsIgnoreCase("wait")) {
+//            int seconds = 0;
+//            try {
+//                seconds = Integer.parseInt(parameter);
+//            }
+//            catch(Exception e)
+//            {
+//                e.printStackTrace();
+//            }
+//            waitSeconds(seconds);
+//        }
+            else if (action.equalsIgnoreCase("focus")) {
+                if(index>=1) {
+                    if (actionList[index - 1].)
+                        focus(parameter);
+                }
+            } else if (action.equalsIgnoreCase("enter")) {
+                enter(parameter);
+            } else if (action.equalsIgnoreCase("click")) {
+                click(parameter);
+            } else if (action.equalsIgnoreCase("screenshot")) {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        takeScreenshot("");
+                    }
+                }, 5000);
+
+            }
         }
     }
 
