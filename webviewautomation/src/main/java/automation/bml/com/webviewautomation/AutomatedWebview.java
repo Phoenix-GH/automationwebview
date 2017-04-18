@@ -29,11 +29,13 @@ import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import automation.bml.com.webviewautomation.RestAPI.Constants;
+import automation.bml.com.webviewautomation.RestAPI.DataModel.Action;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionRequest;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionResponse;
 import automation.bml.com.webviewautomation.RestAPI.RestAPI;
@@ -52,7 +54,7 @@ public class AutomatedWebview extends WebView
     Context context;
     private int mnc, mcc;
     private String cssSelector;
-    ArrayList<String> actionList;
+    ArrayList<Action> actionList;
     public AutomatedWebview(Context context) {
         super(context);
         this.context = context;
@@ -135,12 +137,18 @@ public class AutomatedWebview extends WebView
                             actionList = new ArrayList<>();
                             for (Map.Entry<String, String> entry : actions.entrySet())
                             {
-                                System.out.println(entry.getKey() + "/" + entry.getValue());
-                                actionList.add(entry.getValue());
+                                String action = "";
+                                String parameter = "";
+                                if (entry.getValue().length() > 0) {
+                                    String array[] = entry.getValue().split(" ", 2);
+                                    action = array[0];
+                                    if (array.length > 1)
+                                        parameter = array[1];
+                                }
 
+                                actionList.add(new Action(action, parameter));
                             }
                             process();
-
                         }
                         else
                         {
@@ -228,47 +236,47 @@ public class AutomatedWebview extends WebView
 
     public void process()
     {
-        int index = 0;
-        for(String item: actionList) {
+        int seconds = 0;
+        for(final Action item: actionList) {
+            if (item.getAction().equalsIgnoreCase("load"))
+                loadUrl(item.getParameter());
 
-            String action = "", parameter = "";
-            if (item.length() > 0) {
-                String array[] = item.split(" ", 2);
-                action = array[0];
-                if (array.length > 1)
-                    parameter = array[1];
-            }
-            if (action.equalsIgnoreCase("load"))
-                loadUrl(parameter);
-
-//        else if(action.equalsIgnoreCase("wait")) {
-//            int seconds = 0;
-//            try {
-//                seconds = Integer.parseInt(parameter);
-//            }
-//            catch(Exception e)
-//            {
-//                e.printStackTrace();
-//            }
-//            waitSeconds(seconds);
-//        }
-            else if (action.equalsIgnoreCase("focus")) {
-                if(index>=1) {
-                    if (actionList[index - 1].)
-                        focus(parameter);
+        else if(item.getAction().equalsIgnoreCase("wait")) {
+                seconds = 0;
+                try {
+                    seconds = Integer.parseInt(item.getParameter());
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } else if (action.equalsIgnoreCase("enter")) {
-                enter(parameter);
-            } else if (action.equalsIgnoreCase("click")) {
-                click(parameter);
-            } else if (action.equalsIgnoreCase("screenshot")) {
+            }
+        else if (item.getAction().equalsIgnoreCase("focus")) {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        focus(item.getParameter());
+                    }
+                }, seconds*1000);
+
+        } else if (item.getAction().equalsIgnoreCase("enter")) {
+            enter(item.getParameter());
+        } else if (item.getAction().equalsIgnoreCase("click")) {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        click(item.getParameter());
+                    }
+                }, seconds*1000);
+        } else if (item.getAction().equalsIgnoreCase("screenshot"))
+        {
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         takeScreenshot("");
                     }
-                }, 5000);
+                }, seconds*1000);
 
             }
         }
@@ -371,4 +379,5 @@ public class AutomatedWebview extends WebView
         }
         return name;
     }
+
 }
