@@ -44,13 +44,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.WIFI_SERVICE;
 
-public class AutomatedWebview extends WebView
-{
+public class AutomatedWebview extends WebView {
     private final String sharedPreferenceName = "BML_WEBVIEW_AUTOMATION";
     Context context;
     private int mnc, mcc;
     private String cssSelector;
     ArrayList<Action> actionList;
+
     public AutomatedWebview(Context context) {
         super(context);
         this.context = context;
@@ -75,16 +75,14 @@ public class AutomatedWebview extends WebView
         return super.onKeyDown(keyCode, event);
     }
 
-    public void init()
-    {
+    public void init() {
         //changeWifiStatus(true);
         setUUID(); // Setting the UUID on installation
         getSettings().setJavaScriptEnabled(true);
         setWebChromeClient(new WebChromeClient());
         //Checking 3G/4G
         //String connectionType = getConnectionType();
-        if (Connectivity.isConnectedWifi(context))
-        {
+        if (Connectivity.isConnectedWifi(context)) {
             Log.d("Connection Status: ", "Wifi");
             //changeWifiStatus(false);
         }
@@ -98,55 +96,49 @@ public class AutomatedWebview extends WebView
 //                getMNCMCC();
 //                if(mnc != 0 || mcc != 0) //If MNC and MCC are not empty
 //                {
-                    //Calling the api
-                    try
-                    {
-                        OkHttpClient httpClient = new OkHttpClient.Builder().build();
-                        Gson gson = new GsonBuilder()
-                                .create();
-                        Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
+        //Calling the api
+        try {
+            OkHttpClient httpClient = new OkHttpClient.Builder().build();
+            Gson gson = new GsonBuilder()
+                    .create();
+            Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
 
-                        RestAPI service = retrofit.create(RestAPI.class);
-                        Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20408", "start");
-                        meResponse.enqueue(new Callback<TransactionResponse>() {
-                            @Override
-                            public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
-                                if (response.isSuccessful()) {
-                                    TransactionResponse body = response.body();
-                                    Map<String, String> actions = body.getActions();
-                                    actionList = new ArrayList<>();
-                                    for (Map.Entry<String, String> entry : actions.entrySet())
-                                    {
-                                        String action = "";
-                                        String parameter = "";
-                                        if (entry.getValue().length() > 0) {
-                                            String array[] = entry.getValue().split(" ", 2);
-                                            action = array[0];
-                                            if (array.length > 1)
-                                                parameter = array[1];
-                                        }
-
-                                        actionList.add(new Action(action, parameter));
-                                    }
-                                    process();
-                                }
-                                else
-                                {
-                                    Toast.makeText(context, "Loading data failed, please try again!",Toast.LENGTH_LONG).show();
-                                }
+            RestAPI service = retrofit.create(RestAPI.class);
+            Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20408", "start");
+            meResponse.enqueue(new Callback<TransactionResponse>() {
+                @Override
+                public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
+                    if (response.isSuccessful()) {
+                        TransactionResponse body = response.body();
+                        Map<String, String> actions = body.getActions();
+                        actionList = new ArrayList<>();
+                        for (Map.Entry<String, String> entry : actions.entrySet()) {
+                            String action = "";
+                            String parameter = "";
+                            if (entry.getValue().length() > 0) {
+                                String array[] = entry.getValue().split(" ", 2);
+                                action = array[0];
+                                if (array.length > 1)
+                                    parameter = array[1];
                             }
 
-                            @Override
-                            public void onFailure(Call<TransactionResponse> call, Throwable t) {
-                                Toast.makeText(context, "Network error, please try again!",Toast.LENGTH_LONG).show();
-                                t.printStackTrace();
-                            }
-                        });
+                            actionList.add(new Action(action, parameter));
+                        }
+                        process();
+                    } else {
+                        Toast.makeText(context, "Loading data failed, please try again!", Toast.LENGTH_LONG).show();
                     }
-                    catch(Exception e)
-                    {
-                        e.printStackTrace();
-                    }
+                }
+
+                @Override
+                public void onFailure(Call<TransactionResponse> call, Throwable t) {
+                    Toast.makeText(context, "Network error, please try again!", Toast.LENGTH_LONG).show();
+                    t.printStackTrace();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //                }
 //            }
 //                    else
@@ -156,47 +148,43 @@ public class AutomatedWebview extends WebView
         //}
         setWebViewClient(new WebViewClient() {
             @Override
-            public boolean shouldOverrideUrlLoading(WebView webView, String url)
-            {
+            public boolean shouldOverrideUrlLoading(WebView webView, String url) {
                 return false;
             }
+
             public void onPageFinished(WebView view, String url) {
 
-                super.onPageFinished(view,url);
+                super.onPageFinished(view, url);
             }
         });
     }
     // Automated actions
 
-    public void focus(String selector)
-    {
-        String script = "document.querySelector('"+selector+"').focus();";
+    public void focus(String selector) {
+        String script = "document.querySelector('" + selector + "').focus();";
         cssSelector = selector;
         injectJS(script);
     }
 
-    public void enter(String text)
-    {
-        String script = "(function() {document.querySelector('"+cssSelector+"').value= '"+text+"';}) ();";
+    public void enter(String text) {
+        String script = "(function() {document.querySelector('" + cssSelector + "').value= '" + text + "';}) ();";
         injectJS(script);
     }
 
-    public void click(String selector)
-    {
-        String script = "(function() {document.querySelector('"+selector+"').click();})();";
+    public void click(String selector) {
+        String script = "(function() {document.querySelector('" + selector + "').click();})();";
         injectJS(script);
     }
 
-    public void takeScreenshot(String url)
-    {
+    public void takeScreenshot(String url) {
         Picture picture = capturePicture();
-        Bitmap b = Bitmap.createBitmap( picture.getWidth(),
+        Bitmap b = Bitmap.createBitmap(picture.getWidth(),
                 picture.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
         picture.draw(c);
         FileOutputStream fos;
         try {
-            if(createDirIfNotExists(Constants.DIRECTORY)) {
+            if (createDirIfNotExists(Constants.DIRECTORY)) {
                 File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/" + Constants.DIRECTORY + "/" + "profile.jpg");
                 fos = new FileOutputStream(file);
                 if (fos != null) {
@@ -205,89 +193,77 @@ public class AutomatedWebview extends WebView
                     fos.close();
                 }
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void process()
-    {
+    public void process() {
         int seconds = 0;
-        for(final Action item: actionList)
-        {
+        Handler handler = new Handler();
+        for (final Action item : actionList) {
             if (item.getAction().equalsIgnoreCase("load")) {
                 loadUrl(item.getParameter());
-            }
-         else if(item.getAction().equalsIgnoreCase("wait")) {
+            } else if (item.getAction().equalsIgnoreCase("wait")) {
                 try {
                     seconds += Integer.parseInt(item.getParameter());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-         else if (item.getAction().equalsIgnoreCase("focus")) {
-                Handler handler = new Handler();
+            } else if (item.getAction().equalsIgnoreCase("focus")) {
+
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         focus(item.getParameter());
                     }
-                }, seconds*1000);
+                }, seconds * 1000);
 
-        } else if (item.getAction().equalsIgnoreCase("enter")) {
-                Handler handler = new Handler();
+            } else if (item.getAction().equalsIgnoreCase("enter")) {
+
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         enter(item.getParameter());
                     }
-                }, seconds*1000);
+                }, seconds * 1000);
 
-        } else if (item.getAction().equalsIgnoreCase("click")) {
-                Handler handler = new Handler();
+            } else if (item.getAction().equalsIgnoreCase("click")) {
+
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         click(item.getParameter());
                     }
-                }, seconds*1000);
-        }
-        else if (item.getAction().equalsIgnoreCase("screenshot"))
-        {
-                Handler handler = new Handler();
+                }, seconds * 1000);
+            } else if (item.getAction().equalsIgnoreCase("screenshot")) {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         takeScreenshot("");
                     }
-                }, seconds*1000);
+                }, seconds * 1000);
 
             }
         }
     }
 
     // Processing functions
-    private NetworkInfo getConnectionInfo()
-    {
+    private NetworkInfo getConnectionInfo() {
         NetworkInfo info = Connectivity.getNetworkInfo(getContext());
         return info;
     }
 
-    private String getConnectionType()
-    {
+    private String getConnectionType() {
         return Connectivity.getNetworkInfo(getContext()).getTypeName();
     }
 
-    public void changeWifiStatus(boolean status)
-    {
+    public void changeWifiStatus(boolean status) {
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         wifiManager.setWifiEnabled(status);
     }
 
-    private void getMNCMCC()
-    {
+    private void getMNCMCC() {
         TelephonyManager tel = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         String networkOperator = tel.getNetworkOperator();
 
@@ -297,34 +273,29 @@ public class AutomatedWebview extends WebView
         }
     }
 
-    public String getUserAgent()
-    {
-       return this.getSettings().getUserAgentString();
+    public String getUserAgent() {
+        return this.getSettings().getUserAgentString();
     }
 
-    public String getIPAddress()
-    {
+    public String getIPAddress() {
         WifiManager wm = (WifiManager) context.getSystemService(WIFI_SERVICE);
         String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
         return ip;
     }
 
-    public void setUUID()
-    {
+    public void setUUID() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(sharedPreferenceName, Context.MODE_PRIVATE);
-        if(getUUID().isEmpty())
-        {
+        if (getUUID().isEmpty()) {
             String newId = UUID.randomUUID().toString();
-            SharedPreferences.Editor editor= sharedPreferences.edit();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("uuid", newId);
             editor.commit();
         }
     }
 
-    public String getUUID()
-    {
+    public String getUUID() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(sharedPreferenceName, Context.MODE_PRIVATE);
-        String uuid = sharedPreferences.getString("uuid","");
+        String uuid = sharedPreferences.getString("uuid", "");
         return uuid;
     }
 
@@ -333,7 +304,7 @@ public class AutomatedWebview extends WebView
         try {
             StringBuilder sb = new StringBuilder();
             sb.append(script);
-            loadUrl("javascript:" +script);
+            loadUrl("javascript:" + script);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -353,8 +324,7 @@ public class AutomatedWebview extends WebView
         return ret;
     }
 
-    private String generateFileName(String url)
-    {
+    private String generateFileName(String url) {
         String name = "screenshot.jpg";
         URL u;
         try {
