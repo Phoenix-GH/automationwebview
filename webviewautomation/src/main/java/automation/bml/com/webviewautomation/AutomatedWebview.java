@@ -9,7 +9,6 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.Looper;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.Formatter;
@@ -29,8 +28,6 @@ import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -186,27 +183,23 @@ public class AutomatedWebview extends WebView
         });
     }
     // Automated actions
-    public void waitSeconds(int seconds)
-    {
-
-    }
 
     public void focus(String selector)
     {
-        String script = "document.getElementById('"+selector+"').focus();";
+        String script = "document.querySelector('"+selector+"').focus();";
         cssSelector = selector;
         injectJS(script);
     }
 
     public void enter(String text)
     {
-        String script = "(function() {document.getElementById('"+cssSelector+"').value= '"+text+"';}) ();";
+        String script = "(function() {document.querySelector('"+cssSelector+"').value= '"+text+"';}) ();";
         injectJS(script);
     }
 
     public void click(String selector)
     {
-        String script = "(function() {document.getElementById('"+selector+"').click();})();";
+        String script = "(function() {document.querySelector('"+selector+"').click();})();";
         injectJS(script);
     }
 
@@ -224,6 +217,7 @@ public class AutomatedWebview extends WebView
                 fos = new FileOutputStream(file);
                 if (fos != null) {
                     b.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                    Toast.makeText(context, "Saved screenshot!", Toast.LENGTH_LONG).show();
                     fos.close();
                 }
             }
@@ -259,7 +253,14 @@ public class AutomatedWebview extends WebView
                 }, seconds*1000);
 
         } else if (item.getAction().equalsIgnoreCase("enter")) {
-            enter(item.getParameter());
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        enter(item.getParameter());
+                    }
+                }, seconds*1000);
+
         } else if (item.getAction().equalsIgnoreCase("click")) {
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {

@@ -127,5 +127,10 @@
     <orderEntry type="library" exported="" scope="TEST" name="jsr305-2.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-core-utils-25.1.0" level="project" />
     <orderEntry type="module" module-name="webviewautomation" exported="" />
+    <orderEntry type="library" exported="" name="retrofit-2.2.0" level="project" />
+    <orderEntry type="library" exported="" name="gson-2.7" level="project" />
+    <orderEntry type="library" exported="" name="converter-gson-2.2.0" level="project" />
+    <orderEntry type="library" exported="" name="okio-1.11.0" level="project" />
+    <orderEntry type="library" exported="" name="okhttp-3.6.0" level="project" />
   </component>
 </module>
