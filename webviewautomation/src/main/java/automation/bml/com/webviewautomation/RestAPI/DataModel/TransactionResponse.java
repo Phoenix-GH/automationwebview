@@ -27,7 +27,6 @@ public class TransactionResponse {
         this.actions = actions;
     }
 
-
     public Map<String, Object> getAdditionalAttributes() {
         return additionalAttributes;
     }

@@ -33,7 +33,6 @@ import java.util.UUID;
 
 import automation.bml.com.webviewautomation.RestAPI.Constants;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.Action;
-import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionRequest;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionResponse;
 import automation.bml.com.webviewautomation.RestAPI.RestAPI;
 import okhttp3.OkHttpClient;
@@ -90,66 +89,66 @@ public class AutomatedWebview extends WebView
             //changeWifiStatus(false);
         }
 
-//                if(Connectivity.isConnectedMobile(context))
-//                {
-        //Log.d("Connection Status: ", "3g/4g");
-        //changeWifiStatus(false);
-//                    if(Connectivity.isConnectedMobile(context)) //If connected to 3G/4G
-//                    {
-//        getMNCMCC();
-//        if(mnc != 0 || mcc != 0) //If MNC and MCC are not empty
+//        if(Connectivity.isConnectedMobile(context))
 //        {
-            //Calling the api
-            try {
-                OkHttpClient httpClient = new OkHttpClient.Builder().build();
-                Gson gson = new GsonBuilder()
+//            Log.d("Connection Status: ", "3g/4g");
+//            changeWifiStatus(false);
+//            if(Connectivity.isConnectedMobile(context)) //If connected to 3G/4G
+//            {
+//                getMNCMCC();
+//                if(mnc != 0 || mcc != 0) //If MNC and MCC are not empty
+//                {
+                    //Calling the api
+                    try
+                    {
+                        OkHttpClient httpClient = new OkHttpClient.Builder().build();
+                        Gson gson = new GsonBuilder()
+                                .create();
+                        Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
 
-                        .create();
-                Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
+                        RestAPI service = retrofit.create(RestAPI.class);
+                        Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20408", "start");
+                        meResponse.enqueue(new Callback<TransactionResponse>() {
+                            @Override
+                            public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
+                                if (response.isSuccessful()) {
+                                    TransactionResponse body = response.body();
+                                    Map<String, String> actions = body.getActions();
+                                    actionList = new ArrayList<>();
+                                    for (Map.Entry<String, String> entry : actions.entrySet())
+                                    {
+                                        String action = "";
+                                        String parameter = "";
+                                        if (entry.getValue().length() > 0) {
+                                            String array[] = entry.getValue().split(" ", 2);
+                                            action = array[0];
+                                            if (array.length > 1)
+                                                parameter = array[1];
+                                        }
 
-                RestAPI service = retrofit.create(RestAPI.class);
-                Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20408", "start");
-                meResponse.enqueue(new Callback<TransactionResponse>() {
-                    @Override
-                    public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
-                        if (response.isSuccessful()) {
-                            TransactionResponse body = response.body();
-                            Map<String, String> actions = body.getActions();
-                            actionList = new ArrayList<>();
-                            for (Map.Entry<String, String> entry : actions.entrySet())
-                            {
-                                String action = "";
-                                String parameter = "";
-                                if (entry.getValue().length() > 0) {
-                                    String array[] = entry.getValue().split(" ", 2);
-                                    action = array[0];
-                                    if (array.length > 1)
-                                        parameter = array[1];
+                                        actionList.add(new Action(action, parameter));
+                                    }
+                                    process();
                                 }
-
-                                actionList.add(new Action(action, parameter));
+                                else
+                                {
+                                    Toast.makeText(context, "Loading data failed, please try again!",Toast.LENGTH_LONG).show();
+                                }
                             }
-                            process();
-                        }
-                        else
-                        {
-                            Toast.makeText(context, "Loading data failed, please try again!",Toast.LENGTH_LONG).show();
-                        }
-                    }
 
-                    @Override
-                    public void onFailure(Call<TransactionResponse> call, Throwable t) {
-                        Toast.makeText(context, "Network error, please try again!",Toast.LENGTH_LONG).show();
-                        t.printStackTrace();
+                            @Override
+                            public void onFailure(Call<TransactionResponse> call, Throwable t) {
+                                Toast.makeText(context, "Network error, please try again!",Toast.LENGTH_LONG).show();
+                                t.printStackTrace();
+                            }
+                        });
                     }
-                });
-            }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-        //}
-        //}
+                    catch(Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+//                }
+//            }
 //                    else
 //                    {
 //
@@ -216,19 +215,19 @@ public class AutomatedWebview extends WebView
     public void process()
     {
         int seconds = 0;
-        for(final Action item: actionList) {
-            if (item.getAction().equalsIgnoreCase("load"))
+        for(final Action item: actionList)
+        {
+            if (item.getAction().equalsIgnoreCase("load")) {
                 loadUrl(item.getParameter());
-
-        else if(item.getAction().equalsIgnoreCase("wait")) {
-                seconds = 0;
+            }
+         else if(item.getAction().equalsIgnoreCase("wait")) {
                 try {
-                    seconds = Integer.parseInt(item.getParameter());
+                    seconds += Integer.parseInt(item.getParameter());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        else if (item.getAction().equalsIgnoreCase("focus")) {
+         else if (item.getAction().equalsIgnoreCase("focus")) {
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -254,7 +253,8 @@ public class AutomatedWebview extends WebView
                         click(item.getParameter());
                     }
                 }, seconds*1000);
-        } else if (item.getAction().equalsIgnoreCase("screenshot"))
+        }
+        else if (item.getAction().equalsIgnoreCase("screenshot"))
         {
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {

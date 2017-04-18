@@ -64,6 +64,4 @@ public class TransactionRequest {
     {
         this.mccmnc = mccmnc;
     }
-
-
 }
