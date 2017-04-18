@@ -8,6 +8,8 @@ import android.graphics.Picture;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.Formatter;
@@ -26,6 +28,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -48,7 +52,7 @@ public class AutomatedWebview extends WebView
     Context context;
     private int mnc, mcc;
     private String cssSelector;
-
+    ArrayList<String> actionList;
     public AutomatedWebview(Context context) {
         super(context);
         this.context = context;
@@ -77,13 +81,7 @@ public class AutomatedWebview extends WebView
     {
         //changeWifiStatus(true);
         setUUID(); // Setting the UUID on installation
-        try{
-            loadUrl("https://www.google.com");
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+
         getSettings().setJavaScriptEnabled(true);
         setWebChromeClient(new WebChromeClient());
         //Checking 3G/4G
@@ -105,9 +103,9 @@ public class AutomatedWebview extends WebView
         //changeWifiStatus(false);
 //                    if(Connectivity.isConnectedMobile(context)) //If connected to 3G/4G
 //                    {
-        getMNCMCC();
-        if(mnc != 0 || mcc != 0) //If MNC and MCC are not empty
-        {
+//        getMNCMCC();
+//        if(mnc != 0 || mcc != 0) //If MNC and MCC are not empty
+//        {
             TransactionRequest request = new TransactionRequest();
             // Setting the parameters for API call
             request.setAction("start");
@@ -134,11 +132,14 @@ public class AutomatedWebview extends WebView
                         if (response.isSuccessful()) {
                             TransactionResponse body = response.body();
                             Map<String, String> actions = body.getActions();
+                            actionList = new ArrayList<>();
                             for (Map.Entry<String, String> entry : actions.entrySet())
                             {
                                 System.out.println(entry.getKey() + "/" + entry.getValue());
-                                process(entry.getValue());
+                                actionList.add(entry.getValue());
+
                             }
+                            process(actions.get("1"));
                         }
                         else
                         {
@@ -156,7 +157,7 @@ public class AutomatedWebview extends WebView
             {
                 e.printStackTrace();
             }
-        }
+        //}
         //}
 //                    else
 //                    {
@@ -178,11 +179,13 @@ public class AutomatedWebview extends WebView
     // Automated actions
     public void waitSeconds(int seconds)
     {
-        try {
-            Thread.sleep(seconds*1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Handler handler = new Handler(Looper.getMainLooper());
+        final Runnable r = new Runnable() {
+            public void run() {
+                //do your stuff here after DELAY sec
+            }
+        };
+        handler.postDelayed(r, seconds*1000);
     }
 
     public void focus(String selector)
@@ -234,7 +237,8 @@ public class AutomatedWebview extends WebView
         if(value.length()>0) {
             String array[] = value.split(" ", 2);
             action = array[0];
-            parameter = array[1];
+            if(array.length>1)
+                parameter = array[1];
         }
         if(action.equalsIgnoreCase("load"))
             loadUrl(parameter);
@@ -251,6 +255,7 @@ public class AutomatedWebview extends WebView
             waitSeconds(seconds);
         }
         else if(action.equalsIgnoreCase("focus")){
+
             focus(parameter);
         }
         else if(action.equalsIgnoreCase("enter")){
