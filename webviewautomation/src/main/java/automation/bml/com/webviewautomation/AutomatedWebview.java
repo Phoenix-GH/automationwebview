@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Picture;
+import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
@@ -42,6 +43,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.WIFI_SERVICE;
 
 public class AutomatedWebview extends WebView {
@@ -81,7 +83,9 @@ public class AutomatedWebview extends WebView {
         getSettings().setJavaScriptEnabled(true);
         setWebChromeClient(new WebChromeClient());
         //Checking 3G/4G
-        //String connectionType = getConnectionType();
+        ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         if (Connectivity.isConnectedWifi(context)) {
             Log.d("Connection Status: ", "Wifi");
             //changeWifiStatus(false);
