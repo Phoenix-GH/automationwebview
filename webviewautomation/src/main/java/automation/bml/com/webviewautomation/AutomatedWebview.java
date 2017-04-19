@@ -108,7 +108,7 @@ public class AutomatedWebview extends WebView {
                             .create();
                     Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
                     RestAPI service = retrofit.create(RestAPI.class);
-                    Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20404", "start");
+                    Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20408", "start");
                     meResponse.enqueue(new Callback<TransactionResponse>() {
                         @Override
                         public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
@@ -302,6 +302,7 @@ public class AutomatedWebview extends WebView {
             StringBuilder sb = new StringBuilder();
             sb.append(script);
             loadUrl("javascript:" + script);
+            Toast.makeText(context,String.valueOf(isForeground(context.getPackageName())), Toast.LENGTH_LONG).show();
 
         } catch (Exception e) {
             e.printStackTrace();
