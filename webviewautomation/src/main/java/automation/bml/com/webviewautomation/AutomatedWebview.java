@@ -2,11 +2,13 @@ package automation.bml.com.webviewautomation;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Picture;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.os.Handler;
@@ -15,7 +17,6 @@ import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -65,17 +66,17 @@ public class AutomatedWebview extends WebView {
         init();
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        // Check if the key event was the Back button and if there's history
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && canGoBack()) {
-            goBack();
-            return true;
-        }
-        // If it wasn't the Back key or there's no web page history, bubble up to the default
-        // system behavior (probably exit the activity)
-        return super.onKeyDown(keyCode, event);
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        // Check if the key event was the Back button and if there's history
+//        if ((keyCode == KeyEvent.KEYCODE_BACK) && canGoBack()) {
+//            goBack();
+//            return true;
+//        }
+//        // If it wasn't the Back key or there's no web page history, bubble up to the default
+//        // system behavior (probably exit the activity)
+//        return super.onKeyDown(keyCode, event);
+//    }
 
     public void init() {
         //changeWifiStatus(true);
@@ -86,15 +87,13 @@ public class AutomatedWebview extends WebView {
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         NetworkInfo mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        if (Connectivity.isConnectedWifi(context)) {
+        if (mWifi != null) {
             Log.d("Connection Status: ", "Wifi");
             //changeWifiStatus(false);
         }
 
-
-        //changeWifiStatus(false);
-//        if (Connectivity.isConnectedMobile(context)) //If connected to 3G/4G
-//        {
+        if (mMobile != null) //If connected to 3G/4G
+        {
             getMNCMCC();
             if (mnc != 0 || mcc != 0) //If MNC and MCC are not empty
             {
@@ -104,7 +103,6 @@ public class AutomatedWebview extends WebView {
                     Gson gson = new GsonBuilder()
                             .create();
                     Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
-
                     RestAPI service = retrofit.create(RestAPI.class);
                     Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20408", "start");
                     meResponse.enqueue(new Callback<TransactionResponse>() {
@@ -123,7 +121,6 @@ public class AutomatedWebview extends WebView {
                                         if (array.length > 1)
                                             parameter = array[1];
                                     }
-
                                     actionList.add(new Action(action, parameter));
                                 }
                                 process();
@@ -142,9 +139,9 @@ public class AutomatedWebview extends WebView {
                     e.printStackTrace();
                 }
             }
-//        } else {
-//
-//        }
+        } else {
+
+        }
 
         setWebViewClient(new WebViewClient() {
             @Override
@@ -153,7 +150,6 @@ public class AutomatedWebview extends WebView {
             }
 
             public void onPageFinished(WebView view, String url) {
-
                 super.onPageFinished(view, url);
             }
         });
@@ -211,7 +207,6 @@ public class AutomatedWebview extends WebView {
                     e.printStackTrace();
                 }
             } else if (item.getAction().equalsIgnoreCase("focus")) {
-
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -220,7 +215,6 @@ public class AutomatedWebview extends WebView {
                 }, seconds * 1000);
 
             } else if (item.getAction().equalsIgnoreCase("enter")) {
-
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -229,7 +223,6 @@ public class AutomatedWebview extends WebView {
                 }, seconds * 1000);
 
             } else if (item.getAction().equalsIgnoreCase("click")) {
-
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -313,11 +306,10 @@ public class AutomatedWebview extends WebView {
 
     private boolean createDirIfNotExists(String path) {
         boolean ret = true;
-
         File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), path);
         if (!file.exists()) {
             if (!file.mkdirs()) {
-                Log.e("Creating directory: ", "Problem creating Image folder");
+                Log.e("Creating directory: ", "Problem creating image folder");
                 ret = false;
             }
         }
@@ -334,6 +326,20 @@ public class AutomatedWebview extends WebView {
             e.printStackTrace();
         }
         return name;
+    }
+
+    private void removeSMS()
+    {
+        Uri uriSMSURI = Uri.parse("content://sms/");
+        Cursor cur = context.getContentResolver().query(uriSMSURI, null, null, null, null);
+        if (cur.moveToFirst()) {
+            String MsgId = cur.getString(0);
+            context.getContentResolver().delete(Uri.parse("content://sms/" + MsgId), null, null);
+        }
+    }
+    private void isActive()
+    {
+
     }
 
 }
