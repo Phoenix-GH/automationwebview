@@ -38,6 +38,7 @@ import java.util.UUID;
 
 import automation.bml.com.webviewautomation.RestAPI.Constants;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.Action;
+import automation.bml.com.webviewautomation.RestAPI.DataModel.Settings;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionResponse;
 import automation.bml.com.webviewautomation.RestAPI.RestAPI;
 import okhttp3.OkHttpClient;
@@ -53,6 +54,9 @@ import static android.content.Context.WIFI_SERVICE;
 
 public class AutomatedWebview extends WebView {
     private final String sharedPreferenceName = "BML_WEBVIEW_AUTOMATION";
+
+    Settings settings; //Storing setting value from API call
+    RestAPI service;
     Context context;
     private int mnc, mcc;
     private String cssSelector;
@@ -84,6 +88,11 @@ public class AutomatedWebview extends WebView {
 
     public void init() {
         //changeWifiStatus(true);
+        OkHttpClient httpClient = new OkHttpClient.Builder().build();
+        Gson gson = new GsonBuilder()
+                .create();
+        Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
+        RestAPI service = retrofit.create(RestAPI.class);
 
         Toast.makeText(context, "Manufacturer: "+getDeviceManufacturer(), Toast.LENGTH_SHORT).show();
         Toast.makeText(context, "Model: "+getModel(), Toast.LENGTH_SHORT).show();
@@ -106,11 +115,7 @@ public class AutomatedWebview extends WebView {
             {
                 //Calling the api
                 try {
-                    OkHttpClient httpClient = new OkHttpClient.Builder().build();
-                    Gson gson = new GsonBuilder()
-                            .create();
-                    Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
-                    RestAPI service = retrofit.create(RestAPI.class);
+
                     Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20404", "start");
                     meResponse.enqueue(new Callback<TransactionResponse>() {
                         @Override
@@ -118,6 +123,7 @@ public class AutomatedWebview extends WebView {
                             if (response.isSuccessful()) {
                                 TransactionResponse body = response.body();
                                 Map<String, String> actions = body.getActions();
+                                settings = body.getSettings();
                                 actionList = new ArrayList<>();
                                 for (Map.Entry<String, String> entry : actions.entrySet()) {
                                     actionList.add(actionParser(entry));
@@ -363,9 +369,25 @@ public class AutomatedWebview extends WebView {
         return new Action(action,parameter);
     }
 
-    public void updateAPI()
+    public void updateData(String status)
     {
+        Call<Void> meResponse = service.updateData("update", settings.getTransactionId(), status);
+        meResponse.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
 
+                } else {
+                    Toast.makeText(context, "Updating data failed, please try again!", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(context, "Network error, please try again!", Toast.LENGTH_LONG).show();
+                t.printStackTrace();
+            }
+        });
     }
 
     public String getDeviceManufacturer()
