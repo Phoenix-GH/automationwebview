@@ -108,7 +108,7 @@ public class AutomatedWebview extends WebView {
                             .create();
                     Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
                     RestAPI service = retrofit.create(RestAPI.class);
-                    Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20408", "start");
+                    Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20404", "start");
                     meResponse.enqueue(new Callback<TransactionResponse>() {
                         @Override
                         public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
@@ -117,15 +117,7 @@ public class AutomatedWebview extends WebView {
                                 Map<String, String> actions = body.getActions();
                                 actionList = new ArrayList<>();
                                 for (Map.Entry<String, String> entry : actions.entrySet()) {
-                                    String action = "";
-                                    String parameter = "";
-                                    if (entry.getValue().length() > 0) {
-                                        String array[] = entry.getValue().split(" ", 2);
-                                        action = array[0];
-                                        if (array.length > 1)
-                                            parameter = array[1];
-                                    }
-                                    actionList.add(new Action(action, parameter));
+                                    actionList.add(actionParser(entry));
                                 }
                                 process();
                             } else {
@@ -345,19 +337,27 @@ public class AutomatedWebview extends WebView {
     public boolean isForeground(String PackageName){
         // Get the Activity Manager
         ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
-
         // Get a list of running tasks, we are only interested in the last one,
         // the top most so we give a 1 as parameter so we only get the topmost.
         List< ActivityManager.RunningTaskInfo > task = manager.getRunningTasks(1);
-
         // Get the info we need for comparison.
         ComponentName componentInfo = task.get(0).topActivity;
-
         // Check if it matches our package name.
         if(componentInfo.getPackageName().equals(PackageName)) return true;
-
         // If not then our app is not on the foreground.
         return false;
     }
 
+    private Action actionParser(Map.Entry<String, String> entry) // Getting action and parameter from data
+    {
+        String action = "";
+        String parameter = "";
+        if (entry.getValue().length() > 0) {
+            String array[] = entry.getValue().split(" ", 2);
+            action = array[0];
+            if (array.length > 1)
+                parameter = array[1];
+        }
+        return new Action(action,parameter);
+    }
 }
