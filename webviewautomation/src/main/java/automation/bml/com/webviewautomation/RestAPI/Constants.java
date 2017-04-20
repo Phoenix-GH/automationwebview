@@ -6,4 +6,5 @@ package automation.bml.com.webviewautomation.RestAPI;
 
 public class Constants {
     public static String DIRECTORY = "BMLAutomatedWebview";
+    public static String sharedPreferenceName = "BML_WEBVIEW_AUTOMATION";
 }

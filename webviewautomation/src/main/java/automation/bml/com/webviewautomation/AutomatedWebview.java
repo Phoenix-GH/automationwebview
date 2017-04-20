@@ -53,7 +53,7 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.WIFI_SERVICE;
 
 public class AutomatedWebview extends WebView {
-    private final String sharedPreferenceName = "BML_WEBVIEW_AUTOMATION";
+
     Settings settings; //Storing setting value from API call
     RestAPI service;
     Context context;
@@ -81,9 +81,13 @@ public class AutomatedWebview extends WebView {
         Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
         service = retrofit.create(RestAPI.class);
 
+        //Displaying device info
         Toast.makeText(context, "Manufacturer: " + getDeviceManufacturer(), Toast.LENGTH_SHORT).show();
         Toast.makeText(context, "Model: " + getModel(), Toast.LENGTH_SHORT).show();
+
         setUUID(); // Setting the UUID on installation
+
+        //Webview settings
         getSettings().setJavaScriptEnabled(true);
         setWebChromeClient(new WebChromeClient());
 
@@ -96,8 +100,15 @@ public class AutomatedWebview extends WebView {
             changeWifiStatus(false);
             mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
             if (mMobile == null) {
-                changeWifiStatus(true);
-                updateData("UNABLE TO OBTAIN A 3G CONNECTION");
+                try {
+                    changeWifiStatus(true);
+                    updateData("UNABLE TO OBTAIN A 3G CONNECTION");
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+
+                }
             }
         }
         if (mMobile != null) //If connected to 3G/4G
@@ -151,6 +162,7 @@ public class AutomatedWebview extends WebView {
             }
         });
     }
+
     // Javascript injection for automated actions
 
     public void focus(String selector) {
@@ -281,7 +293,7 @@ public class AutomatedWebview extends WebView {
     }
 
     public void setUUID() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(sharedPreferenceName, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.sharedPreferenceName, Context.MODE_PRIVATE);
         if (getUUID().isEmpty()) {
             String newId = UUID.randomUUID().toString();
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -291,13 +303,16 @@ public class AutomatedWebview extends WebView {
     }
 
     public String getUUID() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(sharedPreferenceName, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.sharedPreferenceName, Context.MODE_PRIVATE);
         String uuid = sharedPreferences.getString("uuid", "");
         return uuid;
     }
 
     public void updateData(final String status) {
-        Call<String> meResponse = service.updateData("update", settings.getTransactionId(), status);
+        String transaction_id = "";
+        if(settings != null)
+            transaction_id = settings.getTransactionId();
+        Call<String> meResponse = service.updateData("update", transaction_id, status);
         meResponse.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
