@@ -247,7 +247,8 @@ public class AutomatedWebview extends WebView {
         return Connectivity.getNetworkInfo(getContext()).getTypeName();
     }
 
-    public void changeWifiStatus(boolean status) {
+    public void changeWifiStatus(boolean status)
+    {
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         wifiManager.setWifiEnabled(status);
     }
@@ -334,6 +335,7 @@ public class AutomatedWebview extends WebView {
             context.getContentResolver().delete(Uri.parse("content://sms/" + MsgId), null, null);
         }
     }
+
     public boolean isForeground(String PackageName){
         // Get the Activity Manager
         ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
@@ -355,8 +357,11 @@ public class AutomatedWebview extends WebView {
         if (entry.getValue().length() > 0) {
             String array[] = entry.getValue().split(" ", 2);
             action = array[0];
-            if (array.length > 1)
+            if (array.length > 1) {
                 parameter = array[1];
+                parameter = parameter.replace("\\","");
+                parameter = parameter.replace(".tsf-hp",""); //temporary code to check the parser
+            }
         }
         return new Action(action,parameter);
     }
