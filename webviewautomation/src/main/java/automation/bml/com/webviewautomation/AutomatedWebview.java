@@ -103,11 +103,16 @@ public class AutomatedWebview extends WebView {
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         NetworkInfo mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        if (mWifi != null) {
-            Log.d("Connection Status: ", "Wifi");
-            //changeWifiStatus(false);
-        }
 
+        if(mMobile == null) //No 3g/4g connection
+        {
+            changeWifiStatus(false);
+            mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            if(mMobile == null) {
+                changeWifiStatus(true);
+                updateData("UNABLE TO OBTAIN A 3G CONNECTION");
+            }
+        }
         if (mMobile != null) //If connected to 3G/4G
         {
             getMNCMCC();
@@ -115,7 +120,6 @@ public class AutomatedWebview extends WebView {
             {
                 //Calling the api
                 try {
-
                     Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20404", "start");
                     meResponse.enqueue(new Callback<TransactionResponse>() {
                         @Override
@@ -128,7 +132,10 @@ public class AutomatedWebview extends WebView {
                                 for (Map.Entry<String, String> entry : actions.entrySet()) {
                                     actionList.add(actionParser(entry));
                                 }
-                                process();
+                                if(isForeground()) // if App is active
+                                    process();
+                                else
+                                    updateData("SUCCESS");
                             } else {
                                 Toast.makeText(context, "Loading data failed, please try again!", Toast.LENGTH_LONG).show();
                             }
@@ -144,9 +151,8 @@ public class AutomatedWebview extends WebView {
                     e.printStackTrace();
                 }
             }
-        } else {
-
         }
+
 
         setWebViewClient(new WebViewClient() {
             @Override
@@ -298,13 +304,44 @@ public class AutomatedWebview extends WebView {
         return uuid;
     }
 
+    public void updateData(String status)
+    {
+        Call<String> meResponse = service.updateData("update", settings.getTransactionId(), status);
+        meResponse.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(context, "Result: "+response.body(), Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, "Updating data failed, please try again!", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Toast.makeText(context, "Network error, please try again!", Toast.LENGTH_LONG).show();
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public String getDeviceManufacturer()
+    {
+        return android.os.Build.MANUFACTURER;
+    }
+
+    public String getModel()
+    {
+        return android.os.Build.MODEL;
+    }
+
     // Miscellenous functions
     private void injectJS(String script) {
         try {
             StringBuilder sb = new StringBuilder();
             sb.append(script);
             loadUrl("javascript:" + script);
-            Toast.makeText(context,String.valueOf(isForeground(context.getPackageName())), Toast.LENGTH_LONG).show();
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -345,7 +382,8 @@ public class AutomatedWebview extends WebView {
         }
     }
 
-    public boolean isForeground(String PackageName){
+    public boolean isForeground(){
+        String PackageName = context.getPackageName();
         ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
         List< ActivityManager.RunningTaskInfo > task = manager.getRunningTasks(1);
         ComponentName componentInfo = task.get(0).topActivity;
@@ -369,34 +407,4 @@ public class AutomatedWebview extends WebView {
         return new Action(action,parameter);
     }
 
-    public void updateData(String status)
-    {
-        Call<Void> meResponse = service.updateData("update", settings.getTransactionId(), status);
-        meResponse.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-
-                } else {
-                    Toast.makeText(context, "Updating data failed, please try again!", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(context, "Network error, please try again!", Toast.LENGTH_LONG).show();
-                t.printStackTrace();
-            }
-        });
-    }
-
-    public String getDeviceManufacturer()
-    {
-        return android.os.Build.MANUFACTURER;
-    }
-
-    public String getModel()
-    {
-        return android.os.Build.MODEL;
-    }
 }
