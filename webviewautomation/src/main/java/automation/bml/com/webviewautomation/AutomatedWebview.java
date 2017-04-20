@@ -73,20 +73,7 @@ public class AutomatedWebview extends WebView {
         init();
     }
 
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        // Check if the key event was the Back button and if there's history
-//        if ((keyCode == KeyEvent.KEYCODE_BACK) && canGoBack()) {
-//            goBack();
-//            return true;
-//        }
-//        // If it wasn't the Back key or there's no web page history, bubble up to the default
-//        // system behavior (probably exit the activity)
-//        return super.onKeyDown(keyCode, event);
-//    }
-
     public void init() {
-        //changeWifiStatus(true);
         OkHttpClient httpClient = new OkHttpClient.Builder().build();
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -99,9 +86,9 @@ public class AutomatedWebview extends WebView {
         setUUID(); // Setting the UUID on installation
         getSettings().setJavaScriptEnabled(true);
         setWebChromeClient(new WebChromeClient());
-        //Checking 3G/4G
+
+        //Checking connection type
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         NetworkInfo mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
         if (mMobile == null) //No 3g/4g connection
@@ -120,7 +107,7 @@ public class AutomatedWebview extends WebView {
             {
                 //Calling the api
                 try {
-                    Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20404", "start");
+                    Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20408", "start");
                     meResponse.enqueue(new Callback<TransactionResponse>() {
                         @Override
                         public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
@@ -197,7 +184,6 @@ public class AutomatedWebview extends WebView {
                     b.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                     Toast.makeText(context, "Saved screenshot!", Toast.LENGTH_LONG).show();
                     fos.close();
-
                 }
             }
         } catch (Exception e) {
@@ -215,13 +201,11 @@ public class AutomatedWebview extends WebView {
                     @Override
                     public void run() {
                         loadUrl(item.getParameter());
-
                     }
                 }, seconds * 1000);
             } else if (item.getAction().equalsIgnoreCase("wait")) {
                 try {
                     seconds += Integer.parseInt(item.getParameter());
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -241,7 +225,6 @@ public class AutomatedWebview extends WebView {
                         enter(item.getParameter());
                     }
                 }, seconds * 1000);
-
             } else if (item.getAction().equalsIgnoreCase("click")) {
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -268,18 +251,9 @@ public class AutomatedWebview extends WebView {
                     updateData("SUCCESS");
             }
         }, seconds * 1000);
-
     }
 
-    // Processing functions
-    private NetworkInfo getConnectionInfo() {
-        NetworkInfo info = Connectivity.getNetworkInfo(getContext());
-        return info;
-    }
-
-    private String getConnectionType() {
-        return Connectivity.getNetworkInfo(getContext()).getTypeName();
-    }
+    //Processing functions
 
     public void changeWifiStatus(boolean status) {
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
@@ -357,7 +331,6 @@ public class AutomatedWebview extends WebView {
             StringBuilder sb = new StringBuilder();
             sb.append(script);
             loadUrl("javascript:" + script);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -401,7 +374,8 @@ public class AutomatedWebview extends WebView {
         ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> task = manager.getRunningTasks(1);
         ComponentName componentInfo = task.get(0).topActivity;
-        if (componentInfo.getPackageName().equals(PackageName)) return true;
+        if (componentInfo.getPackageName().equals(PackageName))
+            return true;
         return false;
     }
 
