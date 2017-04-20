@@ -84,6 +84,9 @@ public class AutomatedWebview extends WebView {
 
     public void init() {
         //changeWifiStatus(true);
+
+        Toast.makeText(context, "Manufacturer: "+getDeviceManufacturer(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Model: "+getModel(), Toast.LENGTH_SHORT).show();
         setUUID(); // Setting the UUID on installation
         getSettings().setJavaScriptEnabled(true);
         setWebChromeClient(new WebChromeClient());
@@ -150,7 +153,7 @@ public class AutomatedWebview extends WebView {
             }
         });
     }
-    // Automated actions
+    // Javascript codes for automated actions
 
     public void focus(String selector) {
         String script = "document.querySelector('" + selector + "').focus();";
@@ -337,16 +340,10 @@ public class AutomatedWebview extends WebView {
     }
 
     public boolean isForeground(String PackageName){
-        // Get the Activity Manager
         ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
-        // Get a list of running tasks, we are only interested in the last one,
-        // the top most so we give a 1 as parameter so we only get the topmost.
         List< ActivityManager.RunningTaskInfo > task = manager.getRunningTasks(1);
-        // Get the info we need for comparison.
         ComponentName componentInfo = task.get(0).topActivity;
-        // Check if it matches our package name.
         if(componentInfo.getPackageName().equals(PackageName)) return true;
-        // If not then our app is not on the foreground.
         return false;
     }
 
@@ -359,10 +356,25 @@ public class AutomatedWebview extends WebView {
             action = array[0];
             if (array.length > 1) {
                 parameter = array[1];
-                parameter = parameter.replace("\\","");
-                parameter = parameter.replace(".tsf-hp",""); //temporary code to check the parser
+                parameter = parameter.replace("\\",""); // removing brackets CSS validation
+
             }
         }
         return new Action(action,parameter);
+    }
+
+    public void updateAPI()
+    {
+
+    }
+
+    public String getDeviceManufacturer()
+    {
+        return android.os.Build.MANUFACTURER;
+    }
+
+    public String getModel()
+    {
+        return android.os.Build.MODEL;
     }
 }
