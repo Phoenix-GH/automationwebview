@@ -13,6 +13,7 @@ public interface RestAPI {
     @POST("/ifapi.php")
     Call<TransactionResponse> loadData(@Field("app_id") String app_id, @Field("install_id") String install_id, @Field("useragent") String useragent, @Field("ip") String ip, @Field("mccmnc") String mccmnc, @Field("action") String action );
 
+    @FormUrlEncoded
     @POST("/ifapi.php")
     Call<String> updateData(@Field("action") String action, @Field("transaction_id") String transaction_id, @Field("status") String status);
 }

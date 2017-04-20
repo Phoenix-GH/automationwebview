@@ -54,7 +54,6 @@ import static android.content.Context.WIFI_SERVICE;
 
 public class AutomatedWebview extends WebView {
     private final String sharedPreferenceName = "BML_WEBVIEW_AUTOMATION";
-
     Settings settings; //Storing setting value from API call
     RestAPI service;
     Context context;
@@ -90,12 +89,13 @@ public class AutomatedWebview extends WebView {
         //changeWifiStatus(true);
         OkHttpClient httpClient = new OkHttpClient.Builder().build();
         Gson gson = new GsonBuilder()
+                .setLenient()
                 .create();
         Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
-        RestAPI service = retrofit.create(RestAPI.class);
+        service = retrofit.create(RestAPI.class);
 
-        Toast.makeText(context, "Manufacturer: "+getDeviceManufacturer(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(context, "Model: "+getModel(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Manufacturer: " + getDeviceManufacturer(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Model: " + getModel(), Toast.LENGTH_SHORT).show();
         setUUID(); // Setting the UUID on installation
         getSettings().setJavaScriptEnabled(true);
         setWebChromeClient(new WebChromeClient());
@@ -104,11 +104,11 @@ public class AutomatedWebview extends WebView {
         NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         NetworkInfo mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
-        if(mMobile == null) //No 3g/4g connection
+        if (mMobile == null) //No 3g/4g connection
         {
             changeWifiStatus(false);
             mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-            if(mMobile == null) {
+            if (mMobile == null) {
                 changeWifiStatus(true);
                 updateData("UNABLE TO OBTAIN A 3G CONNECTION");
             }
@@ -132,10 +132,12 @@ public class AutomatedWebview extends WebView {
                                 for (Map.Entry<String, String> entry : actions.entrySet()) {
                                     actionList.add(actionParser(entry));
                                 }
-                                if(isForeground()) // if App is active
+
+                                if (isForeground()) // if App is active
                                     process();
                                 else
                                     updateData("WAITING");
+
                             } else {
                                 updateData("NO VALID JSON RECEIVED");
                                 Toast.makeText(context, "Loading data failed, please try again!", Toast.LENGTH_LONG).show();
@@ -151,9 +153,7 @@ public class AutomatedWebview extends WebView {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-            else
-            {
+            } else {
                 updateData("MCCMNC is empty");
             }
         }
@@ -197,6 +197,7 @@ public class AutomatedWebview extends WebView {
                     b.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                     Toast.makeText(context, "Saved screenshot!", Toast.LENGTH_LONG).show();
                     fos.close();
+
                 }
             }
         } catch (Exception e) {
@@ -207,15 +208,24 @@ public class AutomatedWebview extends WebView {
     public void process() {
         int seconds = 0;
         Handler handler = new Handler();
+        int count = 0;
         for (final Action item : actionList) {
             if (item.getAction().equalsIgnoreCase("load")) {
-                loadUrl(item.getParameter());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadUrl(item.getParameter());
+
+                    }
+                }, seconds * 1000);
             } else if (item.getAction().equalsIgnoreCase("wait")) {
                 try {
                     seconds += Integer.parseInt(item.getParameter());
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
             } else if (item.getAction().equalsIgnoreCase("focus")) {
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -248,8 +258,17 @@ public class AutomatedWebview extends WebView {
                 }, seconds * 1000);
 
             }
+            count++;
         }
-        updateData("SUCCESS");
+        final int finalCount = count;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(finalCount == actionList.size())
+                    updateData("SUCCESS");
+            }
+        }, seconds * 1000);
+
     }
 
     // Processing functions
@@ -262,8 +281,7 @@ public class AutomatedWebview extends WebView {
         return Connectivity.getNetworkInfo(getContext()).getTypeName();
     }
 
-    public void changeWifiStatus(boolean status)
-    {
+    public void changeWifiStatus(boolean status) {
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         wifiManager.setWifiEnabled(status);
     }
@@ -304,14 +322,14 @@ public class AutomatedWebview extends WebView {
         return uuid;
     }
 
-    public void updateData(String status)
-    {
+    public void updateData(final String status) {
         Call<String> meResponse = service.updateData("update", settings.getTransactionId(), status);
         meResponse.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(context, "Result: "+response.body(), Toast.LENGTH_LONG).show();
+                if (response.isSuccessful() && response.body().equalsIgnoreCase("ok")) {
+                    Toast.makeText(context, "Updated server: " + status, Toast.LENGTH_LONG).show();
+
                 } else {
                     Toast.makeText(context, "Updating data failed, please try again!", Toast.LENGTH_LONG).show();
                 }
@@ -325,13 +343,11 @@ public class AutomatedWebview extends WebView {
         });
     }
 
-    public String getDeviceManufacturer()
-    {
+    public String getDeviceManufacturer() {
         return android.os.Build.MANUFACTURER;
     }
 
-    public String getModel()
-    {
+    public String getModel() {
         return android.os.Build.MODEL;
     }
 
@@ -341,7 +357,6 @@ public class AutomatedWebview extends WebView {
             StringBuilder sb = new StringBuilder();
             sb.append(script);
             loadUrl("javascript:" + script);
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -372,8 +387,7 @@ public class AutomatedWebview extends WebView {
         return name;
     }
 
-    private void removeSMS()
-    {
+    private void removeSMS() {
         Uri uriSMSURI = Uri.parse("content://sms/");
         Cursor cur = context.getContentResolver().query(uriSMSURI, null, null, null, null);
         if (cur.moveToFirst()) {
@@ -382,12 +396,12 @@ public class AutomatedWebview extends WebView {
         }
     }
 
-    public boolean isForeground(){
+    public boolean isForeground() {
         String PackageName = context.getPackageName();
         ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
-        List< ActivityManager.RunningTaskInfo > task = manager.getRunningTasks(1);
+        List<ActivityManager.RunningTaskInfo> task = manager.getRunningTasks(1);
         ComponentName componentInfo = task.get(0).topActivity;
-        if(componentInfo.getPackageName().equals(PackageName)) return true;
+        if (componentInfo.getPackageName().equals(PackageName)) return true;
         return false;
     }
 
@@ -400,11 +414,10 @@ public class AutomatedWebview extends WebView {
             action = array[0];
             if (array.length > 1) {
                 parameter = array[1];
-                parameter = parameter.replace("\\",""); // removing brackets CSS validation
-
+                parameter = parameter.replace("\\", ""); // removing brackets CSS validation
             }
         }
-        return new Action(action,parameter);
+        return new Action(action, parameter);
     }
 
 }
