@@ -135,8 +135,9 @@ public class AutomatedWebview extends WebView {
                                 if(isForeground()) // if App is active
                                     process();
                                 else
-                                    updateData("SUCCESS");
+                                    updateData("WAITING");
                             } else {
+                                updateData("NO VALID JSON RECEIVED");
                                 Toast.makeText(context, "Loading data failed, please try again!", Toast.LENGTH_LONG).show();
                             }
                         }
@@ -151,21 +152,19 @@ public class AutomatedWebview extends WebView {
                     e.printStackTrace();
                 }
             }
+            else
+            {
+                updateData("MCCMNC is empty");
+            }
         }
 
-
         setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView webView, String url) {
-                return false;
-            }
-
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
             }
         });
     }
-    // Javascript codes for automated actions
+    // Javascript injection for automated actions
 
     public void focus(String selector) {
         String script = "document.querySelector('" + selector + "').focus();";
@@ -250,6 +249,7 @@ public class AutomatedWebview extends WebView {
 
             }
         }
+        updateData("SUCCESS");
     }
 
     // Processing functions
