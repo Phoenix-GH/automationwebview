@@ -60,7 +60,6 @@ public class AutomatedWebview extends WebView {
     private int mnc, mcc;
     private String cssSelector;
     ArrayList<Action> actionList;
-    public static final int PERMISSIONS_REQUEST_CODE_CHANGE_WIFI_STATUS = 102;
     public AutomatedWebview(Context context) {
         super(context);
         this.context = context;
@@ -74,6 +73,8 @@ public class AutomatedWebview extends WebView {
     }
 
     public void init() {
+
+        //Setting up REST api objects
         OkHttpClient httpClient = new OkHttpClient.Builder().build();
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -176,7 +177,8 @@ public class AutomatedWebview extends WebView {
         injectJS(script);
     }
 
-    public void takeScreenshot(String url) {
+    public void takeScreenshot() {
+        String fileName = generateFileName(this.getUrl());
         Picture picture = capturePicture();
         Bitmap b = Bitmap.createBitmap(picture.getWidth(),
                 picture.getHeight(), Bitmap.Config.ARGB_8888);
@@ -185,7 +187,7 @@ public class AutomatedWebview extends WebView {
         FileOutputStream fos;
         try {
             if (createDirIfNotExists(Constants.DIRECTORY)) {
-                File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/" + Constants.DIRECTORY + "/" + "profile.jpg");
+                File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/" + Constants.DIRECTORY + "/" + fileName);
                 fos = new FileOutputStream(file);
                 if (fos != null) {
                     b.compress(Bitmap.CompressFormat.JPEG, 100, fos);
@@ -243,7 +245,7 @@ public class AutomatedWebview extends WebView {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        takeScreenshot("");
+                        takeScreenshot();
                     }
                 }, seconds * 1000);
 
@@ -277,7 +279,6 @@ public class AutomatedWebview extends WebView {
         if(status)
         {
             IntentFilter intentFilter = new IntentFilter();
-            //intentFilter.addAction(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION);
             intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION) ;
             intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
             WifiReceiver receiver =  new WifiReceiver(this);
@@ -332,7 +333,6 @@ public class AutomatedWebview extends WebView {
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful() && response.body().equalsIgnoreCase("ok")) {
                     Toast.makeText(context, "Updated server: " + status, Toast.LENGTH_LONG).show();
-
                 } else {
                     Toast.makeText(context, "Updating data failed, please try again!", Toast.LENGTH_LONG).show();
                 }
@@ -354,7 +354,7 @@ public class AutomatedWebview extends WebView {
         return android.os.Build.MODEL;
     }
 
-    // Miscellenous functions
+    // miscellaneous functions
     private void injectJS(String script) {
         try {
             StringBuilder sb = new StringBuilder();
@@ -382,7 +382,7 @@ public class AutomatedWebview extends WebView {
         URL u;
         try {
             u = new URL(url);
-            name = u.getHost();
+            name = u.getHost()+".jpg";
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -400,7 +400,6 @@ public class AutomatedWebview extends WebView {
         }
         catch(Exception e)
         {
-
             e.printStackTrace();
         }
     }
