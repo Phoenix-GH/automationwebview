@@ -19,7 +19,6 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Toast;
@@ -102,14 +101,11 @@ public class AutomatedWebview extends WebView {
             mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
             if (mMobile == null) {
                 try {
-                    //showWifiDialog();
                     changeWifiStatus(true);
-                    //updateData("UNABLE TO OBTAIN A 3G CONNECTION");
                 }
                 catch(Exception e)
                 {
                     e.printStackTrace();
-
                 }
             }
         }
@@ -370,7 +366,6 @@ public class AutomatedWebview extends WebView {
         File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), path);
         if (!file.exists()) {
             if (!file.mkdirs()) {
-                Log.e("Creating directory: ", "Problem creating image folder");
                 ret = false;
             }
         }
