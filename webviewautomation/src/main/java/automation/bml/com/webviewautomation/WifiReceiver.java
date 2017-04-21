@@ -19,9 +19,9 @@ public class WifiReceiver extends BroadcastReceiver {
         super();
         this.webview = webview;
     }
+
     @Override
     public void onReceive(Context context, Intent intent) {
-
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         if(mWifi != null && mWifi.isConnected()) {

