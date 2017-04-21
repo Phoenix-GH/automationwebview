@@ -25,7 +25,7 @@
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="29093df44cadb0e6dab222b305b33f126e0190ce">
+        sha1="fe49639c31ee6961c4b96fb5a4b7586ec517a3ee">
         <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/classes_15edcedaa3c8cdb08308e63a435a7669579da72b.jar" />
     </item>
     <item
