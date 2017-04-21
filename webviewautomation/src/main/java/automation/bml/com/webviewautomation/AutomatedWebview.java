@@ -2,9 +2,11 @@ package automation.bml.com.webviewautomation;
 
 import android.Manifest;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -108,6 +110,7 @@ public class AutomatedWebview extends WebView {
             mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
             if (mMobile == null) {
                 try {
+                    //showWifiDialog();
                     changeWifiStatus(true);
                     //updateData("UNABLE TO OBTAIN A 3G CONNECTION");
                 }
@@ -162,8 +165,6 @@ public class AutomatedWebview extends WebView {
                 updateData("MCCMNC is empty");
             }
         }
-
-
     }
 
     // Javascript injection for automated actions
@@ -275,7 +276,9 @@ public class AutomatedWebview extends WebView {
         if(status)
         {
             IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION);
+            //intentFilter.addAction(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION);
+            intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION) ;
+            intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
             WifiReceiver receiver =  new WifiReceiver(this);
             context.registerReceiver(receiver, intentFilter);
         }
@@ -418,5 +421,36 @@ public class AutomatedWebview extends WebView {
         }
         return new Action(action, parameter);
     }
+    private void showWifiDialog()
+    {
+        final WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
 
+        // set title
+        alertDialogBuilder.setTitle("Wifi Settings");
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Do you want to enable WIFI ?")
+                .setCancelable(false)
+                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        //enable wifi
+                        changeWifiStatus(true);
+                    }
+                })
+                .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        //disable wifi
+                        changeWifiStatus(false);
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
 }
