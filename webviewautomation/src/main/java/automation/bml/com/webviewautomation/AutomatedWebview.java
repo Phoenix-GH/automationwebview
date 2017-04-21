@@ -1,9 +1,13 @@
 package automation.bml.com.webviewautomation;
 
+import android.Manifest;
 import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -12,8 +16,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.Formatter;
@@ -60,7 +66,7 @@ public class AutomatedWebview extends WebView {
     private int mnc, mcc;
     private String cssSelector;
     ArrayList<Action> actionList;
-
+    public static final int PERMISSIONS_REQUEST_CODE_CHANGE_WIFI_STATUS = 102;
     public AutomatedWebview(Context context) {
         super(context);
         this.context = context;
@@ -161,6 +167,8 @@ public class AutomatedWebview extends WebView {
                 super.onPageFinished(view, url);
             }
         });
+
+
     }
 
     // Javascript injection for automated actions
@@ -271,7 +279,35 @@ public class AutomatedWebview extends WebView {
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         wifiManager.setWifiEnabled(status);
     }
+    private BroadcastReceiver WifiStateChangedReceiver
+            = new BroadcastReceiver(){
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // TODO Auto-generated method stub
+
+            int extraWifiState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE ,
+                    WifiManager.WIFI_STATE_UNKNOWN);
+
+            switch(extraWifiState){
+                case WifiManager.WIFI_STATE_DISABLED:
+                    Toast.makeText(context, "WIFI STATE DISABLED",Toast.LENGTH_LONG).show();
+                    break;
+                case WifiManager.WIFI_STATE_DISABLING:
+                    Toast.makeText(context, "WIFI STATE DISABLING",Toast.LENGTH_LONG).show();
+                    break;
+                case WifiManager.WIFI_STATE_ENABLED:
+                    Toast.makeText(context, "WIFI STATE ENABLED",Toast.LENGTH_LONG).show();
+                    break;
+                case WifiManager.WIFI_STATE_ENABLING:
+                    Toast.makeText(context, "WIFI STATE ENABLING",Toast.LENGTH_LONG).show();
+                    break;
+                case WifiManager.WIFI_STATE_UNKNOWN:
+                    Toast.makeText(context, "WIFI STATE UNKNOWN",Toast.LENGTH_LONG).show();
+                    break;
+            }
+
+        }};
     private void getMNCMCC() {
         TelephonyManager tel = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         String networkOperator = tel.getNetworkOperator();

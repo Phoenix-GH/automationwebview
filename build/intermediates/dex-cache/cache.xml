@@ -25,7 +25,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="346958a7a1184c0c17eac263f405a932fbcb4f05">
+        sha1="f9fb5d5117716a392dd97fada87c8d7f356579f9">
         <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_b798190f21eaa7d2bc0306b2b7b60d53154209f3/classes.dex" />
     </item>
     <item
