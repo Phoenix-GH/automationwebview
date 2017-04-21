@@ -109,7 +109,7 @@ public class AutomatedWebview extends WebView {
             if (mMobile == null) {
                 try {
                     changeWifiStatus(true);
-                    updateData("UNABLE TO OBTAIN A 3G CONNECTION");
+                    //updateData("UNABLE TO OBTAIN A 3G CONNECTION");
                 }
                 catch(Exception e)
                 {
@@ -162,12 +162,6 @@ public class AutomatedWebview extends WebView {
                 updateData("MCCMNC is empty");
             }
         }
-
-        setWebViewClient(new WebViewClient() {
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-            }
-        });
 
 
     }
@@ -285,9 +279,7 @@ public class AutomatedWebview extends WebView {
             WifiReceiver receiver =  new WifiReceiver(this);
             context.registerReceiver(receiver, intentFilter);
         }
-        else
-            wifiManager.setWifiEnabled(status);
-
+        wifiManager.setWifiEnabled(status);
     }
 
     private void getMNCMCC() {
