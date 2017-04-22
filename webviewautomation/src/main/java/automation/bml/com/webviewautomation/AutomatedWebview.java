@@ -113,21 +113,21 @@ public class AutomatedWebview extends WebView {
 
         //Checking connection type
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-
-        if (mMobile == null) //No 3g/4g connection
+        //NetworkInfo mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        NetworkInfo info = connManager.getActiveNetworkInfo();
+        if (info.getType() == ConnectivityManager.TYPE_MOBILE) //No 3g/4g connection
         {
             changeWifiStatus(false);
-            mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-            if (mMobile == null) {
-                try {
-                    changeWifiStatus(true);
-                }
-                catch(Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
+//            mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+//            if (mMobile == null) {
+//                try {
+//                    changeWifiStatus(true);
+//                }
+//                catch(Exception e)
+//                {
+//                    e.printStackTrace();
+//                }
+//            }
         }
         if (mMobile != null) //If connected to 3G/4G
         {
@@ -274,7 +274,7 @@ public class AutomatedWebview extends WebView {
             public void run() {
                 removeSMS();
             }
-        }, seconds * 1000+100);
+        }, seconds * 1000);
 
         //Updating server
         final int finalCount = count;
