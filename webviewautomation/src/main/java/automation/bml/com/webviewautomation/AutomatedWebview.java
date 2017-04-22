@@ -10,16 +10,19 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Picture;
 import android.net.ConnectivityManager;
+import android.net.Network;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -74,6 +77,7 @@ public class AutomatedWebview extends WebView {
         init();
     }
 
+
     public void init() {
 
         //Setting up REST api objects
@@ -114,23 +118,27 @@ public class AutomatedWebview extends WebView {
         //Checking connection type
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
         //NetworkInfo mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        NetworkInfo info = connManager.getActiveNetworkInfo();
-        if (info.getType() == ConnectivityManager.TYPE_MOBILE) //No 3g/4g connection
-        {
-            changeWifiStatus(false);
-//            mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-//            if (mMobile == null) {
-//                try {
-//                    changeWifiStatus(true);
-//                }
-//                catch(Exception e)
-//                {
-//                    e.printStackTrace();
-//                }
-//            }
+        Network[] networks;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            networks = connManager.getAllNetworks();
+            Log.d("Stop",networks.toString());
         }
-        if (mMobile != null) //If connected to 3G/4G
-        {
+//        if (info.getType() == ConnectivityManager.TYPE_MOBILE) //No 3g/4g connection
+//        {
+//            changeWifiStatus(false);
+////            mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+////            if (mMobile == null) {
+////                try {
+////                    changeWifiStatus(true);
+////                }
+////                catch(Exception e)
+////                {
+////                    e.printStackTrace();
+////                }
+////            }
+//        }
+        //if (mMobile != null) //If connected to 3G/4G
+        //{
             getMNCMCC(); //generating mnc & mcc
             if (mnc != 0 || mcc != 0) //If MNC and MCC are not empty
             {
@@ -172,7 +180,7 @@ public class AutomatedWebview extends WebView {
             } else {
                 updateData("MCCMNC is empty");
             }
-        }
+       // }
     }
 
     // Javascript injection for automated actions
