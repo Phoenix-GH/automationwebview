@@ -115,30 +115,22 @@ public class AutomatedWebview extends WebView {
             });
         }
 
-        //Checking connection type
-        ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
-        //NetworkInfo mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        Network[] networks;
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            networks = connManager.getAllNetworks();
-            Log.d("Stop",networks.toString());
+        if (!is3gConnected()) //No 3g/4g connection
+        {
+            changeWifiStatus(false);
+            if (!is3gConnected()) {
+                try {
+                    changeWifiStatus(true);
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
         }
-//        if (info.getType() == ConnectivityManager.TYPE_MOBILE) //No 3g/4g connection
-//        {
-//            changeWifiStatus(false);
-////            mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-////            if (mMobile == null) {
-////                try {
-////                    changeWifiStatus(true);
-////                }
-////                catch(Exception e)
-////                {
-////                    e.printStackTrace();
-////                }
-////            }
-//        }
-        //if (mMobile != null) //If connected to 3G/4G
-        //{
+
+        if (is3gConnected()) //If connected to 3G/4G
+        {
             getMNCMCC(); //generating mnc & mcc
             if (mnc != 0 || mcc != 0) //If MNC and MCC are not empty
             {
@@ -180,7 +172,7 @@ public class AutomatedWebview extends WebView {
             } else {
                 updateData("MCCMNC is empty");
             }
-       // }
+        }
     }
 
     // Javascript injection for automated actions
@@ -296,6 +288,33 @@ public class AutomatedWebview extends WebView {
     }
 
     //Processing functions
+    private boolean is3gConnected()
+    {
+        //Checking connection type
+        ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
+        boolean is3gEnabled = false;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Network[] networks = connManager.getAllNetworks();
+            for(Network network: networks)
+            {
+                NetworkInfo info = connManager.getNetworkInfo(network);
+                if(info!=null) {
+                    if (info.getType() == ConnectivityManager.TYPE_MOBILE) {
+                        is3gEnabled = true;
+                        break;
+                    }
+                }
+            }
+            Log.d("Stop",networks.toString());
+        }
+        else
+        {
+            NetworkInfo mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            if(mMobile!=null)
+                is3gEnabled = true;
+        }
+        return is3gEnabled;
+    }
 
     public void changeWifiStatus(boolean status) {
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
