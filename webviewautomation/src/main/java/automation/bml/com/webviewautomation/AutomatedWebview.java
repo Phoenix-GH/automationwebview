@@ -21,6 +21,7 @@ import android.text.format.Formatter;
 import android.util.AttributeSet;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -90,6 +91,16 @@ public class AutomatedWebview extends WebView {
         //Webview settings
         getSettings().setJavaScriptEnabled(true);
         setWebChromeClient(new WebChromeClient());
+        setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView webView, String url) {
+                return false;
+            }
+
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+            }
+        });
 
         //Checking connection type
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
