@@ -10,13 +10,12 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" line="211" />
+    <bookmark url="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" line="206" />
     <bookmark url="file://$PROJECT_DIR$/app/src/main/java/automation/bml/com/webviewautomation/MainActivity.java" line="11" />
-    <bookmark url="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" line="216" />
+    <bookmark url="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" line="211" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55852e9a-1cb2-4c57-ac8d-ae22936dfd9a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" afterPath="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" />
     </list>
     <ignored path="automationwebview.iws" />
@@ -54,10 +53,12 @@
           <file leaf-file-name="AutomatedWebview.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="315">
-                  <caret line="55" column="51" selection-start-line="55" selection-start-column="51" selection-end-line="55" selection-end-column="51" />
+                <state relative-caret-position="-413">
+                  <caret line="391" column="31" selection-start-line="391" selection-start-column="31" selection-end-line="391" selection-end-column="31" />
                   <folding>
                     <element signature="imports" expanded="true" />
+                    <element signature="e#9906#10029#0" expanded="true" />
+                    <element signature="e#10028#10029#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -110,21 +111,21 @@
                 <state relative-caret-position="165">
                   <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
                   <folding>
-                    <element signature="e#8447#8448#0" expanded="false" />
-                    <element signature="e#8523#8524#0" expanded="false" />
-                    <element signature="e#9011#9012#0" expanded="false" />
-                    <element signature="e#9085#9086#0" expanded="false" />
-                    <element signature="e#9314#9315#0" expanded="false" />
-                    <element signature="e#9388#9389#0" expanded="false" />
-                    <element signature="e#9616#9617#0" expanded="false" />
-                    <element signature="e#9690#9691#0" expanded="false" />
-                    <element signature="e#9923#9924#0" expanded="false" />
-                    <element signature="e#9987#9988#0" expanded="false" />
-                    <element signature="e#10196#10197#0" expanded="false" />
-                    <element signature="e#10239#10240#0" expanded="false" />
-                    <marker date="1492897061000" expanded="true" signature="2470:6545" ph="{...}" />
-                    <marker date="1492897061000" expanded="true" signature="4053:4299" ph="//..." />
-                    <marker date="1492897061000" expanded="true" signature="4319:4373" ph="//..." />
+                    <element signature="e#8226#8227#0" expanded="false" />
+                    <element signature="e#8302#8303#0" expanded="false" />
+                    <element signature="e#8790#8791#0" expanded="false" />
+                    <element signature="e#8864#8865#0" expanded="false" />
+                    <element signature="e#9093#9094#0" expanded="false" />
+                    <element signature="e#9167#9168#0" expanded="false" />
+                    <element signature="e#9395#9396#0" expanded="false" />
+                    <element signature="e#9469#9470#0" expanded="false" />
+                    <element signature="e#9702#9703#0" expanded="false" />
+                    <element signature="e#9766#9767#0" expanded="false" />
+                    <element signature="e#9975#9976#0" expanded="false" />
+                    <element signature="e#10018#10019#0" expanded="false" />
+                    <marker date="1492898249000" expanded="true" signature="2471:6324" ph="{...}" />
+                    <marker date="1492898249000" expanded="true" signature="4055:4270" ph="//..." />
+                    <marker date="1492898249000" expanded="true" signature="4290:4344" ph="//..." />
                   </folding>
                 </state>
               </provider>
@@ -3688,37 +3689,31 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java</url>
-          <line>162</line>
+          <line>159</line>
           <properties />
           <option name="timeStamp" value="148" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java</url>
-          <line>167</line>
-          <properties />
-          <option name="timeStamp" value="150" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java</url>
-          <line>381</line>
+          <line>371</line>
           <properties />
           <option name="timeStamp" value="173" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java</url>
-          <line>375</line>
+          <line>365</line>
           <properties />
           <option name="timeStamp" value="174" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java</url>
-          <line>124</line>
+          <line>122</line>
           <properties />
           <option name="timeStamp" value="180" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java</url>
-          <line>212</line>
+          <line>207</line>
           <properties />
           <option name="timeStamp" value="190" />
         </line-breakpoint>
@@ -3803,6 +3798,8 @@
           <caret line="80" column="21" selection-start-line="80" selection-start-column="21" selection-end-line="80" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9906#10029#0" expanded="true" />
+            <element signature="e#10028#10029#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4061,10 +4058,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="55" column="51" selection-start-line="55" selection-start-column="51" selection-end-line="55" selection-end-column="51" />
+        <state relative-caret-position="-413">
+          <caret line="391" column="31" selection-start-line="391" selection-start-column="31" selection-end-line="391" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9906#10029#0" expanded="true" />
+            <element signature="e#10028#10029#0" expanded="true" />
           </folding>
         </state>
       </provider>

