@@ -17,12 +17,10 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.annotation.RequiresApi;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -305,7 +303,6 @@ public class AutomatedWebview extends WebView {
                     }
                 }
             }
-            Log.d("Stop",networks.toString());
         }
         else
         {
