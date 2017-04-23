@@ -14,19 +14,19 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 
 public class WifiReceiver extends BroadcastReceiver {
     AutomatedWebview webview;
-    boolean is3gDisabled = false;
-    public WifiReceiver(AutomatedWebview webview,boolean is3gDisabled)
+    boolean isMobileEnabled = false;
+    public WifiReceiver(AutomatedWebview webview,boolean isMobileEnabled)
     {
         super();
         this.webview = webview;
-        this.is3gDisabled = is3gDisabled;
+        this.isMobileEnabled = isMobileEnabled;
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if(mWifi != null && mWifi.isConnected() && is3gDisabled) {
+        if(mWifi != null && mWifi.isConnected() && isMobileEnabled) {
             webview.updateData("UNABLE TO OBTAIN A 3G CONNECTION");
         }
     }

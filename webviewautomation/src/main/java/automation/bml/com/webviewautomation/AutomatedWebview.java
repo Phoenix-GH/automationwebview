@@ -115,10 +115,10 @@ public class AutomatedWebview extends WebView {
             });
         }
 
-        if (!is3gConnected()) //No 3g/4g connection
+        if (!isMobileConnected()) //No 3g/4g connection
         {
             changeWifiStatus(false);
-            if (!is3gConnected()) {
+            if (!isMobileConnected()) {
                 try {
                     changeWifiStatus(true);
                 } catch (Exception e) {
@@ -127,7 +127,7 @@ public class AutomatedWebview extends WebView {
             }
         }
 
-        if (is3gConnected()) //If connected to 3G/4G
+        if (isMobileConnected()) //If connected to 3G/4G
         {
             getMNCMCC(); //generating mnc & mcc
             if (mnc != 0 || mcc != 0) //If MNC and MCC are not empty
@@ -279,21 +279,21 @@ public class AutomatedWebview extends WebView {
                 if (finalCount == actionList.size())
                     updateData("SUCCESS");
             }
-        }, seconds * 1000 + 200);
+        }, seconds * 1000 + 20);
     }
 
     //Processing functions
 
-    private boolean is3gConnected() {
+    private boolean isMobileConnected() {
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
-        boolean is3gEnabled = false;
+        boolean isMobileEnabled = false;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Network[] networks = connManager.getAllNetworks();
             for (Network network : networks) {
                 NetworkInfo info = connManager.getNetworkInfo(network);
                 if (info != null) {
                     if (info.getType() == ConnectivityManager.TYPE_MOBILE) {
-                        is3gEnabled = true;
+                        isMobileEnabled = true;
                         break;
                     }
                 }
@@ -301,9 +301,9 @@ public class AutomatedWebview extends WebView {
         } else {
             NetworkInfo mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
             if (mMobile != null)
-                is3gEnabled = true;
+                isMobileEnabled = true;
         }
-        return is3gEnabled;
+        return isMobileEnabled;
     }
 
     public void changeWifiStatus(boolean status) {
