@@ -21,6 +21,7 @@ import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -114,7 +115,10 @@ public class AutomatedWebview extends WebView {
                 }
             });
         }
-
+        if(isForeground())
+        {
+            Log.d("version", "testing version");
+        }
         if (!isMobileConnected()) //No 3g/4g connection
         {
             changeWifiStatus(false);
@@ -447,8 +451,18 @@ public class AutomatedWebview extends WebView {
     public boolean isForeground() {
         String PackageName = context.getPackageName();
         ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> task = manager.getRunningTasks(1);
-        ComponentName componentInfo = task.get(0).topActivity;
+        ComponentName componentInfo;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            List<ActivityManager.AppTask> tasks = manager.getAppTasks();
+            componentInfo = tasks.get(0).getTaskInfo().topActivity;
+        }
+        else
+        {
+            List<ActivityManager.RunningTaskInfo> tasks = manager.getRunningTasks(1);
+            componentInfo = tasks.get(0).topActivity;
+        }
+
         if (componentInfo.getPackageName().equals(PackageName))
             return true;
         return false;
