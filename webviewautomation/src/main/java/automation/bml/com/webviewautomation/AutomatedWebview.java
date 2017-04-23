@@ -20,7 +20,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.text.format.Formatter;
 import android.util.AttributeSet;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -37,6 +36,7 @@ import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -333,19 +333,21 @@ public class AutomatedWebview extends WebView {
     }
 
     public String getIPAddress() {
-//
-        WifiManager wm = (WifiManager) context.getSystemService(WIFI_SERVICE);
-//        InetAddress inet = new InetAddress();
-//        String ip = InetAddress
-//       // String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-//        return ip;
 
+        WifiManager wm = (WifiManager) context.getSystemService(WIFI_SERVICE);
         WifiInfo wifiinfo = wm.getConnectionInfo();
         byte[] myIPAddress = BigInteger.valueOf(wifiinfo.getIpAddress()).toByteArray();
-// you must reverse the byte array before conversion. Use Apache's commons library
-        ArrayUtils.reverse(myIPAddress);
-        InetAddress myInetIP = InetAddress.getByAddress(myIPAddress);
-        String myIP = myInetIP.getHostAddress();
+        reverseArray(myIPAddress);
+        String myIP = "";
+        InetAddress myInetIP = null;
+        try {
+            myInetIP = InetAddress.getByAddress(myIPAddress);
+            myIP = myInetIP.getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return myIP;
+
     }
 
     public void setUUID() {
@@ -465,5 +467,16 @@ public class AutomatedWebview extends WebView {
             }
         }
         return new Action(action, parameter);
+    }
+
+    private byte[] reverseArray(byte[] array) //needed a tweak with great performance for replacing deprecated solution
+    {
+        for(int i = 0; i < array.length / 2; i++)
+        {
+            byte temp = array[i];
+            array[i] = array[array.length - i - 1];
+            array[array.length - i - 1] = temp;
+        }
+        return array;
     }
 }
