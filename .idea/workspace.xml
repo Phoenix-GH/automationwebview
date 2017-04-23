@@ -16,8 +16,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55852e9a-1cb2-4c57-ac8d-ae22936dfd9a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/android-profile/profile-2017-04-23-23-35-40-750.rawproto" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/android-profile/profile-2017-04-23-23-36-56-803.rawproto" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
@@ -29,8 +27,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_webviewautomation_compileReleaseJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_webviewautomation_compileReleaseJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_webviewautomation_compileReleaseJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_webviewautomation_compileReleaseJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" afterPath="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/WifiReceiver.java" afterPath="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/WifiReceiver.java" />
     </list>
     <ignored path="automationwebview.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -61,14 +58,14 @@
     <favorites_list name="automationwebview" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6662388">
+    <splitter split-orientation="horizontal" split-proportion="0.49422336">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="AutomatedWebview.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="506">
-                  <caret line="488" column="9" selection-start-line="488" selection-start-column="9" selection-end-line="488" selection-end-column="9" />
+                <state relative-caret-position="416">
+                  <caret line="304" column="9" selection-start-line="288" selection-start-column="8" selection-end-line="304" selection-end-column="9" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="e#3475#3750#0" expanded="true" />
@@ -150,8 +147,8 @@
           <file leaf-file-name="WifiReceiver.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/WifiReceiver.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="495">
-                  <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+                <state relative-caret-position="450">
+                  <caret line="47" column="9" selection-start-line="47" selection-start-column="9" selection-end-line="47" selection-end-column="9" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -2846,8 +2843,8 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/webviewautomation/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/Helper.java" />
-        <option value="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/WifiReceiver.java" />
         <option value="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" />
+        <option value="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/WifiReceiver.java" />
       </list>
     </option>
   </component>
@@ -3754,7 +3751,7 @@
           <option name="timeStamp" value="208" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="209" />
+      <option name="time" value="211" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="app">
@@ -3814,13 +3811,21 @@
         <state relative-caret-position="1200">
           <caret line="80" column="21" selection-start-line="80" selection-start-column="21" selection-end-line="80" selection-end-column="21" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3475#3750#0" expanded="true" />
-            <element signature="e#3749#3750#0" expanded="true" />
-            <element signature="e#3799#4034#0" expanded="true" />
-            <element signature="e#4033#4034#0" expanded="true" />
-            <element signature="e#10000#10123#0" expanded="true" />
-            <element signature="e#10122#10123#0" expanded="true" />
+            <element signature="e#8320#8321#0" expanded="false" />
+            <element signature="e#8396#8397#0" expanded="false" />
+            <element signature="e#8884#8885#0" expanded="false" />
+            <element signature="e#8958#8959#0" expanded="false" />
+            <element signature="e#9187#9188#0" expanded="false" />
+            <element signature="e#9261#9262#0" expanded="false" />
+            <element signature="e#9489#9490#0" expanded="false" />
+            <element signature="e#9563#9564#0" expanded="false" />
+            <element signature="e#9796#9797#0" expanded="false" />
+            <element signature="e#9860#9861#0" expanded="false" />
+            <element signature="e#10069#10070#0" expanded="false" />
+            <element signature="e#10112#10113#0" expanded="false" />
+            <marker date="1492983553000" expanded="true" signature="2562:6328" ph="{...}" />
+            <marker date="1492983553000" expanded="true" signature="4150:4369" ph="//..." />
+            <marker date="1492983553000" expanded="true" signature="4389:4447" ph="//..." />
           </folding>
         </state>
       </provider>
@@ -4081,28 +4086,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/WifiReceiver.java">
+    <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+        <state relative-caret-position="165">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#8320#8321#0" expanded="false" />
+            <element signature="e#8396#8397#0" expanded="false" />
+            <element signature="e#8884#8885#0" expanded="false" />
+            <element signature="e#8958#8959#0" expanded="false" />
+            <element signature="e#9187#9188#0" expanded="false" />
+            <element signature="e#9261#9262#0" expanded="false" />
+            <element signature="e#9489#9490#0" expanded="false" />
+            <element signature="e#9563#9564#0" expanded="false" />
+            <element signature="e#9796#9797#0" expanded="false" />
+            <element signature="e#9860#9861#0" expanded="false" />
+            <element signature="e#10069#10070#0" expanded="false" />
+            <element signature="e#10112#10113#0" expanded="false" />
+            <marker date="1492983553000" expanded="true" signature="2562:6328" ph="{...}" />
+            <marker date="1492983553000" expanded="true" signature="4150:4369" ph="//..." />
+            <marker date="1492983553000" expanded="true" signature="4389:4447" ph="//..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java">
+    <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/WifiReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="488" column="9" selection-start-line="488" selection-start-column="9" selection-end-line="488" selection-end-column="9" />
+        <state relative-caret-position="450">
+          <caret line="47" column="9" selection-start-line="47" selection-start-column="9" selection-end-line="47" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3475#3750#0" expanded="true" />
-            <element signature="e#3749#3750#0" expanded="true" />
-            <element signature="e#3799#4034#0" expanded="true" />
-            <element signature="e#4033#4034#0" expanded="true" />
-            <element signature="e#10000#10123#0" expanded="true" />
-            <element signature="e#10122#10123#0" expanded="true" />
           </folding>
         </state>
       </provider>
