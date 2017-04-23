@@ -13,6 +13,7 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
@@ -32,6 +33,8 @@ import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.math.BigInteger;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -146,11 +149,10 @@ public class AutomatedWebview extends WebView {
                             if (isForeground()) // if App is active
                                 process();
                             else
-                                updateData("WAITING"); //Update server status
+                                updateData("WAITING"); //Update server status with 'WAITING' status
 
                         } else {
                             updateData("NO VALID JSON RECEIVED");
-                            Toast.makeText(context, "Loading data failed, please try again!", Toast.LENGTH_LONG).show();
                         }
                     }
 
@@ -204,6 +206,7 @@ public class AutomatedWebview extends WebView {
                 }
             }
         } catch (Exception e) {
+            Toast.makeText(context,"Saving screenshot failed!",Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }
@@ -330,9 +333,19 @@ public class AutomatedWebview extends WebView {
     }
 
     public String getIPAddress() {
+//
         WifiManager wm = (WifiManager) context.getSystemService(WIFI_SERVICE);
-        String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-        return ip;
+//        InetAddress inet = new InetAddress();
+//        String ip = InetAddress
+//       // String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+//        return ip;
+
+        WifiInfo wifiinfo = wm.getConnectionInfo();
+        byte[] myIPAddress = BigInteger.valueOf(wifiinfo.getIpAddress()).toByteArray();
+// you must reverse the byte array before conversion. Use Apache's commons library
+        ArrayUtils.reverse(myIPAddress);
+        InetAddress myInetIP = InetAddress.getByAddress(myIPAddress);
+        String myIP = myInetIP.getHostAddress();
     }
 
     public void setUUID() {
@@ -362,7 +375,7 @@ public class AutomatedWebview extends WebView {
                 if (response.isSuccessful() && response.body().equalsIgnoreCase("ok")) {
                     Toast.makeText(context, "Updated server: " + status, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(context, "Updating data failed, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Updating data failed!", Toast.LENGTH_LONG).show();
                 }
             }
 
