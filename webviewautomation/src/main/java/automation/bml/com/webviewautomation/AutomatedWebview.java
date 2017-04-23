@@ -76,7 +76,6 @@ public class AutomatedWebview extends WebView {
         init();
     }
 
-
     public void init() {
         //Setting up REST api objects
         OkHttpClient httpClient = new OkHttpClient.Builder().build();
