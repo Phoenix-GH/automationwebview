@@ -3,6 +3,7 @@ package automation.bml.com.webviewautomation;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -288,7 +289,6 @@ public class AutomatedWebview extends WebView {
     }
 
     //Processing functions
-
     private boolean isMobileConnected() {
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
         boolean isMobileEnabled = false;
@@ -338,7 +338,6 @@ public class AutomatedWebview extends WebView {
     }
 
     public String getIPAddress() {
-
         WifiManager wm = (WifiManager) context.getSystemService(WIFI_SERVICE);
         WifiInfo wifiinfo = wm.getConnectionInfo();
         byte[] myIPAddress = BigInteger.valueOf(wifiinfo.getIpAddress()).toByteArray();
@@ -352,7 +351,6 @@ public class AutomatedWebview extends WebView {
             e.printStackTrace();
         }
         return myIP;
-
     }
 
     public void setUUID() {
@@ -382,6 +380,7 @@ public class AutomatedWebview extends WebView {
                 if (response.isSuccessful() && response.body().equalsIgnoreCase("ok")) {
                     Toast.makeText(context, "Updated server: " + status, Toast.LENGTH_LONG).show();
                 } else {
+
                     Toast.makeText(context, "Updating data failed!", Toast.LENGTH_LONG).show();
                 }
             }
@@ -493,5 +492,12 @@ public class AutomatedWebview extends WebView {
             array[array.length - i - 1] = temp;
         }
         return array;
+    }
+
+    private void sendSMS(String phoneNumber, String message)
+    {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + phoneNumber));
+        intent.putExtra("sms_body", message);
+        context.startActivity(intent);
     }
 }
