@@ -1,41 +1,26 @@
 package automation.bml.com.webviewautomation.RestAPI.DataModel;
 
-import java.util.Map;
-
 /**
  * Created by krzysztof on 4/12/17.
  */
 public class Settings {
-    private String interceptMsisdn;
-    private String transactionId;
-    private Map<String, Object> additionalAttributes;
-
-    public Settings()
-    {
-
-    }
+    private String intercept_msisdn;
+    private String transaction_id;
 
     public String getInterceptMsisdn() {
-        return interceptMsisdn;
+        return intercept_msisdn;
     }
 
     public void setInterceptMsisdn(String interceptMsisdn) {
-        this.interceptMsisdn = interceptMsisdn;
+        this.intercept_msisdn = intercept_msisdn;
     }
 
     public String getTransactionId() {
-        return transactionId;
+        return transaction_id;
+    }
+    public void setTransactionId(String transaction_id) {
+        this.transaction_id = transaction_id;
     }
 
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
-    public Map<String, Object> getAdditionalAttributes() {
-        return additionalAttributes;
-    }
-
-    public void setAdditionalAttributes(Map<String, Object> additionalAttributes) {
-        this.additionalAttributes = additionalAttributes;
-    }
 }
 

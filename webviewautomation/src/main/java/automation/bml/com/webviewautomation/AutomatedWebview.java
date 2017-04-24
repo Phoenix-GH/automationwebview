@@ -141,7 +141,7 @@ public class AutomatedWebview extends WebView {
                         if (response.isSuccessful()) {
                             TransactionResponse body = response.body();
                             Map<String, String> actions = body.getActions();
-                            settings = new Settings();
+
                             settings = body.getSettings(); //Storing settings value for update
                             actionList = new ArrayList<>();
                             for (Map.Entry<String, String> entry : actions.entrySet()) {
