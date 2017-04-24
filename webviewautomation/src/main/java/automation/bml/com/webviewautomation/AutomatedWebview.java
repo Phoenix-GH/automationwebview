@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Picture;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
@@ -97,6 +96,7 @@ public class AutomatedWebview extends WebView {
         //Webview settings
         getSettings().setJavaScriptEnabled(true);
         setWebChromeClient(new WebChromeClient());
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             setWebViewClient(new WebViewClient() {
                 @Override
@@ -188,10 +188,15 @@ public class AutomatedWebview extends WebView {
     }
 
     public void takeScreenshot() {
+        measure(MeasureSpec.makeMeasureSpec(
+                MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED),
+                MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+        setDrawingCacheEnabled(true);
+        buildDrawingCache();
         String fileName = generateFileName(this.getUrl());
 
         //Picture picture = capturePicture();
-        Bitmap b = Bitmap.createBitmap(getWidth(),getContentHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap b = Bitmap.createBitmap(getMeasuredWidth(),getMeasuredHeight(), Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
         draw(c);
         FileOutputStream fos;
