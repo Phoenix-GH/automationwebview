@@ -47,7 +47,10 @@ import automation.bml.com.webviewautomation.RestAPI.DataModel.Action;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.Settings;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionResponse;
 import automation.bml.com.webviewautomation.RestAPI.RestAPI;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -146,7 +149,6 @@ public class AutomatedWebview extends WebView {
                             for (Map.Entry<String, String> entry : actions.entrySet()) {
                                 actionList.add(actionParser(entry));
                             }
-
                             if (isForeground()) // if App is active
                                 process();
                             else
@@ -209,6 +211,28 @@ public class AutomatedWebview extends WebView {
                     b.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                     Toast.makeText(context, "Saved screenshot!", Toast.LENGTH_LONG).show();
                     fos.close();
+
+                    RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+                    MultipartBody.Part body = MultipartBody.Part.createFormData("upload", file.getName(), reqFile);
+                    Call<String> meResponse = service.postScreenShot(body);
+                    meResponse.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            if (response.isSuccessful() && response.body().equalsIgnoreCase("success")) {
+                                Toast.makeText(context, "Posted screenshot!", Toast.LENGTH_LONG).show();
+                            } else {
+
+                                Toast.makeText(context, "Uploading screenshot failed!", Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Toast.makeText(context, "Network error, please try again!", Toast.LENGTH_LONG).show();
+                            t.printStackTrace();
+                        }
+                    });
+
                 }
             }
         } catch (Exception e) {
@@ -494,10 +518,4 @@ public class AutomatedWebview extends WebView {
         return array;
     }
 
-    private void sendSMS(String phoneNumber, String message)
-    {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + phoneNumber));
-        intent.putExtra("sms_body", message);
-        context.startActivity(intent);
-    }
 }

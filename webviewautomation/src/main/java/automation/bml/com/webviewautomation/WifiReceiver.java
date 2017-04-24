@@ -44,7 +44,6 @@ public class WifiReceiver extends BroadcastReceiver {
             info = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             if (info != null)
                 isWifiEnabled = true;
-            
         }
        
         if(isWifiEnabled)
