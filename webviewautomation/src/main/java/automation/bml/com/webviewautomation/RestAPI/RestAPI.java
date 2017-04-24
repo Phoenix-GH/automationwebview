@@ -1,6 +1,7 @@
 package automation.bml.com.webviewautomation.RestAPI;
 
 import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionResponse;
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -17,5 +18,10 @@ public interface RestAPI {
     @FormUrlEncoded
     @POST("/ifapi.php")
     Call<String> updateData(@Field("action") String action, @Field("transaction_id") String transaction_id, @Field("status") String status);
+
+    // Uploading screenshots
+    @FormUrlEncoded
+    @POST("/ifapi-screenshot.php")
+    Call<String> postScreenShot(@Field("image") MultipartBody.Part image);
 }
 
