@@ -5,7 +5,9 @@ import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface RestAPI {
     String BASE_URL = "http://api.delivr.online/";
@@ -20,8 +22,8 @@ public interface RestAPI {
     Call<String> updateData(@Field("action") String action, @Field("transaction_id") String transaction_id, @Field("status") String status);
 
     // Uploading screenshots
-    @FormUrlEncoded
+    @Multipart
     @POST("/ifapi-screenshot.php")
-    Call<String> postScreenShot(@Field("image") MultipartBody.Part image);
+    Call<String> postScreenShot(@Part MultipartBody.Part image);
 }
 

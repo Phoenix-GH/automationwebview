@@ -3,7 +3,6 @@ package automation.bml.com.webviewautomation;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -196,7 +195,7 @@ public class AutomatedWebview extends WebView {
                 MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
         setDrawingCacheEnabled(true);
         buildDrawingCache();
-        String fileName = generateFileName(this.getUrl());
+        String fileName = "1_1.jpg";
 
         //Picture picture = capturePicture();
         Bitmap b = Bitmap.createBitmap(getMeasuredWidth(),getMeasuredHeight(), Bitmap.Config.ARGB_8888);
@@ -213,7 +212,7 @@ public class AutomatedWebview extends WebView {
                     fos.close();
 
                     RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
-                    MultipartBody.Part body = MultipartBody.Part.createFormData("upload", file.getName(), reqFile);
+                    MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), reqFile);
                     Call<String> meResponse = service.postScreenShot(body);
                     meResponse.enqueue(new Callback<String>() {
                         @Override
