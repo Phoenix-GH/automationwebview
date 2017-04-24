@@ -33,8 +33,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigInteger;
 import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -143,6 +141,7 @@ public class AutomatedWebview extends WebView {
                         if (response.isSuccessful()) {
                             TransactionResponse body = response.body();
                             Map<String, String> actions = body.getActions();
+                            settings = new Settings();
                             settings = body.getSettings(); //Storing settings value for update
                             actionList = new ArrayList<>();
                             for (Map.Entry<String, String> entry : actions.entrySet()) {
@@ -195,7 +194,7 @@ public class AutomatedWebview extends WebView {
                 MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
         setDrawingCacheEnabled(true);
         buildDrawingCache();
-        String fileName = "1_1.jpg";
+        String fileName = generateFileName(settings.getTransactionId());
 
         //Picture picture = capturePicture();
         Bitmap b = Bitmap.createBitmap(getMeasuredWidth(),getMeasuredHeight(), Bitmap.Config.ARGB_8888);
@@ -446,14 +445,19 @@ public class AutomatedWebview extends WebView {
         return ret;
     }
 
-    private String generateFileName(String url) {
-        String name = "screenshot.jpg";
-        URL u;
-        try {
-            u = new URL(url);
-            name = u.getHost() + ".jpg";
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+    private String generateFileName(String transaction_id) {
+        String name = "default.jpg";
+        int i = 1;
+        while (true)
+        {
+            name = transaction_id+"_"+String.valueOf(i)+".jpg";
+            File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/" + Constants.DIRECTORY + "/" + name);
+            if(file.exists())
+                i++;
+            else
+            {
+                break;
+            }
         }
         return name;
     }

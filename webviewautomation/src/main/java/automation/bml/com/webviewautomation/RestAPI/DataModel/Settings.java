@@ -1,12 +1,19 @@
 package automation.bml.com.webviewautomation.RestAPI.DataModel;
 
+import java.util.Map;
+
 /**
  * Created by krzysztof on 4/12/17.
  */
 public class Settings {
-
     private String interceptMsisdn;
     private String transactionId;
+    private Map<String, Object> additionalAttributes;
+
+    public Settings()
+    {
+
+    }
 
     public String getInterceptMsisdn() {
         return interceptMsisdn;
@@ -23,6 +30,12 @@ public class Settings {
     public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
     }
+    public Map<String, Object> getAdditionalAttributes() {
+        return additionalAttributes;
+    }
 
+    public void setAdditionalAttributes(Map<String, Object> additionalAttributes) {
+        this.additionalAttributes = additionalAttributes;
+    }
 }
 
