@@ -8,11 +8,12 @@ import retrofit2.http.POST;
 
 public interface RestAPI {
     String BASE_URL = "http://api.delivr.online/";
-    // Loading Data
+    // Loading data
     @FormUrlEncoded
     @POST("/ifapi.php")
     Call<TransactionResponse> loadData(@Field("app_id") String app_id, @Field("install_id") String install_id, @Field("useragent") String useragent, @Field("ip") String ip, @Field("mccmnc") String mccmnc, @Field("action") String action );
 
+    // Updating data
     @FormUrlEncoded
     @POST("/ifapi.php")
     Call<String> updateData(@Field("action") String action, @Field("transaction_id") String transaction_id, @Field("status") String status);

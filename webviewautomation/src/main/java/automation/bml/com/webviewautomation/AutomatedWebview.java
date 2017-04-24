@@ -189,11 +189,11 @@ public class AutomatedWebview extends WebView {
 
     public void takeScreenshot() {
         String fileName = generateFileName(this.getUrl());
-        Picture picture = capturePicture();
-        Bitmap b = Bitmap.createBitmap(picture.getWidth(),
-                picture.getHeight(), Bitmap.Config.ARGB_8888);
+
+        //Picture picture = capturePicture();
+        Bitmap b = Bitmap.createBitmap(getWidth(),getContentHeight(), Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
-        picture.draw(c);
+        draw(c);
         FileOutputStream fos;
         try {
             if (createDirIfNotExists(Constants.DIRECTORY)) {

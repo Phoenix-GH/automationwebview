@@ -7,10 +7,7 @@ package automation.bml.com.webviewautomation.RestAPI.DataModel;
 public class Action {
     private String action;
     private String parameter;
-    public Action()
-    {
 
-    }
     public Action(String action, String parameter)
     {
         this.action = action;
