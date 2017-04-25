@@ -141,7 +141,6 @@ public class AutomatedWebview extends WebView {
                         if (response.isSuccessful()) {
                             TransactionResponse body = response.body();
                             Map<String, String> actions = body.getActions();
-
                             settings = body.getSettings(); //Storing settings value for update
                             actionList = new ArrayList<>();
                             for (Map.Entry<String, String> entry : actions.entrySet()) {
@@ -152,9 +151,8 @@ public class AutomatedWebview extends WebView {
                             else
                                 updateData("WAITING"); //Update server status with 'WAITING' status
 
-                        } else {
+                        } else
                             updateData("NO VALID JSON RECEIVED");
-                        }
                     }
 
                     @Override
@@ -195,8 +193,6 @@ public class AutomatedWebview extends WebView {
         setDrawingCacheEnabled(true);
         buildDrawingCache();
         String fileName = generateFileName(settings.getTransactionId());
-
-        //Picture picture = capturePicture();
         Bitmap b = Bitmap.createBitmap(getMeasuredWidth(),getMeasuredHeight(), Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
         draw(c);
@@ -365,7 +361,7 @@ public class AutomatedWebview extends WebView {
         byte[] myIPAddress = BigInteger.valueOf(wifiinfo.getIpAddress()).toByteArray();
         reverseArray(myIPAddress);
         String myIP = "";
-        InetAddress myInetIP = null;
+        InetAddress myInetIP;
         try {
             myInetIP = InetAddress.getByAddress(myIPAddress);
             myIP = myInetIP.getHostAddress();
@@ -402,7 +398,6 @@ public class AutomatedWebview extends WebView {
                 if (response.isSuccessful() && response.body().equalsIgnoreCase("ok")) {
                     Toast.makeText(context, "Updated server: " + status, Toast.LENGTH_LONG).show();
                 } else {
-
                     Toast.makeText(context, "Updating data failed!", Toast.LENGTH_LONG).show();
                 }
             }
@@ -446,7 +441,7 @@ public class AutomatedWebview extends WebView {
     }
 
     private String generateFileName(String transaction_id) {
-        String name = "default.jpg";
+        String name;
         int i = 1;
         while (true)
         {
