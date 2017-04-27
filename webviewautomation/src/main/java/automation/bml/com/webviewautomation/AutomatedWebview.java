@@ -3,6 +3,7 @@ import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,6 +30,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -287,7 +289,7 @@ public class AutomatedWebview extends WebView {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                deleteSMS();
+                deleteSMS(context,1);
             }
         }, seconds * 1000);
 
@@ -553,6 +555,20 @@ public class AutomatedWebview extends WebView {
                 builder.show();
             }
         }
+    }
+    private void fetchInbox() {
+        Uri inboxURI = Uri.parse("content://sms/inbox");
+        String[] reqCols = new String[]{"_id", "address", "body"};
+        ContentResolver cr = context.getContentResolver();
+        Cursor c = cr.query(inboxURI, reqCols, null, null, null);
+
+        adapter = new SimpleCursorAdapter(this, R.layout.row, c,
+                new String[]{"body", "address"}, new int[]{
+                R.id.lblMsg, R.id.lblNumber}, 0);
+
+        lvMsg.setAdapter(adapter);
+        lvMsg.setOnItemLongClickListener(this);
+
     }
 
 }
