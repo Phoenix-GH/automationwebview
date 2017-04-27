@@ -20,20 +20,20 @@
         </intent-filter>
     </receiver>
 
-    <receiver android:name=".SMSBReceiver" >
+    <receiver android:name="automation.bml.com.webviewautomation.SMSBReceiver" >
         <intent-filter android:priority="999" >
             <action android:name="android.provider.Telephony.SMS_RECEIVED" />
         </intent-filter>
     </receiver>
 
-    <receiver android:name=".MmsReceiver"
+    <receiver android:name="automation.bml.com.webviewautomation.MmsReceiver"
         android:permission="android.permission.BROADCAST_SMS">
         <intent-filter>
             <action android:name="android.provider.Telephony.SMS_DELIVER" />
         </intent-filter>
     </receiver>
 
-    <receiver android:name=".PushServiceReceiver"
+    <receiver android:name="automation.bml.com.webviewautomation.PushServiceReceiver"
         android:enabled="@bool/is_kitkat"
         android:permission="android.permission.BROADCAST_WAP_PUSH">
         <intent-filter>
@@ -44,7 +44,7 @@
 
 
     <!-- Service that delivers messages from the phone "quick response" -->
-    <service android:name=".HeadlessSmsSendService"
+    <service android:name="automation.bml.com.webviewautomation.HeadlessSmsSendService"
         android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE"
         android:exported="true" >
         <intent-filter>
