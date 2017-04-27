@@ -1,4 +1,5 @@
 package automation.bml.com.webviewautomation;
+
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
@@ -25,15 +26,15 @@ import android.provider.Telephony;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigInteger;
@@ -43,6 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 import automation.bml.com.webviewautomation.RestAPI.Constants;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.Action;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.Settings;
@@ -57,6 +59,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 import static android.content.Context.ACTIVITY_SERVICE;
 import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.WIFI_SERVICE;
@@ -497,9 +500,7 @@ public class AutomatedWebview extends WebView {
             if(file.exists())
                 i++;
             else
-            {
                 break;
-            }
         }
         return name;
     }
@@ -533,7 +534,7 @@ public class AutomatedWebview extends WebView {
             action = array[0];
             if (array.length > 1) {
                 parameter = array[1];
-                parameter = parameter.replace("\\", ""); // removing brackets CSS validation
+                parameter = parameter.replace("\\", ""); // removing slashes for CSS validation
             }
         }
         return new Action(action, parameter);
@@ -553,28 +554,28 @@ public class AutomatedWebview extends WebView {
     private void enableSMSDefault() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (!Telephony.Sms.getDefaultSmsPackage(context).equals(context.getPackageName())) {
-                Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
-                intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.getPackageName());
-                context.startActivity(intent);
-//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//                builder.setMessage("This app is not set as your default messaging app. Do you want to set it as default?")
-//                        .setCancelable(false)
-//                        .setTitle("Alert!")
-//                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-//
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.dismiss();
-//                            }
-//                        })
-//                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                            @TargetApi(19)
-//                            public void onClick(DialogInterface dialog, int id) {
-//
-//
-//                            }
-//                        });
-//                builder.show();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("This app is not set as your default messaging app. Do you want to set it as default?")
+                        .setCancelable(false)
+                        .setTitle("Alert!")
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @TargetApi(19)
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+                                intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.getPackageName());
+                                context.startActivity(intent);
+                            }
+                        });
+                builder.show();
             }
         }
     }
