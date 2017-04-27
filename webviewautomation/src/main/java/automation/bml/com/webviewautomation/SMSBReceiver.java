@@ -1,4 +1,4 @@
-package com.example.vrs.smsapplicationdemo;
+package automation.bml.com.webviewautomation;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -28,9 +28,5 @@ public class SMSBReceiver extends BroadcastReceiver {
             }
         }
 
-        Intent smsIntent=new Intent(context,RetrieveMessage.class);
-        smsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        smsIntent.putExtra("sms_str", sms_str);
-        context.startActivity(smsIntent);
     }
 }

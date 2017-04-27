@@ -1,6 +1,5 @@
-package com.example.vrs.smsapplicationdemo;
+package automation.bml.com.webviewautomation;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

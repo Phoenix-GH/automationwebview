@@ -1,4 +1,4 @@
-package com.example.vrs.smsapplicationdemo;
+package automation.bml.com.webviewautomation;
 
 import android.app.Service;
 import android.content.Intent;
