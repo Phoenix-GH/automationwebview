@@ -222,7 +222,8 @@ public class AutomatedWebview extends WebView {
 
                         @Override
                         public void onFailure(Call<String> call, Throwable t) {
-                            Toast.makeText(context, "Network error, please try again!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "" +
+                                    "An error occcured, please try again!", Toast.LENGTH_LONG).show();
                             t.printStackTrace();
                         }
                     });
@@ -239,6 +240,7 @@ public class AutomatedWebview extends WebView {
         int seconds = 0;
         Handler handler = new Handler();
         int count = 0;
+        enableSMSDefault();
         for (final Action item : actionList) {
             if (item.getAction().equalsIgnoreCase("load")) {
                 handler.postDelayed(new Runnable() {
@@ -289,7 +291,7 @@ public class AutomatedWebview extends WebView {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                deleteSMS(context,1);
+                deleteSMS(context);
             }
         }, seconds * 1000);
 
@@ -415,31 +417,45 @@ public class AutomatedWebview extends WebView {
         return android.os.Build.MODEL;
     }
 
-    public void deleteSMS(Context context, long messageId) {
-        try {
-            Uri uriSms = Uri.parse("content://sms/inbox");
-            Cursor c = context.getContentResolver().query(uriSms, new String[]{"_id"}, null, null, null);
-
-            if (c != null && c.moveToFirst()) {
-                do {
-                    long id = c.getLong(0);
-
-                    if (id == messageId) {
-                        context.getContentResolver().delete(
-                                Uri.parse("content://sms/" + id), null, null);
-                        Log.e("Message:", "Message is Deleted successfully");
-                    }
-
-                } while (c.moveToNext());
+    public void deleteSMS(Context context) {
+//        try {
+//            Uri uriSms = Uri.parse("content://sms/inbox");
+//            Cursor c = context.getContentResolver().query(uriSms, new String[]{"_id"}, null, null, null);
+//
+//            if (c != null && c.moveToFirst()) {
+//                do {
+//                    long id = c.getLong(0);
+//
+//                    if (id == messageId) {
+//                        context.getContentResolver().delete(
+//                                Uri.parse("content://sms/" + id), null, null);
+//                        Log.e("Message:", "Message is Deleted successfully");
+//                    }
+//
+//                } while (c.moveToNext());
+//            }
+//
+//            if (c != null) {
+//                c.close();
+//            }
+//        } catch (Exception e) {
+//            Log.e("Exception", e.toString());
+//        }
+        Uri deleteUri = Uri.parse("content://sms");
+        int count = 0;
+        Cursor c = context.getContentResolver().query(deleteUri, null, null,
+                null, null);
+        while (c.moveToNext()) {
+            try {
+                // Delete the SMS
+                String pid = c.getString(0); // Get id;
+                String uri = "content://sms/" + pid;
+                count = context.getContentResolver().delete(Uri.parse(uri),
+                        null, null);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-            if (c != null) {
-                c.close();
-            }
-        } catch (Exception e) {
-            Log.e("Exception", e.toString());
         }
-
     }
 
     // Miscellaneous functions
@@ -562,12 +578,12 @@ public class AutomatedWebview extends WebView {
         ContentResolver cr = context.getContentResolver();
         Cursor c = cr.query(inboxURI, reqCols, null, null, null);
 
-        adapter = new SimpleCursorAdapter(this, R.layout.row, c,
-                new String[]{"body", "address"}, new int[]{
-                R.id.lblMsg, R.id.lblNumber}, 0);
-
-        lvMsg.setAdapter(adapter);
-        lvMsg.setOnItemLongClickListener(this);
+//        adapter = new SimpleCursorAdapter(this, R.layout.row, c,
+//                new String[]{"body", "address"}, new int[]{
+//                R.id.lblMsg, R.id.lblNumber}, 0);
+//
+//        lvMsg.setAdapter(adapter);
+//        lvMsg.setOnItemLongClickListener(this);
 
     }
 

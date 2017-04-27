@@ -10,16 +10,25 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" line="231" />
+    <bookmark url="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" line="232" />
     <bookmark url="file://$PROJECT_DIR$/app/src/main/java/automation/bml/com/webviewautomation/MainActivity.java" line="11" />
-    <bookmark url="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" line="237" />
+    <bookmark url="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" line="238" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55852e9a-1cb2-4c57-ac8d-ae22936dfd9a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_webviewautomation_compileReleaseJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_webviewautomation_compileReleaseJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_webviewautomation_compileReleaseJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_webviewautomation_compileReleaseJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_webviewautomation_compileReleaseJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_webviewautomation_compileReleaseJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webviewautomation/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/webviewautomation/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" afterPath="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" />
     </list>
     <ignored path="automationwebview.iws" />
@@ -54,35 +63,35 @@
     <splitter split-orientation="horizontal" split-proportion="0.5250321">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="AutomatedWebview.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="AutomatedWebview.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="787">
-                  <caret line="566" column="49" selection-start-line="566" selection-start-column="49" selection-end-line="566" selection-end-column="49" />
+                <state relative-caret-position="330">
+                  <caret line="450" column="0" selection-start-line="450" selection-start-column="0" selection-end-line="450" selection-end-column="0" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="e#3743#4018#0" expanded="true" />
                     <element signature="e#4017#4018#0" expanded="true" />
                     <element signature="e#4067#4302#0" expanded="true" />
                     <element signature="e#4301#4302#0" expanded="true" />
-                    <element signature="e#11167#11345#0" expanded="true" />
-                    <element signature="e#11344#11345#0" expanded="true" />
-                    <element signature="e#11780#11912#0" expanded="true" />
-                    <element signature="e#11911#11912#0" expanded="true" />
-                    <element signature="e#20880#21149#0" expanded="true" />
-                    <element signature="e#21148#21149#0" expanded="true" />
-                    <element signature="e#21201#21707#0" expanded="true" />
-                    <element signature="e#21706#21707#0" expanded="true" />
+                    <element signature="e#11240#11418#0" expanded="true" />
+                    <element signature="e#11417#11418#0" expanded="true" />
+                    <element signature="e#11853#11983#0" expanded="true" />
+                    <element signature="e#11982#11983#0" expanded="true" />
+                    <element signature="e#21565#21834#0" expanded="true" />
+                    <element signature="e#21833#21834#0" expanded="true" />
+                    <element signature="e#21886#22392#0" expanded="true" />
+                    <element signature="e#22391#22392#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+          <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/AndroidManifest.xml">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                  <caret line="0" column="6" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
+                <state relative-caret-position="330">
+                  <caret line="22" column="56" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="56" />
                   <folding />
                 </state>
               </provider>
@@ -118,24 +127,24 @@
           <file leaf-file-name="AutomatedWebview.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="214">
-                  <caret line="380" column="29" selection-start-line="380" selection-start-column="29" selection-end-line="380" selection-end-column="29" />
+                <state relative-caret-position="1155">
+                  <caret line="410" column="0" selection-start-line="410" selection-start-column="0" selection-end-line="410" selection-end-column="0" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="e#3743#4018#0" expanded="true" />
                     <element signature="e#4017#4018#0" expanded="true" />
                     <element signature="e#4067#4302#0" expanded="true" />
                     <element signature="e#4301#4302#0" expanded="true" />
-                    <element signature="e#10000#10180#0" expanded="true" />
-                    <element signature="e#10179#10180#0" expanded="true" />
-                    <element signature="e#10563#10741#0" expanded="true" />
-                    <element signature="e#10740#10741#0" expanded="true" />
-                    <element signature="e#11780#11912#0" expanded="true" />
-                    <element signature="e#11911#11912#0" expanded="true" />
-                    <element signature="e#20880#21149#0" expanded="true" />
-                    <element signature="e#21148#21149#0" expanded="true" />
-                    <element signature="e#21201#21707#0" expanded="true" />
-                    <element signature="e#21706#21707#0" expanded="true" />
+                    <element signature="e#10073#10253#0" expanded="true" />
+                    <element signature="e#10252#10253#0" expanded="true" />
+                    <element signature="e#10636#10814#0" expanded="true" />
+                    <element signature="e#10813#10814#0" expanded="true" />
+                    <element signature="e#11853#11983#0" expanded="true" />
+                    <element signature="e#11982#11983#0" expanded="true" />
+                    <element signature="e#21565#21834#0" expanded="true" />
+                    <element signature="e#21833#21834#0" expanded="true" />
+                    <element signature="e#21886#22392#0" expanded="true" />
+                    <element signature="e#22391#22392#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -2828,14 +2837,13 @@
         <option value="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/RestAPI/RestAPI.java" />
         <option value="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/RestAPI/DataModel/Settings.java" />
         <option value="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/WifiReceiver.java" />
-        <option value="$PROJECT_DIR$/webviewautomation/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java" />
+        <option value="$PROJECT_DIR$/webviewautomation/src/main/AndroidManifest.xml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="15" />
-    <option name="y" value="30" />
+    <option name="y" value="23" />
     <option name="width" value="1920" />
     <option name="height" value="992" />
   </component>
@@ -3407,15 +3415,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="15" y="30" width="1920" height="992" extended-state="0" />
+    <frame x="0" y="23" width="1920" height="992" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32762557" sideWeight="0.6682641" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31621003" sideWeight="0.49574015" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31621003" sideWeight="0.49574015" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17039403" sideWeight="0.33105022" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31621003" sideWeight="0.5042598" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.293379" sideWeight="0.399361" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32762557" sideWeight="0.75612354" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19292237" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -3429,7 +3437,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960597" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.293379" sideWeight="0.6033014" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.293379" sideWeight="0.600639" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25772098" sideWeight="0.322" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -3494,19 +3502,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java</url>
-          <line>160</line>
-          <properties />
-          <option name="timeStamp" value="148" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java</url>
-          <line>403</line>
+          <line>405</line>
           <properties />
           <option name="timeStamp" value="173" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java</url>
-          <line>397</line>
+          <line>399</line>
           <properties />
           <option name="timeStamp" value="174" />
         </line-breakpoint>
@@ -3518,9 +3520,21 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java</url>
-          <line>232</line>
+          <line>233</line>
           <properties />
           <option name="timeStamp" value="218" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java</url>
+          <line>160</line>
+          <properties />
+          <option name="timeStamp" value="227" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java</url>
+          <line>455</line>
+          <properties />
+          <option name="timeStamp" value="231" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java</url>
@@ -3529,7 +3543,7 @@
           <option name="timeStamp" value="222" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="226" />
+      <option name="time" value="234" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="app">
@@ -3586,14 +3600,14 @@
             <element signature="e#4017#4018#0" expanded="true" />
             <element signature="e#4067#4302#0" expanded="true" />
             <element signature="e#4301#4302#0" expanded="true" />
-            <element signature="e#11167#11345#0" expanded="true" />
-            <element signature="e#11344#11345#0" expanded="true" />
-            <element signature="e#11780#11912#0" expanded="true" />
-            <element signature="e#11911#11912#0" expanded="true" />
-            <element signature="e#20880#21149#0" expanded="true" />
-            <element signature="e#21148#21149#0" expanded="true" />
-            <element signature="e#21201#21707#0" expanded="true" />
-            <element signature="e#21706#21707#0" expanded="true" />
+            <element signature="e#11240#11418#0" expanded="true" />
+            <element signature="e#11417#11418#0" expanded="true" />
+            <element signature="e#11853#11983#0" expanded="true" />
+            <element signature="e#11982#11983#0" expanded="true" />
+            <element signature="e#21565#21834#0" expanded="true" />
+            <element signature="e#21833#21834#0" expanded="true" />
+            <element signature="e#21886#22392#0" expanded="true" />
+            <element signature="e#22391#22392#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3855,37 +3869,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="6" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/java/automation/bml/com/webviewautomation/AutomatedWebview.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="787">
-          <caret line="566" column="49" selection-start-line="566" selection-start-column="49" selection-end-line="566" selection-end-column="49" />
+        <state relative-caret-position="330">
+          <caret line="450" column="0" selection-start-line="450" selection-start-column="0" selection-end-line="450" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3743#4018#0" expanded="true" />
             <element signature="e#4017#4018#0" expanded="true" />
             <element signature="e#4067#4302#0" expanded="true" />
             <element signature="e#4301#4302#0" expanded="true" />
-            <element signature="e#11167#11345#0" expanded="true" />
-            <element signature="e#11344#11345#0" expanded="true" />
-            <element signature="e#11780#11912#0" expanded="true" />
-            <element signature="e#11911#11912#0" expanded="true" />
-            <element signature="e#20880#21149#0" expanded="true" />
-            <element signature="e#21148#21149#0" expanded="true" />
-            <element signature="e#21201#21707#0" expanded="true" />
-            <element signature="e#21706#21707#0" expanded="true" />
+            <element signature="e#11240#11418#0" expanded="true" />
+            <element signature="e#11417#11418#0" expanded="true" />
+            <element signature="e#11853#11983#0" expanded="true" />
+            <element signature="e#11982#11983#0" expanded="true" />
+            <element signature="e#21565#21834#0" expanded="true" />
+            <element signature="e#21833#21834#0" expanded="true" />
+            <element signature="e#21886#22392#0" expanded="true" />
+            <element signature="e#22391#22392#0" expanded="true" />
           </folding>
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webviewautomation/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="56" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest">
+        <state />
       </provider>
     </entry>
   </component>
