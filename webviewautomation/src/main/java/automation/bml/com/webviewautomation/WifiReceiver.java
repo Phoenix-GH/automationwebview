@@ -17,6 +17,10 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 public class WifiReceiver extends BroadcastReceiver {
     AutomatedWebview webview;
     boolean isMobileEnabled = false;
+    public WifiReceiver()
+    {
+        super();
+    }
     public WifiReceiver(AutomatedWebview webview,boolean isMobileEnabled)
     {
         super();
