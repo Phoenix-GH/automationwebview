@@ -87,7 +87,7 @@ public class AutomatedWebview extends WebView {
     }
 
     public void init() {
-       // enableSMSDefault();
+        enableSMSDefault();
         //Setting up REST api objects
         OkHttpClient httpClient = new OkHttpClient.Builder().build();
         Gson gson = new GsonBuilder()
