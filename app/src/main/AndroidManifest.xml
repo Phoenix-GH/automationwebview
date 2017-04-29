@@ -19,26 +19,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name="automation.bml.com.webviewautomation.WifiReceiver" >
-            <intent-filter android:priority="100">
-                <action android:name="android.net.wifi.STATE_CHANGE" />
-            </intent-filter>
-        </receiver>
 
-        <receiver android:name="automation.bml.com.webviewautomation.SMSBReceiver" >
+        <receiver android:name=".SMSBReceiver" >
             <intent-filter android:priority="999" >
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name="automation.bml.com.webviewautomation.MmsReceiver"
+        <receiver android:name=".MmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_DELIVER" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name="automation.bml.com.webviewautomation.PushServiceReceiver"
+        <receiver android:name=".PushServiceReceiver"
             android:enabled="@bool/is_kitkat"
             android:permission="android.permission.BROADCAST_WAP_PUSH">
             <intent-filter>
@@ -49,7 +44,7 @@
 
 
         <!-- Service that delivers messages from the phone "quick response" -->
-        <service android:name="automation.bml.com.webviewautomation.HeadlessSmsSendService"
+        <service android:name=".HeadlessSmsSendService"
             android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE"
             android:exported="true" >
             <intent-filter>

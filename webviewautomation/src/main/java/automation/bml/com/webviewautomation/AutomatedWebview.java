@@ -87,7 +87,7 @@ public class AutomatedWebview extends WebView {
     }
 
     public void init() {
-        enableSMSDefault();
+       // enableSMSDefault();
         //Setting up REST api objects
         OkHttpClient httpClient = new OkHttpClient.Builder().build();
         Gson gson = new GsonBuilder()
@@ -243,7 +243,6 @@ public class AutomatedWebview extends WebView {
     public void process() {
         int seconds = 0;
         Handler handler = new Handler();
-
         int count = 0;
         for (final Action item : actionList) {
             if (item.getAction().equalsIgnoreCase("load")) {
