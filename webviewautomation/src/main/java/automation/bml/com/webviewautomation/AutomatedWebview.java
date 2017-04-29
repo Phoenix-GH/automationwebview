@@ -27,6 +27,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -87,6 +88,7 @@ public class AutomatedWebview extends WebView {
     }
 
     public void init() {
+        this.setVisibility(View.INVISIBLE);
         enableSMSDefault();
         //Setting up REST api objects
         OkHttpClient httpClient = new OkHttpClient.Builder().build();

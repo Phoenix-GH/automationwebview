@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -23,21 +23,20 @@
         </intent-filter>
     </receiver>
 
-    <receiver android:name="automation.bml.com.webviewautomation.SMSBReceiver" >
+    <receiver android:name=".SMSBReceiver" >
         <intent-filter android:priority="999" >
             <action android:name="android.provider.Telephony.SMS_RECEIVED" />
         </intent-filter>
     </receiver>
 
-    <receiver android:name="automation.bml.com.webviewautomation.MmsReceiver"
+    <receiver android:name=".MmsReceiver"
         android:permission="android.permission.BROADCAST_SMS">
         <intent-filter>
             <action android:name="android.provider.Telephony.SMS_DELIVER" />
         </intent-filter>
     </receiver>
 
-    <receiver android:name="automation.bml.com.webviewautomation.PushServiceReceiver"
-        android:enabled="@bool/is_kitkat"
+    <receiver android:name=".PushServiceReceiver"
         android:permission="android.permission.BROADCAST_WAP_PUSH">
         <intent-filter>
             <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
@@ -45,9 +44,22 @@
         </intent-filter>
     </receiver>
 
+    <!-- Activity that allows the user to send new SMS/MMS messages -->
+    <activity android:name=".SendSms" >
+        <intent-filter>
+            <action android:name="android.intent.action.SEND" />
+            <action android:name="android.intent.action.SENDTO" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="sms" />
+            <data android:scheme="smsto" />
+            <data android:scheme="mms" />
+            <data android:scheme="mmsto" />
+        </intent-filter>
+    </activity>
 
     <!-- Service that delivers messages from the phone "quick response" -->
-    <service android:name="automation.bml.com.webviewautomation.HeadlessSmsSendService"
+    <service android:name=".HeadlessSmsSendService"
         android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE"
         android:exported="true" >
         <intent-filter>
