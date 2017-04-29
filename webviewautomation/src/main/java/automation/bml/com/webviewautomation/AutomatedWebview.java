@@ -516,7 +516,7 @@ public class AutomatedWebview extends WebView {
         return array;
     }
 
-    public void enableSMSDefault() // Setting the app as default SMS app so that it can intercept messages comming in while running
+    public void enableSMSDefault() // Setting the app as default SMS app so that it can intercept messages coming in while running
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (!Telephony.Sms.getDefaultSmsPackage(context).equals(context.getPackageName())) {
