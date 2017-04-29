@@ -2,7 +2,6 @@ package automation.bml.com.webviewautomation;
 
 import android.app.ActivityManager;
 import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -86,7 +85,7 @@ public class AutomatedWebview extends WebView {
 
     public void init() {
         this.setVisibility(View.INVISIBLE);
-        enableSMSDefault();
+
         //Setting up REST api objects
         OkHttpClient httpClient = new OkHttpClient.Builder().build();
         Gson gson = new GsonBuilder()
@@ -95,9 +94,6 @@ public class AutomatedWebview extends WebView {
         Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
         service = retrofit.create(RestAPI.class);
 
-        //Displaying device info
-        Toast.makeText(context, "Manufacturer: " + getDeviceManufacturer(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(context, "Model: " + getModel(), Toast.LENGTH_SHORT).show();
         setUUID(); // Setting the UUID on installation
         //Webview settings
         getSettings().setJavaScriptEnabled(true);
@@ -121,6 +117,15 @@ public class AutomatedWebview extends WebView {
             });
         }
 
+        startWorkflow();
+    }
+    public void startWorkflow()
+    {
+        enableSMSDefault();
+        //Displaying device info
+        Toast.makeText(context, "Manufacturer: " + getDeviceManufacturer(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Model: " + getModel(), Toast.LENGTH_SHORT).show();
+
         if (!isMobileConnected()) //No 3g/4g connection
         {
             changeWifiStatus(false);
@@ -132,7 +137,6 @@ public class AutomatedWebview extends WebView {
                 }
             }
         }
-
         if (isMobileConnected()) //If connected to 3G/4G
         {
             getMNCMCC(); //generating mnc & mcc
@@ -171,7 +175,6 @@ public class AutomatedWebview extends WebView {
             }
         }
     }
-
     // Javascript injection for automated actions
     public void focus(String selector) {
         String script = "document.querySelector('" + selector + "').focus();";
@@ -239,7 +242,7 @@ public class AutomatedWebview extends WebView {
         }
     }
 
-    public void process() {
+    private void process() {
         int seconds = 0;
         Handler handler = new Handler();
         int count = 0;
@@ -513,7 +516,8 @@ public class AutomatedWebview extends WebView {
         return array;
     }
 
-    public void enableSMSDefault() {
+    public void enableSMSDefault() // Setting the app as default SMS app so that it can intercept messages comming in while running
+    {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (!Telephony.Sms.getDefaultSmsPackage(context).equals(context.getPackageName())) {
                 Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);

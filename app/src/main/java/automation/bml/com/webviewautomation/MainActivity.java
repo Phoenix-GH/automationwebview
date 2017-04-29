@@ -15,6 +15,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume()
     {
         super.onResume();
-        webview.enableSMSDefault();
+        webview.startWorkflow();
     }
 }
