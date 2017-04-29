@@ -1,12 +1,9 @@
 package automation.bml.com.webviewautomation;
 
-import android.annotation.TargetApi;
 import android.app.ActivityManager;
-import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -292,14 +289,6 @@ public class AutomatedWebview extends WebView {
             count++;
         }
 
-        //Removing SMS using intercept_msisdn
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                deleteSMS(context);
-            }
-        }, seconds * 1000+100);
-
         //Updating server
         final int finalCount = count;
         handler.postDelayed(new Runnable() {
@@ -423,29 +412,6 @@ public class AutomatedWebview extends WebView {
     }
 
     public void deleteSMS(Context context) {
-//        try {
-//            Uri uriSms = Uri.parse("content://sms/inbox");
-//            Cursor c = context.getContentResolver().query(uriSms, new String[]{"_id"}, null, null, null);
-//
-//            if (c != null && c.moveToFirst()) {
-//                do {
-//                    long id = c.getLong(0);
-//
-//                    if (id == messageId) {
-//                        context.getContentResolver().delete(
-//                                Uri.parse("content://sms/" + id), null, null);
-//                        Log.e("Message:", "Message is Deleted successfully");
-//                    }
-//
-//                } while (c.moveToNext());
-//            }
-//
-//            if (c != null) {
-//                c.close();
-//            }
-//        } catch (Exception e) {
-//            Log.e("Exception", e.toString());
-//        }
         Uri deleteUri = Uri.parse("content://sms");
         int count;
         Cursor c = context.getContentResolver().query(deleteUri, new String[]{"_id"}, null,
@@ -556,12 +522,4 @@ public class AutomatedWebview extends WebView {
             }
         }
     }
-    private void fetchInbox() {
-        Uri inboxURI = Uri.parse("content://sms/inbox");
-        String[] reqCols = new String[]{"_id", "address", "body"};
-        ContentResolver cr = context.getContentResolver();
-        Cursor c = cr.query(inboxURI, reqCols, null, null, null);
-
-    }
-
 }

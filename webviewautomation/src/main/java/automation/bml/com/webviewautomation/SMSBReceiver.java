@@ -5,12 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+import android.widget.Toast;
 
 public class SMSBReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
-        SmsMessage[] smsm = null;
+        SmsMessage[] smsm;
         String sms_str = "";
         if (bundle != null) {
             // Get the SMS message
@@ -24,5 +25,6 @@ public class SMSBReceiver extends BroadcastReceiver {
                 sms_str += "\r\n";
             }
         }
+        Toast.makeText(context,sms_str,Toast.LENGTH_LONG).show();
     }
 }
