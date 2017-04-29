@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 
-/**
- * Created by vrs on 5/2/16.
- */
 public class SMSBReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {

