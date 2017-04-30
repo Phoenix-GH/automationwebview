@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         webview =(AutomatedWebview)findViewById(R.id.webview);
     }
+
     @Override
     protected void onResume()
     {

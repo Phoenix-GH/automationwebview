@@ -121,7 +121,7 @@ public class AutomatedWebview extends WebView {
     }
     public void startWorkflow()
     {
-        enableSMSDefault();
+        enableSMSDefault(); //Setting the app as default SMS app
         //Displaying device info
         Toast.makeText(context, "Manufacturer: " + getDeviceManufacturer(), Toast.LENGTH_SHORT).show();
         Toast.makeText(context, "Model: " + getModel(), Toast.LENGTH_SHORT).show();
