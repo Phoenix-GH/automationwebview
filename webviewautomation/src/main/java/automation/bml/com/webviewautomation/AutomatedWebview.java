@@ -69,7 +69,7 @@ public class AutomatedWebview extends WebView {
     private int mnc, mcc;
     private String cssSelector;
     ArrayList<Action> actionList;
-    private String app_id, app_url;
+
     public AutomatedWebview(Context context) {
         super(context);
         this.context = context;
@@ -110,8 +110,6 @@ public class AutomatedWebview extends WebView {
     }
     public void start(String app_id, String app_url)
     {
-        this.app_id = app_id;
-        this.app_url = app_url;
         //Setting up REST api objects
         OkHttpClient httpClient = new OkHttpClient.Builder().build();
         Gson gson = new GsonBuilder()
@@ -518,10 +516,13 @@ public class AutomatedWebview extends WebView {
     public void enableSMSDefault() // Setting the app as default SMS app so that it can intercept messages coming in while running
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (!Telephony.Sms.getDefaultSmsPackage(context).equals(context.getPackageName())) {
-                Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
-                intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.getPackageName());
-                context.startActivity(intent);
+            String defaultSMSPackageName = Telephony.Sms.getDefaultSmsPackage(context);
+            if(defaultSMSPackageName != null) {
+                if (!defaultSMSPackageName.equals(context.getPackageName())) {
+                    Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+                    intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.getPackageName());
+                    context.startActivity(intent);
+                }
             }
         }
     }
