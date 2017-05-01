@@ -10,6 +10,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         webview =(AutomatedWebview)findViewById(R.id.webview);
+        webview.start("1", "http://api.delivr.online");
     }
 
     @Override

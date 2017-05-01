@@ -10,7 +10,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 
 public interface RestAPI {
-    String BASE_URL = "http://api.delivr.online/";
     // Loading data
     @FormUrlEncoded
     @POST("/ifapi.php")

