@@ -93,6 +93,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/krzysztof/.android/build-cache/ce982ec478d2b1e44a9bb0c5b9ac98f9301618f4/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="78ea232052df889856dcb7b7b542707c89bb3bfb">
+        <dex dex="/Users/krzysztof/automationwebview/app/build/intermediates/pre-dexed/debug/classes_fada7d5e8c4f8236b71cccc284e8ae79fbc58bab.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/krzysztof/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.11.0/840897fcd7223a8143f1d9b6f69714e7be34fd50/okio-1.11.0.jar"
         jumboMode="false"
         optimize="true"
